@@ -10,10 +10,10 @@ Source code for the complete ActiveGS iOS application
 
 That's it!
 
-![ScreenShot 1](https://github.com/ogoguel/activegs-ios/README.images/screen1.png)
-![ScreenShot 2](https://github.com/ogoguel/activegs-ios/README.images/screen2.png)
-![ScreenShot 3](https://github.com/ogoguel/activegs-ios/README.images/screen3.png)
-![ScreenShot 4](https://github.com/ogoguel/activegs-ios/README.images/screen4.png)
+![ScreenShot 1](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/README.images/screen1.png)
+![ScreenShot 2](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/README.images/screen2.png)
+![ScreenShot 3](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/README.images/screen3.png)
+![ScreenShot 4](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/README.images/screen3.png)
 
 ### Open/Known issues
 * Orientation
