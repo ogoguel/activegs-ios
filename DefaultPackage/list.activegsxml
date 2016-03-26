@@ -1,0 +1,361 @@
+﻿
+<?xml-stylesheet href="fichier.xsl" type="text/xsl"?>
+<list version="1" >
+	<source 
+		websiteurl="http://www.freetoolsassociation.com" 
+		icon="http://www.freetoolsassociation.com/fta/activegs/ActiveGS.png"
+		revision ="1.01"
+		 >
+		ActiveGS - Best of FTA
+	</source>
+	
+	<config version="2" id="floby">
+		<name>Flobynoid</name>
+		<year>1987</year>
+		<publisher>Second Sight Software</publisher>
+		<desc><![CDATA[
+		This was the first major development of the team on the Apple II : the game included 100 levels, 
+		a level-editor (hence its tagline the "buildable break-out"!), 
+		and a end-game animation that no-one has ever seen!<br />
+		
+		The game was fully programmed by entering each byte code directly onto the sectors using a disk editor (Moby Disk II):
+		years after, it is hard to imagine that it could even run but, at that time, we didn't know what an assembler was
+		(nor the difference between object and source code).<br />
+		
+		Under the Second Sight Software Label, the was presented at the French Apple Expo in 1987, 
+		and sent to major US publishing companies in the USA (Epyx, DataSoft, Electronics Art, ...). 
+		It received very good feedback from those professionals, which impressed the teenagers we were.<br />
+
+		Unfortunately, the Apple II was fading away and publishing new titles did not make much sense
+		while the IIGS was just being launched : eventually, the game finished its life as a freeware for the pleasure of players all around the world!
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">floby3.png</pic>
+		<format>APPLE2</format>
+		<image slot="6" disk="1">flobynoid (2002).dsk.zip</image>
+		<pic type="screenshot" width="320" height="200">floby1.png</pic>
+		<pic type="screenshot" width="320" height="200">floby2.png</pic>
+		<pic type="screenshot" width="320" height="200">floby3.png</pic>
+		<pic type="screenshot" width="320" height="200">floby_editor.png</pic>
+		<bootslot>6</bootslot>
+	</config>
+	
+	
+	<config version="2" id="starwizard">
+		<name>Star Wizard</name>
+		<year>1989</year>
+		<publisher>Sergent Claude</publisher>
+    <desc>
+      <![CDATA[
+    With friends from Savoie, Pierre and Dany developed this state-of-the art 3D real time game (released, under the Sergent Claude label).
+    This game was highly appreciated by the Second Sight Software members, and it was then decided to create a new team that 
+    would be composed of naturally complementary members in design, art, music, metal- and math- powered development: FTA was born.
+    ]]></desc>
+		<format>2GS</format>
+		<image slot="5" disk="1">StarWizard (2002).fta</image>
+		<pic type="thumbnail" width="64" height="40">starwizard_3.png</pic>
+		<pic type="screenshot" width="320" height="200">starwizard_2.png</pic>
+		<pic type="screenshot" width="320" height="200">starwizard_4.png</pic>
+		<pic type="screenshot" width="320" height="200">starwizard_5.png</pic>
+		<bootslot>5</bootslot>
+	</config>
+	
+	
+	<config version="2" id="nucleus">
+		<name>Nucleus</name>
+		<year>1989</year>
+		<publisher>FTA</publisher>
+		<desc><![CDATA[
+		<p><b>The demo that has made FTA the famous beyond their Dijon &amp; Aix-Les-Bains hideouts !</b></p>
+    <p>
+		It has evolved from a simple parametric-based animation (thanks to Arkanoid for the sprites!) to a full 3D-powered demo with modern graphics and fancy musics.
+		Even though there was a bug in the 3D calculation (the shapes should never have collapsed onto themselves), people loved the demo.
+		</p>
+    <p>
+    In less than 2 weeks, the first version spread quickly from Dijon to <a target="_blank" href="http://groups.google.fr/group/comp.sys.apple/browse_thread/thread/79404fd00b1c66c2/33488ef31805980e?hl=fr&lnk=gst&q=nucleus++#33488ef31805980e">Cupertino</a>, 
+		where the Green Software Engineering team reviewed it. Unfortunately, due to a glitch in a low level drive command, it was incompatible with the upcoming ROM03 Motherboard which Apple was about to release.
+		Through their Switzerland office, Apple sent us a prototype of the ROM03 motherboard to make it work in time for the upcoming AppleFest in San Francisco, 
+		where then VP Jean-Louis Gass&eacute;e used it during his talk. 
+	</p>
+		<p></i>The rest is history ;)</i> </p>
+   
+    <p>
+    Eventually, Nucleus was later customized to serve as an advertisment for the SPIT company (unfortunately, no copy could be retrieved) 
+    </p>
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">nucleus_2.png</pic>
+		<pic type="screenshot" width="320" height="200">nucleus.png</pic>
+		<pic type="screenshot" width="320" height="200">nucleus_2.png</pic>
+		<pic type="screenshot" width="320" height="200">nucleus_c.png</pic>
+		<pic type="screenshot" width="320" height="200">nucleus_t.png</pic>
+		<format>2GS</format><image slot="5" disk="1">NUCLEUS.FTA</image>
+		<bootslot>5</bootslot>
+	</config>
+	   
+	<config version="2" id="photonix">
+		<name>Photonix II</name>
+		<year>1990</year>
+		<publisher>FTA</publisher>
+		<desc><![CDATA[
+		<p>
+		One of the successes of the first version of Nucleus was its very fast loading routines (even though most of the users
+		only know the ROM03 version which does not include them!)
+		Those fast routines came originally from SpeedySmith, a very fast disk copier but with limited features and raw (not to say crude) interface.
+		</p>
+		<p>
+		After having written Nucleus during the summer, the FTA team gathered again the next month (just before going back to college) to create a new program that would be a mix between
+		Speedysmith (for the copying features) and Nucleus (for the fancy graphics) : this is how Photonix started! 
+		</p>
+		<p>
+		Thanks to the speed of the copy, its large set of features (it was often used by Mac users to quickly format disks for example), and its appealing interface, it became
+		a very successful shareware program, and we were very pleased to receive (snail) mails from people around the world from persons liking our work and asking us to "keep up the good work" : 
+		: it was then that we learnt how popular that expression was!<br /> 
+		A commercial version of Photonix was later developed (Photonix II) and sold by Toolbox, before finishing its life as an abandonware.
+		</p>
+		<p>
+		15 years later, Photonix was recently brought to life as a prior-artifact in an anti-virus 
+		<a href="http://www.fr.com/files/uploads/publications/DSU-Medical-Corp-v-JMS-Co-Ltd/Symantec_Corp_v_Computer_Assocs_Intl_Inc_Fed_Cir_2007-1201.pdf">patent infrigment lawsuit</a> 
+		: good programs never die!   
+		</p>
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">photonix_2.png</pic>
+		<pic type="screenshot" width="320" height="200">photonix_1.png</pic>
+		<pic type="screenshot" width="320" height="200">photonix_2.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">PHOTONIX.FTA</image>
+		<bootslot>5</bootslot>
+    </config>
+
+	<config version="2" id="miniprix">
+	   <name>Mini Prix</name>
+	   <year>1990</year>
+	   <publisher>FTA</publisher>
+     <desc>A very realistic racing game simulation that did not want to compromise the fluidity of the control for the graphic immersion of the player !
+	  The game could easily win the-smallest-rendering-screen-ever-being-used-in-a-racing-game award, but nevertheless, the game was fun to play: easy to learn, hard to master!</desc>
+	   <pic type="thumbnail" width="64" height="40">miniprix_2.png</pic>
+    <format>2GS</format>
+	  <image slot="5" disk="1">MINIPRIX.FTA</image>
+		<pic type="screenshot" width="320" height="200">miniprix_1.png</pic>
+           <pic type="screenshot" width="320" height="200">miniprix_2.png</pic>
+           <pic type="screenshot" width="320" height="200">miniprix_3.png</pic>
+           <bootslot>5</bootslot>
+     </config>
+     
+  <config version="2" id="bluehelmet">
+    <name>Blue Helmet</name>
+    <year>1990</year>
+    <publisher>FTA</publisher>
+    <desc>
+      <![CDATA[
+		FTA Members have always been fan of racing games: during the development of Photonix, only watching F1 GP Race could distract the team!<br />
+		Even though Blue Helmet was far from being finished, it provided some pretty cool racing experience at the decent frame rate. 
+		]]>
+    </desc>
+    <pic type="thumbnail" width="320" height="200">bluehelmet_1.png</pic>
+    <format>2GS</format>
+    <image slot="5" disk="1">BLUE_HELMET.FTA</image>
+    <pic type="screenshot" width="320" height="200">bluehelmet_1.png</pic>
+    <pic type="screenshot" width="320" height="200">bluehelmet_2.png</pic>
+    <bootslot>5</bootslot>
+  </config>
+
+
+  <config version="2" id="harrier">
+		<name>Space Harrier Demo</name>
+		<year>1990</year>
+		<publisher>FTA</publisher>
+		<desc><![CDATA[
+		At a time where there was no video console at home, arcade gaming was the only way to get a fully immersive experience, and Space Harrier was one of our favourite games. <br />
+		This project emerged after having seen the Atari ST version that was really appealing, and we wanted to build something similar to bring that hi-speed spirit onto the IIGS.
+		Actually, the project started with Atari ST development in order to extract (not to say rip) all the sprites from the computer memory while the game was running,
+		 and then to transfer the files back to the IIGS. Exchanging information between computers seems so easy today, but at that time, it has required to build a custom
+		NULL Modem cable, and find communication software on both machines that would implement the ZModem protocol in a similar way: needless to say that the whole process took several weeks!<br />
+		With those nice looking assets available, it encouraged us to develop some great graphic routines that would nicely use them.<br />
+		The result is one of our favorite productions, and even now, the version easily matches the official Sega version on iPhone (ok, their version is based on the Megadrive port)
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">harrier1.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">SPACE_HARRIER.FTA</image>
+		<pic type="screenshot" width="320" height="200">harrier1.png</pic>
+		<pic type="screenshot" width="320" height="200">harrier_1.png</pic>
+		<pic type="screenshot" width="320" height="200">harrier_2.png</pic>
+		<pic type="screenshot" width="320" height="200">harrier_5.png</pic>
+		<bootslot>5</bootslot>
+     </config>
+
+	<config version="2" id="modulae">
+		<name>Modulae</name>
+		<year>1990</year>
+		<publisher>FTA</publisher>
+		<desc><![CDATA[
+		<p>Quite often,a demo starts from a set of small and independent routines developed without any idea on where they could be used. But at a certain point, and that's the magic
+		of software development, everything naturally fits together : alchemy in action!</p>
+		<p> This is how Moduale was created by reuniting all those routines into a nice package : its 3D content was outstanding at that time, and
+		it was the most polished program we ever produced.</p>
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">modulae_4.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">MODULAE.FTA</image>
+		<pic type="screenshot" width="320" height="200">modulae_1.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_10.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_11.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_2.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_3.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_4.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_5.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_6.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_7.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_8.png</pic>
+		<pic type="screenshot" width="320" height="200">modulae_9.png</pic>
+		<bootslot>5</bootslot>
+	</config>
+		
+     
+	 <config version="2" id="xmas">
+		<name>XMAS Demo</name>
+		<year>1990</year>
+		<publisher>FTA/MRZ</publisher>
+		<desc><![CDATA[
+		<p>After the success of our early programs, we kept on experimenting new techniques to go beyond what we had already done : new options were made possible by having a finer 
+		control over the Apple IIGS hardware (pedal to the metal!), but on the other hand, it meant reprogramming almost every aspect of the computer. In retrospect, a lot of hard work was spent on invisible stuff, but
+		altogether, it is that continuous effort on every front that gives such a polished result. They were told it was impossible, so they did it.
+		</p>
+		<p>This is how the XMas demo was built, even though the technical exploits slightly outgrow the demo content : it was the first demo with music-enabled loading routines, 
+		overscan scrolls, and more important entirely coded in Geneva!</p>
+		]]></desc>
+		
+		<pic type="thumbnail" width="64" height="40">xmas_2.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">XMASDEMO.FTA</image>
+		<pic type="screenshot" width="320" height="200">xmas_1.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_2.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_3.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_4.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_5.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_6.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_7.png</pic>
+		<pic type="screenshot" width="320" height="200">xmas_8.png</pic>
+		<bootslot>5</bootslot>
+	</config>
+    
+	<!--
+	<config version="2" id="poms">
+		<name>Pom's Animations</name>
+		<year>1990</year>
+		<publisher>SSS</publisher>
+    <desc>
+     <![CDATA[
+     To bring some coolness to their companion disks, editors of the French Toolbox and Pom's magazines contacted 
+     us to add some fancy animations at the disk boot up. Thanks to tons of unused routines and musics, we've been able to create
+     many demos on a monthly basis : that was a demanding tasks for students, and a forging experience to deliver quality product on time!
+     ]]>
+    </desc>
+
+    <pic type="thumbnail" width="64" height="40">poms_1.png</pic>
+		<format>2GS</format>
+    
+    <image slot="5" disk="1">POMS_TOOLBOX.FTA</image>
+		<pic type="screenshot" width="320" height="200">poms_1.png</pic>
+		<pic type="screenshot" width="320" height="200">poms_2.png</pic>
+		<pic type="screenshot" width="320" height="200">poms_3.png</pic>
+		<pic type="screenshot" width="320" height="200">poms_4.png</pic>
+		<pic type="screenshot" width="320" height="200">poms_5.png</pic>
+		<pic type="screenshot" width="320" height="200">poms_6.png</pic>
+		<bootslot>5</bootslot>
+	</config>
+	-->
+	
+	
+	<config version="2" id="oillanders">
+		<name>Oil Landers</name>
+		<year>1991</year>
+		<publisher>FTA</publisher>
+		<desc>A Stellar7 tribute! </desc>
+		<format>2GS</format>
+		<image slot="5" disk="1">Oil_Landers.fta</image>
+			<pic type="thumbnail" width="320" height="200">oillanders_1.png</pic>
+			<pic type="screenshot" width="320" height="200">oillanders_1.png</pic>
+			<pic type="screenshot" width="320" height="200">oillanders_2.png</pic>
+			<pic type="screenshot" width="320" height="200">oillanders_3.png</pic>
+			<pic type="screenshot" width="320" height="200">oillanders_4.png</pic>
+			<pic type="screenshot" width="320" height="200">oillanders_5.png</pic>		
+		<bootslot>5</bootslot>
+	</config>
+	
+	<config version="2" id="bouncinferno">
+		<name>Boucin'Ferno</name>
+		<year>1991</year>
+		<publisher>FTA</publisher>
+		<desc>Marble madness look alike!</desc>
+		<pic type="thumbnail" width="64" height="40">bouncinferno_4.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">BOUNCIN_FERNO.FTA</image>
+		<pic type="screenshot" width="320" height="200">bouncinferno_1.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_2.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_3.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_4.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_5.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_6.png</pic>
+		<pic type="screenshot" width="320" height="200">bouncinferno_7.png</pic>
+		<bootslot>5</bootslot>
+	</config>
+
+  <config version="2" id="delta">
+		<name>Delta Demo</name>
+		<year>1991</year>
+		<publisher>FTA</publisher>
+    <desc>
+         <![CDATA[
+    <p>The final demo from the FTA</p>
+    <p>Even if it looks like a simple demo (as there's just one part), the Delta Demo contained some highly tuned code.<br />
+    * First, for the first time on the IIGS, a MOD based music (thanks Moby!) that would go beyond the 64KB limit of the Ensoniq. 
+    Those routines were later exposed in the NoiseTracker suite<br />
+    *Second, a multi-threading simulator (!) : all the display was performed during the VBL interrupt, while the main processor 
+    was creating the code to display the next object. Once the code was ready, then it was being used by the VBL interrupt, while the main processor works off the next object.
+	 Quite fancy at that time, and this is what has allowed us to create 3D wireframe based real-time (or so) animation at 50hz per second on a 2.8Mhz processor!
+	</p>
+     <p>After having delivered so many products in 2 years, it was time for the team to move onto something else, but this version was a nice goodbye gift.
+    <p>For the record, it was called the Delta demo to honour an Amiga Demo Maker who used to create everything himself : code, art & music!
+  ]]></desc>
+
+  <pic type="thumbnail" width="64" height="40">delta_3.png</pic>
+		<format>2GS</format>
+		<image slot="5" disk="1">DELTA.FTA </image>
+		<pic type="screenshot" width="320" height="200">delta_1.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_2.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_3.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_4.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_5.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_6.png</pic>
+		<pic type="screenshot" width="320" height="200">delta_7.png</pic>
+		<bootslot>5</bootslot>
+     </config>
+
+<!--
+  <config version="2" id="noisetracker">
+    <name>Noise Tracker</name>
+    <year>1991</year>
+    <publisher>FTA</publisher>
+    <desc>FTA music player</desc>
+    <desc>
+      <![CDATA[
+      <p>
+      The music from the Delta demo was composed on an Amiga, as there was no similar tool available of the IIGS. Even the undisputed music composer, Soundsmith, was limited 
+      to the 64Kb of the Ensoniq (even though we co-designed the 128KB extension while visiting Huibert in Madrid).<br />
+      This is why Noisetracker was started and lead the path to a new generation of Music software on the IIGS.</p>
+      <p>
+      As a tribute to our demo background, a nice demo with simulated z-buffer was added to add some polish to the program.
+      </p>
+      
+      ]]></desc>
+    <pic type="thumbnail" width="64" height="40">noisetracker_1.png</pic>
+    <format>2GS</format>
+    <image slot="5" disk="1">NOISETRACKER.FTA</image>
+	<pic type="screenshot" width="320" height="200">noisetracker_0.png</pic>
+		<pic type="screenshot" width="320" height="200">noisetracker_1.png</pic>
+		<pic type="screenshot" width="320" height="200">noisetracker_2.png</pic>
+	
+    <bootslot>5</bootslot>
+  </config>
+-->
+</list>
+  

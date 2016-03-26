@@ -1,0 +1,130 @@
+ 
+Apple 2 Disk Drive Sounds	Copyright (C) Moose O'Malley, 
+--------------------------	January 2011.
+
+   +===========================================================+
+   |          T A B L E   O F   C O N T E N T S                |
+   +===========================================================+
+   | * Introduction                                            |
+   | * Other Projects Using These Sounds                       |
+   | * License / Limitations / Restrictions                    |
+   | * Amendment History                                       |
+   | * Contacting the Program's Author                         |
+   +===========================================================+
+
+Introduction :
+--------------
+
+This ZIP file contains the Apple 2 disk drive sounds that I recorded for 
+use with my "Apple 2 Disk Drive Sound Simulator" program (Windows 95 / 98 / 
+ME / NT / 2000 / XP, Vista, etc).
+
+
+
+About the Disk Drive Sounds:  (from my "Apple 2 Disk Drive Sound Simulator" program's readme).
+-----------------------------
+
+As people may know from the Apple 2 Emulation section of my WEB pages :
+
+	At the best of times, the Apple 2 disk drive used to make horrible 
+	grunting and scrapping sounds as it loaded programs.  When I used to go 
+	to the local Burleigh Heads library and used the Apple 2 there, everyone 
+	in the library would stop and stare (and sometimes glare !) at us 
+	whenever the Apple 2 was reading floppy disks - the grunts and groans 
+	from the drive were *that* loud !! 
+
+	N.B. These terrible sounds were perfectly normal for Apple 2 drives, 
+	and they were quite loud as well, even when using brand new floppy 
+	disks and brand new floppy drives. 
+
+However, people today didn't believe me about the sounds or how loud they 
+really were.
+
+So now, a short MP3 of some Apple 2 disk drive sounds is available from my 
+WEB page.
+
+And, in addition, I have written this program to simulate some Apple 2 
+disk drive sounds.
+
+All of the Apple 2 disk drive sounds were recorded by me on April 10 and 11, 
+2000.  To record the sounds, I used a cheap microphone hooked up to my 
+Windows 98 PC, which was running Goldwave a good sound editing program.
+I placed the microphone at the entrance to the Apple 2 floppy drive, and
+then proceeded to record the loading sounds the drive made for a bunch
+of games and programs.  (I own an Apple ][c with both internal and 
+external drives).
+
+Finally, in December 2001, I again listened carefully to the sounds I recorded
+18 months ago, and edited out some of the more common sound bytes.
+
+Then, I wrote a Delphi program to play them back, and compiled all of the 
+sounds into a single resource file, which was later compiled and compressed 
+into the Executable program.  That is why there are no WAV files accompanying 
+this program - they are all contained inside the EXE file !!  (See my
+"Apple 2 Disk Drive Sound Simulator" program).
+
+The "squeak" was a sound that the disk drive makes very occassionally 
+when (I think) it is swinging its read head backwards and forwards 
+very quickly and the rubber belt slips - not sure about how it happens 
+but it does happen.  It is definitely a sound the drive makes - not
+the door on the drive.  I rember it happening on all of the Apple ]['s I
+used in the early 1980's and it still happens on my Apple ][c - but it is
+very occasional.
+
+The "Ghostbusters" digitised speech sound is not a disk drive sound, 
+but I thought it would be fun to add this sound in as well to show 
+what digitised speech on the Apple ][ sounded like.  Back in the 
+early 80's, this speech was state of the art and I remember 
+times when people used to crowd around my Apple ][ just to 
+hear it say "Ghostbusters" !!
+
+
+Other Projects Using These Sounds :
+------------------------------------
+
+See the readme file that accompanies my "Apple 2 Disk Drive Sound Simulator" 
+program.
+
+
+License / Limitations / Restrictions :
+---------------------------------------
+
+These sounds are freeware - which means they are copyrighted, but 
+any person and any company is welcome to use them in your own programs / 
+projects, subject to one condition.
+
+I am a friendly guy and I like supporting / helping other software 
+developers.  If you want to use these sounds in your own programs / 
+projects, then that is fine: all I ask is that you add a credit to me 
+on your projects's web page, the credits screen, the help file, 
+or similar.  A credit something like this would be perfect:
+
+	Apple ][ disk drive sounds courtesy of 
+	Moose's Software Valley: http://move.to/moose
+
+Please don't just rip off my work / take my work without giving me 
+any credit.
+
+Hope this is OK.
+
+Long Live the Apple ][ !!!
+
+
+Amendment History :
+--------------------
+
+Vers    Date        Description
+
+1.0  25-Jan-2011    First Public Release of these sounds on their own.
+
+
+If this ZIP file was not downloaded from my Home Page, then
+it is possibly an old version.  The latest version of this 
+ZIP file is available from my WEB page - see below.
+
+ Mike "Moose" O'Malley
+____________________________________________________
+ Moose's Software Valley - Established July, 1996.
+ WEB:  http://move.to/moose
+____________________________________________________
+ 

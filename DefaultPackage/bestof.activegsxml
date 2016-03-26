@@ -1,0 +1,42 @@
+﻿<?xml-stylesheet href="fichier.xsl" type="text/xsl"?>
+<list version="1" >
+	<source revision ="1.00">
+		Best of
+	</source>
+	
+	<config version="2" id="karateka">
+		<name>Karateka</name>
+		<year>1984</year>
+		<publisher>Jordan Mechner</publisher>
+		<desc><![CDATA[
+		SAMPLE TEXT
+		]]></desc>
+		<pic type="thumbnail" width="64" height="40">thumb_karateka.png</pic>
+		<format>APPLE2</format>
+		
+		<image slot="6" disk="1">karateka.dsk.zip</image>
+		<bootslot>6</bootslot>
+		<emulatorParam>joyXScale:1200;joyYScale:1200</emulatorParam>
+		<systemParam>speed:slow;border:black;background:black;font:white;driveEmulation:fast</systemParam>
+	</config>
+	
+	<config version="2" id="pop">
+		<name>Prince of Persia</name>
+		<year>1989</year>
+		<publisher>Jordan Mechner</publisher>
+		<desc><![CDATA[
+		SAMPLE TEXT
+		]]></desc>
+		<pic type="thumbnail">thumb_pop.png</pic>
+		
+		<pic type="screenshot">pop_1.png</pic>
+		<pic type="screenshot">pop_2.png</pic>
+		<pic type="screenshot">pop_3.png</pic>
+		<format>APPLE2</format>
+		<image slot="5" disk="1">pop.2mg.zip</image>
+		<bootslot>5</bootslot>
+		<emulatorParam>joyXScale:1000;joyYScale:1200</emulatorParam>
+		<systemParam>speed:normal;border:black;background:black;font:white;driveEmulation:fast</systemParam>
+	</config>
+</list>
+  
