@@ -10,7 +10,6 @@
 #include "../Common/svnversion.h"
 #import "asyncimageview.h"
 #import "activegsViewController.h"
-#include "../xcodebuild.h"
 
 @implementation infoViewController
 
@@ -27,13 +26,12 @@
 -(void)viewDidLoad
 {
 
-    
-    NSString *AppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    NSString *buildVersion = [NSString stringWithUTF8String:xcodebuild];
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *buildVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     
     
 	self.versionUILandscape.text=
-    self.versionUI.text = [NSString stringWithFormat: @"v%@#%@  -- ActiveGS "TOSTRING(ACTIVEGSMAJOR)"."TOSTRING(ACTIVEGSMINOR)"."TOSTRING(ACTIVEGSBUILD)"",AppVersion,buildVersion];
+    self.versionUI.text = [NSString stringWithFormat: @"v%@.%@  -- ActiveGS "TOSTRING(ACTIVEGSMAJOR)"."TOSTRING(ACTIVEGSMINOR)"."TOSTRING(ACTIVEGSBUILD)"",appVersion,buildVersion];
     
     [self.portraitView setFrame:[[UIScreen mainScreen] bounds] ];
     [self.landscapeView setFrame:[[UIScreen mainScreen] bounds] ];
