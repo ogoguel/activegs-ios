@@ -1085,8 +1085,8 @@
 				7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */,
 			);
 			name = Common.res;
-			path = /Users/ogoguel/Code/ActiveGS/Common.res;
-			sourceTree = "<absolute>";
+			path = ../Common.res;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -1099,7 +1099,6 @@
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				095F842613AFDD9C009C540E /* CopyFiles */,
-				095981521A3E1A76007C90A8 /* ShellScript */,
 			);
 			buildRules = (
 				095981511A3E1A2D007C90A8 /* PBXBuildRule */,
@@ -1290,22 +1289,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		095981521A3E1A76007C90A8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh ~/Code/ActiveGS/xcodebuild.sh";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
