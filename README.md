@@ -1,5 +1,5 @@
 # Activegs  IOS
-![Intallation Instructions](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/ActiveGS_iOS/ActiveGS.png)
+![ActiveGS Logo](https://raw.githubusercontent.com/ogoguel/activegs-ios/master/README.images/ActiveGS.png)
 
 Source code for the complete ActiveGS iOS application
 
