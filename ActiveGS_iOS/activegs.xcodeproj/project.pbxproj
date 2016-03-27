@@ -1085,8 +1085,8 @@
 				7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */,
 			);
 			name = Common.res;
-			path = /Users/ogoguel/Code/ActiveGS/Common.res;
-			sourceTree = "<absolute>";
+			path = ../Common.res;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
