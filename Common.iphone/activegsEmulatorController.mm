@@ -467,7 +467,7 @@ int	x_lock_zoom = 0;
     [UIView setAnimationDuration:0.3];
 
 	CGAffineTransform matv = CGAffineTransformIdentity;
-	matv = CGAffineTransformRotate (matv,(270-[pManager getAngle])*M_PI/180);	//Avec
+//	matv = CGAffineTransformRotate (matv,(270-[pManager getAngle])*M_PI/180);	//Avec
 	self.contentView.transform = matv;
 	
     
@@ -560,7 +560,6 @@ int	x_lock_zoom = 0;
             boundRect.origin.y = 0;
         }
     
-            
         [self.contentView setBounds:boundRect];
     }
 	
@@ -576,12 +575,7 @@ int	x_lock_zoom = 0;
 	
 	// l'interface est repositionnées mais non animée
     
-    CGRect uirect = [[UIScreen mainScreen] applicationFrame];
-     CGRect uirectrotate = CGRectApplyAffineTransform(uirect,matv);
-     
-     uirectrotate.origin.x = 0;
-     uirectrotate.origin.y = 0;
-    
+    CGRect uirectrotate = [[UIScreen mainScreen] applicationFrame];
 	[self.kbdc updateView:uirectrotate];
     [pManager updateNotificationView:uirectrotate];
     
@@ -593,13 +587,30 @@ int	x_lock_zoom = 0;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO;
+    return YES;
 }
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
+
+// IOS 8
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self updateView];
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
+
 
 
 - (void)didReceiveMemoryWarning {

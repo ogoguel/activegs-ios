@@ -689,7 +689,8 @@ void x_init_persistent_path(MyString& hp)
 - (void) didRotate:(NSNotification *)notification
 {	
 	
-	
+    
+    
 	UIViewController *v = self.primaryViewController;
     if (v==nil)
         return ;
@@ -747,7 +748,8 @@ void x_init_persistent_path(MyString& hp)
 		return ;
 	}
      
-	
+   
+/*
 	// Gère manuellement la rotation
 	
 	// Mets les interfaces systèmes (UIAlert) dans le bon mode
@@ -764,21 +766,15 @@ void x_init_persistent_path(MyString& hp)
 				//	if (currentRawReading==270)
 				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait];
 	
-	
-	
-	// Recalcule la zone d'affichage de l'émulateur
-	
+*/
+		
 	// enleve le clavier si une rotation a eu lieu
 	if (oldRotate != self.currentRawReading )//&& [self hasSecondary]==false)
 	{
-        
         [[pManager getEmulatorView].kbdc restoreInput];
-
-        //[[pManager getEmulatorView].kbdc hideInput];
-        //	[[pManager getEmulatorView].kbdc enableKeyboard:FALSE];
 	}
 	
-	[[pManager getEmulatorView] updateView ];
+//	[[pManager getEmulatorView] updateView ];
     
 	
 }
