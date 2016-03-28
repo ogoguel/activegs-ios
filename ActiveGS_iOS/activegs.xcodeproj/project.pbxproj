@@ -237,8 +237,6 @@
 		7E51482F1CA6B5CE005DA0A6 /* ShastonHi640.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481C1CA6B5CE005DA0A6 /* ShastonHi640.ttf */; };
 		7E5148301CA6B5CE005DA0A6 /* Spin Up Search 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481D1CA6B5CE005DA0A6 /* Spin Up Search 1.wav */; };
 		7E5148311CA6B5CE005DA0A6 /* Spin Up Search 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */; };
-		7E8EED6B1A7D83C900C6E522 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E8EED6A1A7D83C900C6E522 /* Entitlements.plist */; };
-		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -575,8 +573,6 @@
 		7E51481C1CA6B5CE005DA0A6 /* ShastonHi640.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ShastonHi640.ttf; sourceTree = "<group>"; };
 		7E51481D1CA6B5CE005DA0A6 /* Spin Up Search 1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Spin Up Search 1.wav"; sourceTree = "<group>"; };
 		7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Spin Up Search 2.wav"; sourceTree = "<group>"; };
-		7E8EED6A1A7D83C900C6E522 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
-		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1027,7 +1023,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				928410571CA8443A00DC5D93 /* Images.xcassets */,
 				090A6076163093D800C8FB59 /* Default-568h@2x.png */,
 				095542A6128375C40035AE09 /* Tab][.png */,
 				095542A7128375C40035AE09 /* Tab][@2x.png */,
@@ -1200,7 +1195,6 @@
 				09E7BE3911FC935E00DCCFE7 /* XMASDEMO.FTA in Resources */,
 				09BCB6281211649D009858DF /* flobynoid (2002).dsk.zip in Resources */,
 				09087F3A12244C0500C52D88 /* delta_1.png in Resources */,
-				928410581CA8443A00DC5D93 /* Images.xcassets in Resources */,
 				09087F3B12244C0500C52D88 /* delta_2.png in Resources */,
 				09087F3C12244C0500C52D88 /* delta_3.png in Resources */,
 				09087F3D12244C0500C52D88 /* delta_4.png in Resources */,
@@ -1406,10 +1400,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yoshinobu Sugawara (5AFZVV5C8V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
@@ -1430,7 +1422,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myname.myid;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1443,10 +1435,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yoshinobu Sugawara (5AFZVV5C8V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1469,7 +1459,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myname.myid;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1481,10 +1471,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yoshinobu Sugawara (5AFZVV5C8V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
@@ -1504,7 +1492,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myname.myid;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

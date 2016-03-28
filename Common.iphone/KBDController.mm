@@ -460,7 +460,7 @@ extern int findCode(const char* _s);
 
 	self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
 	self.textField.delegate = self;
-	self.textField.autocapitalizationType= UITextAutocorrectionTypeNo;
+	self.textField.autocapitalizationType= UITextAutocapitalizationTypeAllCharacters;
 	self.textField.text= @"*";	// Put a default value to capture del key
 	[self.interfaceView addSubview:self.textField];
 	
@@ -599,7 +599,7 @@ int hardwarekeyboard= 0;
     }
     else
     {
-        option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_NATIVE_1);
+        option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_KEYPAD);
         [pManager setNotificationText:@"iCade de-activated"];
         
     }   
@@ -692,13 +692,17 @@ scontrol  runtimeControlDefs[]={
 		{ LOCKZOOM_AUTO,LOCKZOOM_ON, LOCKZOOM_ARCADE},
 		nil
 	},
+/*
+#if 0
     {
         RC_JOYSTICK,
         "Pad Input" ,
-        { "TouchPad", "iCade",NULL },
+        { "iDevice", "iCade",NULL },
         { JOYSTICK_TYPE_NATIVE_1,JOYSTICK_TYPE_ICADE},
         nil
     },
+#endif
+ */
 #ifdef ACTIVEGS_NOHARDWAREKEYBOARDDETECTION
 	{ 
 		RC_KBD,
@@ -808,11 +812,6 @@ extern int x_frame_rate ;
                 case RC_JOYSTICK:
                     option.setIntValue(OPTION_JOYSTICKMODE,v);
                     g_joystick_type = v;
-                    if ( v == JOYSTICK_TYPE_ICADE ) {
-                        [self setiCadeMode:YES];
-                    } else {
-                        [self setiCadeMode:NO];
-                    }
 					break;
 				case RC_DISPLAY:
 					// monitor
@@ -1844,7 +1843,7 @@ extern int x_frame_rate ;
 
 
 
-const char* iCadeDetectString="wewexzxz";
+const char* iCadeDetectString="zexwzexw";
 int iCadeDetectPos=0;
 
 int keypad_x = 0;
@@ -1898,10 +1897,11 @@ int x_adb_get_keypad_y()
             else
                 [self setiCadeMode:TRUE];
             return NO;
-
+            /*
             option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_ICADE);
             [self setInputMode:inputMode&INPUTMODE_PAD];
             [self refreshControls:nil];
+             */
         }
     }
     else
@@ -1914,20 +1914,20 @@ int x_adb_get_keypad_y()
         {
             switch(c)
             {
-                case 'w': // up
+                case 'z': // up
                     keypad_y = -32767;
                     break;
-                case 'e': // !verti
-                case 'z':
+                case 'e':
+                case 'w': // !verti
                     keypad_y = 0;
                     break;
                 case 'x': // down
                     keypad_y = 32767;
                     break;
-                case 'a': // left
+                case 'q': // left
                     keypad_x = -32767;
                     break;
-                case 'q':   // !hori
+                case 'a':   // !hori
                 case 'c':
                     keypad_x = 0;
                     break;
