@@ -2183,8 +2183,10 @@ int x_adb_get_keypad_y()
 
         debug_printf("setInputAccessoryView:accessView");
         // IOS8
-        [self.accessView removeFromSuperview];
-        [self.textField setInputAccessoryView:self.accessView];
+        if ( !isHardwareKeyboard() ) {
+            [self.accessView removeFromSuperview];
+            [self.textField setInputAccessoryView:self.accessView];
+        }
 		
 		[self.textField becomeFirstResponder];
 	}
