@@ -1428,7 +1428,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1467,7 +1467,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1502,7 +1502,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs.yoshi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.activegs;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
