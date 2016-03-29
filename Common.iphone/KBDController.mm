@@ -549,7 +549,11 @@ extern int findCode(const char* _s);
     externalKeyboard = FALSE;
 
     [self detectHardwareKeyboard:nil];
-    
+
+    // If iCade explicitly selected in options, force enable it
+    if ( option.getIntValue(OPTION_JOYSTICKMODE) == JOYSTICK_TYPE_ICADE ) {
+        [self setiCadeMode:YES];
+    }
 
     [self setInputMode:INPUTMODE_ACCESS+INPUTMODE_HIDDEN];
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
@@ -596,12 +600,13 @@ int hardwarekeyboard= 0;
         option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_ICADE);
         [self setInputMode:inputMode&INPUTMODE_PAD];
         [pManager setNotificationText:@"iCade activated"];
+        g_joystick_type = JOYSTICK_TYPE_ICADE;
     }
     else
     {
         option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_NATIVE_1);
         [pManager setNotificationText:@"iCade de-activated"];
-        
+        g_joystick_type = JOYSTICK_TYPE_NATIVE_1;
     }   
     
     [self refreshControls:nil];
