@@ -284,12 +284,6 @@
 {
     
 	CGRect rv2 = [[UIScreen mainScreen] applicationFrame];
-	if (abs([pManager getAngle])!=90)
-	{
-		float t = rv2.size.width;
-		rv2.size.width = rv2.size.height;
-		rv2.size.height = t;
-	}
 	
 	// Ajuste la barre de navigation
 	CGRect rc = self.navView.frame; 
