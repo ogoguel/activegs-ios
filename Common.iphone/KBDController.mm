@@ -460,7 +460,7 @@ extern int findCode(const char* _s);
 
 	self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
 	self.textField.delegate = self;
-	self.textField.autocapitalizationType= UITextAutocapitalizationTypeAllCharacters;
+	self.textField.autocapitalizationType= UITextAutocorrectionTypeNo;
 	self.textField.text= @"*";	// Put a default value to capture del key
 	[self.interfaceView addSubview:self.textField];
 	
@@ -549,7 +549,11 @@ extern int findCode(const char* _s);
     externalKeyboard = FALSE;
 
     [self detectHardwareKeyboard:nil];
-    
+
+    // If iCade explicitly selected in options, force enable it
+    if ( option.getIntValue(OPTION_JOYSTICKMODE) == JOYSTICK_TYPE_ICADE ) {
+        [self setiCadeMode:YES];
+    }
 
     [self setInputMode:INPUTMODE_ACCESS+INPUTMODE_HIDDEN];
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
@@ -596,12 +600,13 @@ int hardwarekeyboard= 0;
         option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_ICADE);
         [self setInputMode:inputMode&INPUTMODE_PAD];
         [pManager setNotificationText:@"iCade activated"];
+        g_joystick_type = JOYSTICK_TYPE_ICADE;
     }
     else
     {
-        option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_KEYPAD);
+        option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_NATIVE_1);
         [pManager setNotificationText:@"iCade de-activated"];
-        
+        g_joystick_type = JOYSTICK_TYPE_NATIVE_1;
     }   
     
     [self refreshControls:nil];
@@ -692,17 +697,13 @@ scontrol  runtimeControlDefs[]={
 		{ LOCKZOOM_AUTO,LOCKZOOM_ON, LOCKZOOM_ARCADE},
 		nil
 	},
-/*
-#if 0
     {
         RC_JOYSTICK,
         "Pad Input" ,
-        { "iDevice", "iCade",NULL },
+        { "TouchPad", "iCade",NULL },
         { JOYSTICK_TYPE_NATIVE_1,JOYSTICK_TYPE_ICADE},
         nil
     },
-#endif
- */
 #ifdef ACTIVEGS_NOHARDWAREKEYBOARDDETECTION
 	{ 
 		RC_KBD,
@@ -812,6 +813,11 @@ extern int x_frame_rate ;
                 case RC_JOYSTICK:
                     option.setIntValue(OPTION_JOYSTICKMODE,v);
                     g_joystick_type = v;
+                    if ( v == JOYSTICK_TYPE_ICADE ) {
+                        [self setiCadeMode:YES];
+                    } else {
+                        [self setiCadeMode:NO];
+                    }
 					break;
 				case RC_DISPLAY:
 					// monitor
@@ -1843,7 +1849,7 @@ extern int x_frame_rate ;
 
 
 
-const char* iCadeDetectString="zexwzexw";
+const char* iCadeDetectString="wewexzxz";
 int iCadeDetectPos=0;
 
 int keypad_x = 0;
@@ -1897,11 +1903,10 @@ int x_adb_get_keypad_y()
             else
                 [self setiCadeMode:TRUE];
             return NO;
-            /*
+
             option.setIntValue(OPTION_JOYSTICKMODE,JOYSTICK_TYPE_ICADE);
             [self setInputMode:inputMode&INPUTMODE_PAD];
             [self refreshControls:nil];
-             */
         }
     }
     else
@@ -1914,20 +1919,20 @@ int x_adb_get_keypad_y()
         {
             switch(c)
             {
-                case 'z': // up
+                case 'w': // up
                     keypad_y = -32767;
                     break;
-                case 'e':
-                case 'w': // !verti
+                case 'e': // !verti
+                case 'z':
                     keypad_y = 0;
                     break;
                 case 'x': // down
                     keypad_y = 32767;
                     break;
-                case 'q': // left
+                case 'a': // left
                     keypad_x = -32767;
                     break;
-                case 'a':   // !hori
+                case 'q':   // !hori
                 case 'c':
                     keypad_x = 0;
                     break;
