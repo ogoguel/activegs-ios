@@ -236,7 +236,7 @@ UIImageView* loadImage(NSString* _name)
 {
 	
 	NSString *imgSource = [[NSBundle mainBundle] pathForResource:_name ofType:@"png"];
-	UIImage* img = [[UIImage imageWithContentsOfFile: imgSource] retain];
+	UIImage* img = [UIImage imageWithContentsOfFile: imgSource];
 		UIImageView* view = [[UIImageView alloc] initWithImage:img];
 	return view;
 	
@@ -1034,8 +1034,8 @@ extern int x_frame_rate ;
 -(void)addDiskSelection
 {
     
-    [self.diskSelectionOptions release];
-    [self.diskSelection release];
+    self.diskSelectionOptions;
+    self.diskSelection;
     
     self.diskSelectionOptions = nil;
     self.diskSelection =  nil;
@@ -1212,7 +1212,7 @@ extern int x_frame_rate ;
 	{
 		printf("removing RuntimeView");
 		[self.runtimeView removeFromSuperview];
-		[self.runtimeView release];
+		self.runtimeView;
 	}
 	
 	// position par défault
@@ -2032,7 +2032,7 @@ int x_adb_get_keypad_y()
 		for(int i=0;i<20;i++)
 			add_event_delay();	
 		caButton = TRUE;
-		self.caButtonTouch = [touch retain];;
+		self.caButtonTouch = touch;;
 		self.caButtonView.alpha = 1.0;
 #ifdef GRAPHICAL_PAD
 		self.padButton2Down.hidden = FALSE;
@@ -2764,30 +2764,8 @@ const int cycles[]=
     
     NSLog(@"---kbd dealloc");
     self.textField.delegate = nil;
-	self.textField = nil;
-	self.menuButton = nil;
-	self.optionButton = nil;
-	self.diskView = nil;
-    self.diskLoadingView = nil;
-	self.loaderLabel = nil;
-	self.debugIndicator = nil;
-	self.swipeIndicator = nil;
-	self.zoomIndicator = nil;
-	self.padIndicator = nil;
-	self.mouseButtonIndicator = nil;
-    self.inputIndicator = nil;
-	self.loader = nil;
-	self.padCircleOutter = nil;
-	self.padCircleInner = nil;
-	self.oaButtonView = nil;
-	self.caButtonView = nil;
-	self.emulatorNavItem = nil;
-	self.barView = nil;
-    self.hardwarekbdDetectionTimer = nil;
-    self.animateDiskTimer = nil;
     
 
-    [super dealloc];
 	
 }
 

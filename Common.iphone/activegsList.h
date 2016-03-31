@@ -66,11 +66,11 @@ enum { ONLY_APPLE2=1, ONLY_2GS=2, ALL=4, ALL_NO_INDEX=8, DOC_LIST=128 };
     int	filter;
 }
 
-@property(nonatomic,retain) NSMutableArray* listOfItems;
-@property(nonatomic,retain) UILabelMargin* warningLabel;
-@property(nonatomic,retain) NSString* sourceRevision;
-@property(nonatomic,retain) NSString* sourceName;
-@property(nonatomic,retain) NSArray *searchArray ;
+@property(nonatomic,strong) NSMutableArray* listOfItems;
+@property(nonatomic,strong) UILabelMargin* warningLabel;
+@property(nonatomic,strong) NSString* sourceRevision;
+@property(nonatomic,strong) NSString* sourceName;
+@property(nonatomic,strong) NSArray *searchArray ;
 
 - (simplexml*)addList:(const char*)_listPath;
 - (void)retrieveDocumentList:(MyString&) tempXML withBaseURL:(MyString&)baseURL;

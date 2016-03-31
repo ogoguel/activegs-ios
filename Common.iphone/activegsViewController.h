@@ -32,12 +32,12 @@
 	
 }
 
-@property (retain,nonatomic) UINavigationItem* navItem;
-@property (retain,nonatomic) UINavigationBar* navView;
-@property (retain,nonatomic) UITabBarController* tabView;
-@property (retain,nonatomic) UIActivityIndicatorView* loader;
-@property (retain,nonatomic) activegsList* docList;
-@property (retain,nonatomic) activegsList* l0;
+@property (strong,nonatomic) UINavigationItem* navItem;
+@property (strong,nonatomic) UINavigationBar* navView;
+@property (strong,nonatomic) UITabBarController* tabView;
+@property (strong,nonatomic) UIActivityIndicatorView* loader;
+@property (strong,nonatomic) activegsList* docList;
+@property (strong,nonatomic) activegsList* l0;
 
 - (void)loadView;
 -(void)updateView;

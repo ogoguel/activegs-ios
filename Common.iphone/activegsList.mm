@@ -86,7 +86,6 @@ static	UIImage* defaultImageII = nil;
 	{
 		defaultImage2GS = [UIImage imageWithContentsOfFile: imgSource] ;
 		defaultImage2GS = [AsyncImageView processImage:defaultImage2GS width:64*rr height:40*rr];
-		[defaultImage2GS retain];
 	}
 	else
 		defaultImage2GS = nil;
@@ -96,7 +95,6 @@ static	UIImage* defaultImageII = nil;
 	{
 		defaultImageII = [UIImage imageWithContentsOfFile: imgSource2];
 		defaultImageII = [AsyncImageView processImage:defaultImageII width:64*rr height:40*rr];
-		[defaultImageII retain];
 	}
 	else
 		defaultImageII = nil;
@@ -311,7 +309,7 @@ static	UIImage* defaultImageII = nil;
     for(int i=0;i<list.elements.size();i++)
     {
         ActiveGSElement* el = &list.elements.at(i);
-        itemClass* ic = [[itemClass alloc] autorelease];
+        itemClass* ic = [itemClass alloc];
 //        itemClass* ic = [itemClass alloc];
 
         ic->element = el;
@@ -363,7 +361,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 		CGSize s = self.view.frame.size;
 
 		CGRect r = CGRectMake((s.width-LABELWIDTH)/2,(s.height-LABELHEIGHT)/2,LABELWIDTH,LABELHEIGHT);
-		self.warningLabel = [[[UILabelMargin alloc]initWithFrame:r ] autorelease];
+		self.warningLabel = [[UILabelMargin alloc]initWithFrame:r ];
 		self.warningLabel.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.5];
 		self.warningLabel.lineBreakMode = UILineBreakModeWordWrap;
 		self.warningLabel.numberOfLines = 0;
@@ -396,7 +394,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
     
     if (!versionPath.IsEmpty())
     {
-        [[[AsyncCommand alloc] initCommand:versionPath.c_str() withObject:self withSelector:@selector(checkUpdateCallback:)] autorelease];
+        [[AsyncCommand alloc] initCommand:versionPath.c_str() withObject:self withSelector:@selector(checkUpdateCallback:)];
     }    
     
 	 bLoaded = 1;
@@ -459,7 +457,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 -(void)reloadData:(BOOL)_forceDownload
 {
 	//Initialize the array.
-	self.listOfItems = [[[NSMutableArray alloc] init] autorelease];
+	self.listOfItems = [[NSMutableArray alloc] init];
 	
     list.reset();
 //	pXML = NULL;
@@ -610,7 +608,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 	if (cell != nil)
 		return cell;
     
-    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		
 	cell.textLabel.text = cellValue;
 
@@ -625,7 +623,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 	
     
     
-	AsyncImageView* asyncImage = [[AsyncImageView alloc] autorelease];
+	AsyncImageView* asyncImage = [AsyncImageView alloc];
 	float s = [pManager resolutionRatio]*[pManager dpiRatio];
 	[asyncImage initImage:ic->element->thumb.c_str() target:cell.imageView width:64*s height:40*s];
 //	[asyncImage performSelectorOnMainThread:@selector(loadImage:) withObject:nil waitUntilDone:NO];
@@ -750,7 +748,6 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
      */
     list.reset();
         
-    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

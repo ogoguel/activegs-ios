@@ -23,7 +23,7 @@ static UIActivityIndicatorView* asyncloader=nil;
 	
 	// singleton
 	queue = [[asyncImageQueue alloc] init];
-	queue.theQueue = [[[NSMutableArray alloc] init ] autorelease];
+	queue.theQueue = [[NSMutableArray alloc] init ];
 	queue.theConnection = nil;
 	
 	asyncloader = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -36,14 +36,6 @@ static UIActivityIndicatorView* asyncloader=nil;
 	return queue;
 }
 
-- (void)dealloc {
-	
-//	[self.theConnection cancel]; //in case the URL is still downloading
-	self.theConnection = nil;
-	self.theQueue = nil;
-	
-	[super dealloc];
-}
 
 -(void)prioritizeItem:(UIImageView*)_mytarget {
 	
@@ -54,10 +46,8 @@ static UIActivityIndicatorView* asyncloader=nil;
 		if (o.target==_mytarget)
 		{
             // le remet au début de la pile = A FAIRE DANS CETTE ORDRE
-            [o retain];
 		    [self.theQueue removeObject:o];
             [self.theQueue addObject:o];
-            [o release];
 			debug_printf("image put on top of the cache %s\n",[o.url UTF8String]);
 			return;
 		}
@@ -100,11 +90,6 @@ static UIActivityIndicatorView* asyncloader=nil;
 @synthesize target = _target;
 @synthesize url = _url;
 							
-- (void)dealloc 
-{
-	self.data = nil;
-    [super dealloc];
-}
 
 
 - (void)processDownload {
@@ -125,12 +110,11 @@ static UIActivityIndicatorView* asyncloader=nil;
 
 	NSURLRequest* request = [NSURLRequest requestWithURL:urlnoescape cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0] ;
 
-    queue.theConnection  = [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease]  ;
+    queue.theConnection  = [[NSURLConnection alloc] initWithRequest:request delegate:self]  ;
     
 	if (!queue.theConnection)
 		printf("NSURLConnection failed\n");
                              
-    [urlnoescape release];
  
 }
 
@@ -188,7 +172,7 @@ static UIActivityIndicatorView* asyncloader=nil;
 			// absolute path
 			str2 = str ; //[NSString stringWithUTF8String:str];
 		}
-		imageView = [[UIImage imageWithContentsOfFile:str2] retain]; // to mimic init 
+		imageView = [UIImage imageWithContentsOfFile:str2]; // to mimic init 
 		if (!imageView)
 		{
 			printf("init image failed (%s)\n",[str2 UTF8String]);
@@ -205,7 +189,7 @@ static UIActivityIndicatorView* asyncloader=nil;
 		
 		dl.getPersistentDirectoryFile([self.url UTF8String],IPHONETHUMB,cache);
 		NSString* strcache = [NSString stringWithUTF8String:cache.c_str()];
-		imageView = [[UIImage imageWithContentsOfFile:strcache] retain];
+		imageView = [UIImage imageWithContentsOfFile:strcache];
 		if (imageView)
 		{
 			debug_printf("image loaded from cache %s\n",getfile(cache.c_str()));
@@ -230,7 +214,7 @@ static UIActivityIndicatorView* asyncloader=nil;
 
 //the URL connection calls this repeatedly as data arrives
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)incrementalData {
-	if (self.data==nil) { self.data = [[[NSMutableData alloc] initWithCapacity:2048] autorelease]; } 
+	if (self.data==nil) { self.data = [[NSMutableData alloc] initWithCapacity:2048]; } 
 	[self.data appendData:incrementalData];
 }
 
@@ -374,7 +358,6 @@ static UIActivityIndicatorView* asyncloader=nil;
 		printf("cannot update cache %s\n",cachedURL.c_str());
 	}
     
-	[_img release];
 	
 }
 @end

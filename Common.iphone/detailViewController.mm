@@ -34,13 +34,13 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
 	
-	requestURL = [[ request URL ] retain];
+	requestURL = [ request URL ];
 	
     // Check to see what protocol/scheme the requested URL is.
     if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ]
 		  || [ [ requestURL scheme ] isEqualToString: @"https" ] )
     	&& ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
-		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"iPhone" message:@"Link will open in Safari, continue?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No",nil] autorelease];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"iPhone" message:@"Link will open in Safari, continue?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No",nil];
 		[alert show];
 		return NO;
    	}
@@ -84,15 +84,15 @@
 	self.screenShot2.image = nil;
 	self.screenShot3.image = nil;
 	
-	AsyncImageView* asyncImage1 = [[AsyncImageView alloc] autorelease] ;
+	AsyncImageView* asyncImage1 = [AsyncImageView alloc] ;
 	[asyncImage1 initImage:self->diskSelected->screenShots[0].c_str() target:self.screenShot1 width:128 height:80];
 	[asyncImage1 loadImage:nil];
 	
-	AsyncImageView* asyncImage2 = [[AsyncImageView alloc] autorelease];
+	AsyncImageView* asyncImage2 = [AsyncImageView alloc];
 	[asyncImage2 initImage:self->diskSelected->screenShots[1].c_str() target:self.screenShot2 width:128 height:80];
 	[asyncImage2 loadImage:nil];
 	
-	AsyncImageView* asyncImage3 = [[AsyncImageView alloc] autorelease] ;
+	AsyncImageView* asyncImage3 = [AsyncImageView alloc] ;
 	[asyncImage3 initImage:self->diskSelected->screenShots[2].c_str() target:self.screenShot3 width:128 height:80];
 	[asyncImage3 loadImage:nil];
 	
@@ -128,12 +128,6 @@
 }
 
 
-- (void)dealloc
-{
-
-    [requestURL release];
-    [super dealloc];
-}
 
 
 
@@ -141,7 +135,7 @@
 
 
 	CGRect r = [UIScreen mainScreen].applicationFrame;
-	self.navItem = [[[UINavigationItem alloc] initWithTitle:@"Detail"] autorelease];
+	self.navItem = [[UINavigationItem alloc] initWithTitle:@"Detail"];
 	[self.navView pushNavigationItem:self.navItem animated:FALSE];
 	
 	[self.view setFrame:r];
@@ -158,7 +152,7 @@
 	[backButton setTitle:@"List" forState:UIControlStateNormal];
 	
 	// create button item -- possible because UIButton subclasses UIView!
-	UIBarButtonItem* browseItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
+	UIBarButtonItem* browseItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 #endif
 	
 	self.navItem.leftBarButtonItem = browseItem;
@@ -168,7 +162,6 @@
 	grswipeleft.direction  = UISwipeGestureRecognizerDirectionLeft;
 	grswipeleft.cancelsTouchesInView = NO;
 	[self.view addGestureRecognizer:grswipeleft];
-	[grswipeleft release];
 	
 	
 	// Swipe Right to launch	
@@ -176,7 +169,6 @@
 	grswiperight.direction  = UISwipeGestureRecognizerDirectionRight;
 	grswiperight.cancelsTouchesInView = NO;
 	[self.view addGestureRecognizer:grswiperight];
-	[grswiperight release];
 
 	
 }

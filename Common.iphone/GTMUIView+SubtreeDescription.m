@@ -155,7 +155,7 @@ static NSMutableString *SublayerDescriptionAtLevel(CALayer *layer, int level) {
 
 - (NSString *)subtreeDescription {
   NSMutableString *result =
-    [[[self gtm_subtreeDescriptionLine] mutableCopy] autorelease];
+    [[self gtm_subtreeDescriptionLine] mutableCopy];
   for (UIView *v in [self subviews]) {
     [result appendString:[v gtm_subtreeDescriptionAtLevel:1]];
   }
