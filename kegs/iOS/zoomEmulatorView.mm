@@ -46,7 +46,7 @@
 		
 		self.contentSize = CGSizeMake(r.size.width,r.size.height); 
 		
-		self.ew = [[[emulatorView alloc] initWithFrame:r] autorelease];
+		self.ew = [[emulatorView alloc] initWithFrame:r];
 		[self.ew setUserInteractionEnabled:TRUE];
 				
 		CGColorSpaceRef innerColorSpace = CGColorSpaceCreateDeviceRGB(); 
@@ -62,7 +62,7 @@
 		}
 		CGImageRef innerImageRef = CGBitmapContextCreateImage(icontext);
 		UIImage* img = [UIImage imageWithCGImage:innerImageRef];
-		self.crt = [[[UIImageView alloc]initWithImage:img] autorelease];
+		self.crt = [[UIImageView alloc]initWithImage:img];
 		self.crt.transform = CGAffineTransformMakeScale(1,0.5);
 		[self.crt setFrame:CGRectMake(0,0,r.size.width,r.size.height)];
 		[self.crt setBounds:CGRectMake(0,0,r.size.width,r.size.height*2)];
@@ -801,7 +801,6 @@ float refScaleLandscape;
 - (void)dealloc {
 	
     self.delegate = nil;
-    [super dealloc];
 }
 
 

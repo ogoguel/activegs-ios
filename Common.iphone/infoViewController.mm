@@ -18,9 +18,6 @@
 @synthesize portraitView= _portraitView;
 @synthesize landscapeView = _landscapeView;
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 
 -(void)viewDidLoad
@@ -49,14 +46,12 @@
 	grswipeleft.direction  = UISwipeGestureRecognizerDirectionLeft;
 	grswipeleft.cancelsTouchesInView = NO;
 	[self.view addGestureRecognizer:grswipeleft];
-	[grswipeleft release];
 	
 	// Swipe Right to go back to browsing	
 	UISwipeGestureRecognizer* grswiperight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
 	grswiperight.direction  = UISwipeGestureRecognizerDirectionRight;
 	grswiperight.cancelsTouchesInView = NO;
 	[self.view addGestureRecognizer:grswiperight];
-	[grswiperight release];
 
 }
 
@@ -130,7 +125,7 @@
 
 - (IBAction) parametersButton:(id)_sender
 {
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"ActiveGS" message:@"Not implemented yet" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil] autorelease];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ActiveGS" message:@"Not implemented yet" delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
 	[alert show];	
 
 }

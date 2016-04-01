@@ -67,9 +67,9 @@ void activegs_apply_default_options(void* _config)
 
 void x_notify_eject()
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(animateDiskEjection:) withObject:nil waitUntilDone:NO];
-    [pool release];
+    @autoreleasepool {
+        [[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(animateDiskEjection:) withObject:nil waitUntilDone:NO];
+    }
     
 }
 
@@ -89,9 +89,9 @@ void x_notify_paddle(int _on)
 	printf("x_notify_paddle");
 	padAlreadyDisplayedOnce = 1;
 	
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	[[pManager getEmulatorView].kbdc  performSelectorOnMainThread:@selector(notifyPaddle:) withObject:nil waitUntilDone:NO];
-	[pool release];	
+	@autoreleasepool {
+		[[pManager getEmulatorView].kbdc  performSelectorOnMainThread:@selector(notifyPaddle:) withObject:nil waitUntilDone:NO];
+	}	
 	
 }
 
@@ -104,33 +104,33 @@ void x_notify_download_failure(const char*_url)
 
 void x_loadinginprogress(int _on,int _s,int _d)
 {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
     
     
-    _d --;
-    int param = (_s==5 ? _d : _d +2 );
-    if (_on) param  |= 0x80;
-    
-    NSNumber* b = [NSNumber numberWithInt:param] ;
+        _d --;
+        int param = (_s==5 ? _d : _d +2 );
+        if (_on) param  |= 0x80;
+        
+        NSNumber* b = [NSNumber numberWithInt:param] ;
 	[[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(setLoading:) withObject:b waitUntilDone:NO];
-	[pool release];
+	}
 }
 
 void x_refresh_panel(int _panel)
 {
 	if (!_panel & PANEL_RUNTIME) return ;
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  	[[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(refreshControls:) withObject:nil waitUntilDone:NO];
-	[pool release];
+	@autoreleasepool {
+  	  	[[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(refreshControls:) withObject:nil waitUntilDone:NO];
+	}
 }
 
 void x_downloadinginprogress(int _percent)
 {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSNumber* b = [NSNumber numberWithInt:_percent];
-	[[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(setDownLoading:) withObject:b waitUntilDone:NO];
-	[pool release];
+		NSNumber* b = [NSNumber numberWithInt:_percent];
+		[[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(setDownLoading:) withObject:b waitUntilDone:NO];
+	}
 }
 
 int		 alertAbort;
@@ -142,15 +142,15 @@ MyString alertMessage;
 
 void x_init_persistent_path(MyString& hp)
 {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
     
-	NSArray *paths= NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *dir = [paths objectAtIndex:0];
-	const char *bar = [dir UTF8String]; 
-	CFStringRef sd = __CFStringMakeConstantString(bar);
-	hp= CFStringGetCStringPtr(sd,CFStringGetSystemEncoding());
+		NSArray *paths= NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+		NSString *dir = [paths objectAtIndex:0];
+		const char *bar = [dir UTF8String]; 
+		CFStringRef sd = __CFStringMakeConstantString(bar);
+		hp= CFStringGetCStringPtr(sd,CFStringGetSystemEncoding());
 	
-	[pool release];	
+	}	
 }
 
 
@@ -184,7 +184,7 @@ void x_init_persistent_path(MyString& hp)
 	NSString* strMsg =  [NSString stringWithUTF8String:alertMessage.c_str()];
 	NSString* strTitle =  [NSString stringWithUTF8String:alertTitle.c_str()];
 	
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil] autorelease];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"Done" otherButtonTitles:nil];
 	[alert show];
 }
 
@@ -353,7 +353,7 @@ void x_init_persistent_path(MyString& hp)
 #endif
 	
     
-    self.notificationView = [[[UILabel alloc] initWithFrame:CGRectMake(8,48,200,32)] autorelease];
+    self.notificationView = [[UILabel alloc] initWithFrame:CGRectMake(8,48,200,32)];
     
 
     self.notificationView.alpha=0.0;
@@ -645,7 +645,7 @@ void x_init_persistent_path(MyString& hp)
         
         self.secondaryScreen = self.primaryScreen;
         self.secondaryWindow.hidden = YES;
-        [self.secondaryWindow release];
+        self.secondaryWindow;
         self.secondaryWindow = nil;
         
         [a updateView];
@@ -801,12 +801,6 @@ void x_init_persistent_path(MyString& hp)
 		pMac = NULL;
 	}
 	
-	self.viewController = nil;
-    self.emulatorController = nil;
-	self.detailController = nil;
-    self.infoController = nil;
-	self.window = nil;	
-    [super dealloc];
 }
 
 
@@ -891,8 +885,8 @@ void x_display_alert(int _abort, const char* _title, const char* _message)
 	alertAbort = _abort;
 	alertTitle = _title;
 	alertMessage = _message;
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	[pManager performSelectorOnMainThread:@selector(displayAlert:) withObject:nil waitUntilDone:NO];
-	[pool release];
+	@autoreleasepool {
+		[pManager performSelectorOnMainThread:@selector(displayAlert:) withObject:nil waitUntilDone:NO];
+	}
     
 }

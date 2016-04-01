@@ -15,9 +15,9 @@ NSString *_url;
 id      callbackObj;
 SEL     callbackSel;
 }
-@property (retain,nonatomic) NSMutableData* data;
-@property (retain,nonatomic) NSURLConnection* theConnection;
-@property (retain,nonatomic) NSString *url;
+@property (strong,nonatomic) NSMutableData* data;
+@property (strong,nonatomic) NSURLConnection* theConnection;
+@property (strong,nonatomic) NSString *url;
 
 - (AsyncCommand*)initCommand: (const char*)url withObject:(id)_obj withSelector:(SEL)_sel;
 

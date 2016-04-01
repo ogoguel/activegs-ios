@@ -20,7 +20,7 @@ int x_frame_rate = -1;
 	if (displayLink)
 		[self deactivateEmulatorRefresh];
 	
-	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(directDraw:)] retain];
+	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(directDraw:)];
 
     x_frame_rate = _frameRate;
 	switch(_frameRate)

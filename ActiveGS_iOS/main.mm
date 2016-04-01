@@ -9,9 +9,9 @@
 
 int main(int argc, char *argv[]) {
     
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
  //   int retVal = UIApplicationMain(argc, argv, nil, nil);
-    int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([activegsAppDelegate class]));
-    [pool release];
-    return retVal;
+        int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([activegsAppDelegate class]));
+        return retVal;
+    }
 }

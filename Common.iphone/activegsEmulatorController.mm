@@ -99,7 +99,7 @@ int	x_lock_zoom = 0;
 	{		
 
 		// Swipe down to hide keyboard	
-		self.grswipeup = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)] autorelease];
+		self.grswipeup = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
 		self.grswipeup.direction  = UISwipeGestureRecognizerDirectionUp ;
 		self.grswipeup.cancelsTouchesInView = NO;
 		self.grswipeup.numberOfTouchesRequired = SWIPENBTOUCHES;
@@ -107,14 +107,14 @@ int	x_lock_zoom = 0;
 		
 		
 		// Swipe up to display keyboard	
-		self.grswipedown = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)] autorelease];
+		self.grswipedown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
 		self.grswipedown.direction  = UISwipeGestureRecognizerDirectionDown;
 		self.grswipedown.cancelsTouchesInView = NO;
 		self.grswipedown.numberOfTouchesRequired = SWIPENBTOUCHES;
 		[self addGestureRecognizer:self.grswipedown];
         
 		// Swipe left to go back to browsing	
-		self.grswipeleft = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)] autorelease];
+		self.grswipeleft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
 		self.grswipeleft.direction  = UISwipeGestureRecognizerDirectionLeft;
 		self.grswipeleft.cancelsTouchesInView = NO;
 		self.grswipeleft.numberOfTouchesRequired = SWIPENBTOUCHES;
@@ -122,7 +122,7 @@ int	x_lock_zoom = 0;
 		
 		
 		// Swipe Right to go back to browsing	
-		self.grswiperight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)] autorelease];
+		self.grswiperight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
 		self.grswiperight.direction  = UISwipeGestureRecognizerDirectionRight;
 		self.grswiperight.cancelsTouchesInView = NO;
 		self.grswiperight.numberOfTouchesRequired = SWIPENBTOUCHES;
@@ -386,25 +386,10 @@ int	x_lock_zoom = 0;
 		
 }
 
-- (void)dealloc 
-{
-
-	self.grswipedown = nil;
-	self.grswipeup = nil;
-	self.grswipeleft = nil;
-	self.grswiperight = nil;
-
-	[super dealloc];
-}
 
 @end
 
 @implementation activegsEmulatorController
-
-@synthesize kbdc = _kbdc;
-@synthesize zv = _zv;
-@synthesize contentView = _contentView;
-@synthesize trackerName = _trackerName;
 
 
 #ifdef USE_CAPPTAIN
@@ -419,7 +404,7 @@ int	x_lock_zoom = 0;
 {
    
     CGRect rv = CGRectMake(0,0,100.0,100.0);
-    self.zv = [[[zoomEmulatorView alloc] initWithFrame:rv ratio:1.0] retain];
+    self.zv = [[zoomEmulatorView alloc] initWithFrame:rv ratio:1.0];
 
 }
 
@@ -431,7 +416,7 @@ int	x_lock_zoom = 0;
 	CGRect apprect = [[UIScreen mainScreen] applicationFrame];
     printf("mainScreen apprect %d x %d\n",(int)apprect.size.width,(int)apprect.size.height);
 
-	self.contentView = [[[customView alloc] initWithFrame:apprect] autorelease];
+	self.contentView = [[customView alloc] initWithFrame:apprect];
 #ifdef SHOW_COLOR
 	self.contentView.backgroundColor = [UIColor yellowColor];
 #else
@@ -443,7 +428,7 @@ int	x_lock_zoom = 0;
     
     [self.zv setUserInteractionEnabled:TRUE];
 
-	self.kbdc = [[KBDController alloc] retain]; 
+	self.kbdc = [KBDController alloc]; 
 	[self.contentView addSubview:self.kbdc.view];
 	
 	self.view = self.contentView;
@@ -684,10 +669,9 @@ int	x_lock_zoom = 0;
 
 - (void)dealloc {
 
-    [self.zv release];
+    self.zv;
     self.zv = nil;
 
-    [super dealloc];
 }
 
 @end

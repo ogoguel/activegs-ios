@@ -79,51 +79,51 @@ enum
 	
 }
 
-@property (nonatomic,retain)    UITextField* textField;
+@property (nonatomic,strong)    UITextField* textField;
 
-@property (nonatomic,retain)    UIButton *menuButton;
-@property (nonatomic,retain)    UIBarButtonItem* optionButton ;
-@property (nonatomic,retain)    UIImageView* diskView;
-@property (nonatomic,retain)    UIImageView* diskLoadingView;
-@property (nonatomic,retain)    NSMutableArray* diskIcons;
-@property (nonatomic,retain)    UILabel * loaderLabel;
-@property (nonatomic,retain)    UILabel* debugIndicator;
-@property (nonatomic,retain)    UILabel* swipeIndicator;
-@property (nonatomic,retain)    UILabel* zoomIndicator;
-@property (nonatomic,retain)    UILabel* padIndicator;
-@property (nonatomic,retain)    UILabel* mouseButtonIndicator;
-@property (nonatomic,retain)    UILabel* inputIndicator;
-@property (nonatomic,retain)    UIActivityIndicatorView* loader;
-@property (nonatomic,retain)    NSTimer* loaderTimer;
+@property (nonatomic,strong)    UIButton *menuButton;
+@property (nonatomic,strong)    UIBarButtonItem* optionButton ;
+@property (nonatomic,strong)    UIImageView* diskView;
+@property (nonatomic,strong)    UIImageView* diskLoadingView;
+@property (nonatomic,strong)    NSMutableArray* diskIcons;
+@property (nonatomic,strong)    UILabel * loaderLabel;
+@property (nonatomic,strong)    UILabel* debugIndicator;
+@property (nonatomic,strong)    UILabel* swipeIndicator;
+@property (nonatomic,strong)    UILabel* zoomIndicator;
+@property (nonatomic,strong)    UILabel* padIndicator;
+@property (nonatomic,strong)    UILabel* mouseButtonIndicator;
+@property (nonatomic,strong)    UILabel* inputIndicator;
+@property (nonatomic,strong)    UIActivityIndicatorView* loader;
+@property (nonatomic,strong)    NSTimer* loaderTimer;
 #ifdef GRAPHICAL_PAD
 @property (nonatomic,retain)    UIImageView* padBackground;
 @property (nonatomic,retain)    UIImageView* padButton1Down;
 @property (nonatomic,retain)    UIImageView* padButton2Down;
 @property (nonatomic,retain)    UIImageView* padStick;
 #endif
-@property (nonatomic,retain)    UIImageView* padCircleOutter;
-@property (nonatomic,retain)    UIImageView* padCircleInner;
-@property (nonatomic,retain)    UIImageView* oaButtonView;
-@property (nonatomic,retain)    UIImageView* caButtonView;
-@property (nonatomic,retain)    UITouch* padTouch;
-@property (nonatomic,retain)    UITouch* oaButtonTouch;
-@property (nonatomic,retain)    UITouch* caButtonTouch;
-@property (nonatomic,retain)    UINavigationItem* emulatorNavItem;
-@property (nonatomic,retain)    UINavigationBar* runtimeView;
-@property (nonatomic,retain)    UIView* interfaceView;
-@property (nonatomic,retain)    NSTimer* animateDiskTimer;
-@property (nonatomic,retain)    NSTimer* hardwarekbdDetectionTimer;
-@property (nonatomic,retain)    UIImageView* runtimeControls;
-@property (nonatomic,retain)    UIView* runtimeControlsOptions;
-@property (nonatomic,retain)    UIImageView* diskSelection;
-@property (nonatomic,retain)    UIView* diskSelectionOptions;
-@property (nonatomic,retain)    UIScrollView* uit;
-@property (nonatomic,retain)    UIScrollView* uitb;
-@property (nonatomic,retain)    UIView* accessView;
-@property (nonatomic,retain)    UIButton* leftAccessView;
-@property (nonatomic,retain)    UIButton* rightAccessView;
-@property (nonatomic,retain)    UINavigationBar* barView;
-@property (nonatomic,retain)    UINavigationBar* specialView;
+@property (nonatomic,strong)    UIImageView* padCircleOutter;
+@property (nonatomic,strong)    UIImageView* padCircleInner;
+@property (nonatomic,strong)    UIImageView* oaButtonView;
+@property (nonatomic,strong)    UIImageView* caButtonView;
+@property (nonatomic,strong)    UITouch* padTouch;
+@property (nonatomic,strong)    UITouch* oaButtonTouch;
+@property (nonatomic,strong)    UITouch* caButtonTouch;
+@property (nonatomic,strong)    UINavigationItem* emulatorNavItem;
+@property (nonatomic,strong)    UINavigationBar* runtimeView;
+@property (nonatomic,strong)    UIView* interfaceView;
+@property (nonatomic,strong)    NSTimer* animateDiskTimer;
+@property (nonatomic,strong)    NSTimer* hardwarekbdDetectionTimer;
+@property (nonatomic,strong)    UIImageView* runtimeControls;
+@property (nonatomic,strong)    UIView* runtimeControlsOptions;
+@property (nonatomic,strong)    UIImageView* diskSelection;
+@property (nonatomic,strong)    UIView* diskSelectionOptions;
+@property (nonatomic,strong)    UIScrollView* uit;
+@property (nonatomic,strong)    UIScrollView* uitb;
+@property (nonatomic,strong)    UIView* accessView;
+@property (nonatomic,strong)    UIButton* leftAccessView;
+@property (nonatomic,strong)    UIButton* rightAccessView;
+@property (nonatomic,strong)    UINavigationBar* barView;
+@property (nonatomic,strong)    UINavigationBar* specialView;
 //@property (assign,getter=inputMode)          int	inputMode;
 
 

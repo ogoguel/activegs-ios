@@ -86,7 +86,7 @@
     	[self.loader setFrame:rl];
 	
 #endif
-    	self.loader = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+    	self.loader = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     [self.view addSubview:self.loader];
     
@@ -96,10 +96,10 @@
 	
 	
 	
-	self.navView = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, r.size.width, BARVIEW_HEIGHT)] autorelease];
+	self.navView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, r.size.width, BARVIEW_HEIGHT)];
 	self.navView.barStyle = UIBarStyleBlack;
  //   self.navView.delegate = self;
-	self.navItem = [[[UINavigationItem alloc] initWithTitle:@ACTIVEGS_TITLE] autorelease];
+	self.navItem = [[UINavigationItem alloc] initWithTitle:@ACTIVEGS_TITLE];
     
 #ifdef ACTIVEGS_BACKGROUNDIMAGE
 	[self.view addSubview:pManager.backgroundView];
@@ -132,14 +132,14 @@
 	[backButton setTitle:@"Back" forState:UIControlStateNormal];
 	
 	// create button item -- possible because UIButton subclasses UIView!
-	UIBarButtonItem* browseItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
+	UIBarButtonItem* browseItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 #endif
 	
 	self.navItem.leftBarButtonItem = browseItem;
 	
 	UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight]; 
 	[infoButton addTarget:self action:@selector(infoButton:) forControlEvents:UIControlEventTouchUpInside];
-	UIBarButtonItem* infoItem = [[[UIBarButtonItem alloc] initWithCustomView:infoButton] autorelease];
+	UIBarButtonItem* infoItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
 	
 	self.navItem.rightBarButtonItem = infoItem;
 	
@@ -148,55 +148,55 @@
 	r.origin.y = self.navView.frame.size.height;
 	r.size.height -= r.origin.y;
     
-    self.tabView = [[[UITabBarController alloc] init] autorelease];
+    self.tabView = [[UITabBarController alloc] init];
 	[self.tabView.view setFrame:r];
 	self.tabView.delegate = self;
 	NSString *imgSource;
     
-	self.l0 = [[activegsList alloc] autorelease];
+	self.l0 = [activegsList alloc];
 	//imgSource = [[NSBundle mainBundle] pathForResource:@ACTIVEGS_FIRSTTABLIST ofType:@"activegsxml"] ;
 	self.l0->listPath = pManager->firstTabXML.c_str();
 	self.l0->filter= ALL_NO_INDEX ;
 	self.l0->trackerName = ACTIVEGS_FIRSTTABTRACKER;
 	imgSource = [[NSBundle mainBundle] pathForResource:@ACTIVEGS_FIRSTTABICON ofType:@"png"];
-	self.l0.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@ACTIVEGS_FIRSTTABTITLE image:[UIImage imageWithContentsOfFile: imgSource] tag:0] autorelease];
+	self.l0.tabBarItem = [[UITabBarItem alloc] initWithTitle:@ACTIVEGS_FIRSTTABTITLE image:[UIImage imageWithContentsOfFile: imgSource] tag:0];
 	
 #ifdef ACTIVEGS_SINGLETAB
     [self.l0.view setFrame:r];
 	[self.view addSubview:self.l0.view];	
 #else
-	activegsList* l3 = [[activegsList alloc] autorelease];
+	activegsList* l3 = [activegsList alloc];
 	l3->listPath = "http://www.freetoolsassociation.com/xml/list.activegsxml";
     l3->versionPath = "http://www.freetoolsassociation.com/xml/version.dat";
 	l3->filter= ALL; 
-	l3.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"FTA Website" image:[UIImage imageWithContentsOfFile: imgSource] tag:0] autorelease]; ;
+	l3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"FTA Website" image:[UIImage imageWithContentsOfFile: imgSource] tag:0]; ;
 	l3->trackerName = "FTA";
     
-	activegsList* l1 = [[activegsList alloc] autorelease];
+	activegsList* l1 = [activegsList alloc];
 	l1->listPath = "http://www.virtualapple.org/xmlfiles/list.zip";
     l1->versionPath = "http://www.virtualapple.org/xmlfiles/version.dat";
 	l1->filter = ONLY_APPLE2 ;
 	l1->trackerName = "VirtualApple2";
 	/*NSString */imgSource = [[NSBundle mainBundle] pathForResource:@"Tab][" ofType:@"png"];
-	l1.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Apple II" image:[UIImage imageWithContentsOfFile: imgSource] tag:0] autorelease];
+	l1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Apple II" image:[UIImage imageWithContentsOfFile: imgSource] tag:0];
 	
-	activegsList* l2 = [[activegsList alloc] autorelease];
+	activegsList* l2 = [activegsList alloc];
 	l2->listPath =  "http://www.virtualapple.org/xmlfiles/list.zip";;
     //	l2.title = @"Apple IIGS";
 	l2->filter = ONLY_2GS;
 	l2->trackerName = "VirtualApple2GS";
 	imgSource = [[NSBundle mainBundle] pathForResource:@"Tab2GS" ofType:@"png"];
-	l2.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Apple IIGS" image:[UIImage imageWithContentsOfFile: imgSource] tag:0] autorelease];
+	l2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Apple IIGS" image:[UIImage imageWithContentsOfFile: imgSource] tag:0];
     
 #ifndef ACTIVEGS_ENABLE_DOCUMENT
 	self.docList=  nil;
 #else
-	self.docList = [[activegsList alloc] autorelease];
+	self.docList = [activegsList alloc];
 	self.docList->listPath.Empty();
 	self.docList->filter = (int)(ALL_NO_INDEX|DOC_LIST);
 	self.docList->trackerName = "My2GS";	
 	//docList.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"My 2GS" image:[UIImage imageWithContentsOfFile: imgSource] tag:0] autorelease];
-	self.docList.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0] autorelease];
+	self.docList.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0];
 #endif
     
 	[self.tabView setViewControllers:[NSArray arrayWithObjects:self.l0, l3, l1, l2, self.docList,nil]];
@@ -211,13 +211,11 @@
         UISwipeGestureRecognizer* grswipeleft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
         grswipeleft.direction  = UISwipeGestureRecognizerDirectionLeft;
         [self.view addGestureRecognizer:grswipeleft];
-        [grswipeleft release];
         
         // Swipe right to go back to browsing	
         UISwipeGestureRecognizer* grswiperight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
         grswiperight.direction  = UISwipeGestureRecognizerDirectionRight;
         [self.view addGestureRecognizer:grswiperight];
-        [grswiperight release];
 	
 	// pour etre sur qu'il soit visible
 	[self.view bringSubviewToFront:self.loader];
@@ -244,7 +242,7 @@
 	activegsList* l = (activegsList*) self.tabView.selectedViewController;
     NSString* fmt  = [NSString stringWithFormat:@"Database version v%@ is available!\n(current installed version is v%@)\n\nDo you want to update ?",newVersion,l.sourceRevision];
    
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:l.sourceName message:fmt delegate:self cancelButtonTitle:@"Later" otherButtonTitles:@"Update Now",nil] autorelease];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:l.sourceName message:fmt delegate:self cancelButtonTitle:@"Later" otherButtonTitles:@"Update Now",nil];
 	[alert show];
 }
 
@@ -259,7 +257,7 @@
         fmt  = [NSString stringWithFormat:@"Database v%@\n\nPress Refresh to reload the database.",l.sourceRevision];
         title = l.sourceName;
 	}
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title message:fmt delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Refresh",nil] autorelease];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:fmt delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Refresh",nil];
 	[alert show];
 }
 

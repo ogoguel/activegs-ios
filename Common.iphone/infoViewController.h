@@ -15,10 +15,10 @@
 	UILabel* _versionUILandscape;
 }
 
-@property (nonatomic, retain) IBOutlet UILabel* versionUILandscape;
-@property (nonatomic, retain) IBOutlet UILabel* versionUI;
-@property (nonatomic, retain) IBOutlet UIView* portraitView;
-@property (nonatomic, retain) IBOutlet UIView* landscapeView;
+@property (nonatomic, strong) IBOutlet UILabel* versionUILandscape;
+@property (nonatomic, strong) IBOutlet UILabel* versionUI;
+@property (nonatomic, strong) IBOutlet UIView* portraitView;
+@property (nonatomic, strong) IBOutlet UIView* landscapeView;
 
 - (void)updateView:(UIDeviceOrientation)_orientation ;
 - (IBAction) doneButton:(id)_sender;

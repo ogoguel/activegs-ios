@@ -35,10 +35,10 @@ enum gestureModes
 	NSTimer* disableTimer;
 }
 
-@property (retain,nonatomic) UISwipeGestureRecognizer* grswipeup;
-@property (retain,nonatomic) UISwipeGestureRecognizer* grswipedown;
-@property (retain,nonatomic) UISwipeGestureRecognizer* grswipeleft;
-@property (retain,nonatomic) UISwipeGestureRecognizer* grswiperight;
+@property (strong,nonatomic) UISwipeGestureRecognizer* grswipeup;
+@property (strong,nonatomic) UISwipeGestureRecognizer* grswipedown;
+@property (strong,nonatomic) UISwipeGestureRecognizer* grswipeleft;
+@property (strong,nonatomic) UISwipeGestureRecognizer* grswiperight;
 
 -(void)disableGestures:(int)_mode  ;
 -(void)enableGestures:(int)_mode  ;
@@ -60,10 +60,6 @@ enum attachMode
 
 @interface activegsEmulatorController : UIVIEWCONTROLLERROOT
 {
-	NSString* _trackerName;
-	customView* _contentView;
-	zoomEmulatorView* _zv;	
-	KBDController*      _kbdc ;
 @public
     int    attachedTo;
 }
@@ -74,10 +70,10 @@ enum attachMode
 
 -(void) updateView;
 
-@property	(assign) customView* contentView;
-@property	(assign) zoomEmulatorView* zv;
-@property	(assign) KBDController*		kbdc ;
-@property	(nonatomic, retain) NSString*		trackerName ;
+@property	(nonatomic, strong) customView* contentView;
+@property	(nonatomic, strong) zoomEmulatorView* zv;
+@property	(nonatomic, strong) KBDController*		kbdc ;
+@property	(nonatomic, strong) NSString*		trackerName ;
 
 
 @end

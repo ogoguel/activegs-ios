@@ -19,6 +19,8 @@
 #import <ExternalAccessory/ExternalAccessory.h>
 #include "../kegs/src/paddles.h"
 #import "../kegs/iOS/emulatorView.h"
+#include "../kegs/src/SaveState.h"
+#include "../common/activedownload.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS
     #include "UICustomKey.h"
@@ -236,7 +238,7 @@ UIImageView* loadImage(NSString* _name)
 {
 	
 	NSString *imgSource = [[NSBundle mainBundle] pathForResource:_name ofType:@"png"];
-	UIImage* img = [[UIImage imageWithContentsOfFile: imgSource] retain];
+	UIImage* img = [UIImage imageWithContentsOfFile: imgSource];
 		UIImageView* view = [[UIImageView alloc] initWithImage:img];
 	return view;
 	
@@ -272,6 +274,11 @@ int isHardwareKeyboard()
 #endif
 
 }
+
+@interface KBDController() {
+    UISegmentedControl *saveStateSegmentedControl;
+}
+@end
 
 @implementation KBDController
 
@@ -878,6 +885,42 @@ extern int x_frame_rate ;
 	printf("control not found\n");
 	
 }
+
+-(void) saveStateButtonPressed:(id)sender {
+    MyString dir = CDownload::getPersistentPath();
+    dir = dir + ACTIVEGS_DIRECTORY_SEPARATOR + "savestates" + ACTIVEGS_DIRECTORY_SEPARATOR + config.name;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    [fileManager createDirectoryAtPath:[NSString stringWithCString:dir.c_str() encoding:NSUTF8StringEncoding] withIntermediateDirectories:YES attributes:nil error:&error];
+    dir += ACTIVEGS_DIRECTORY_SEPARATOR;
+    NSString *segIndex = [saveStateSegmentedControl titleForSegmentAtIndex:[saveStateSegmentedControl selectedSegmentIndex]];
+    dir += "save";
+    dir += [segIndex UTF8String];
+    g_savestate.saveState(dir.c_str());
+    [self optionsButton:nil];
+    [pManager setNotificationText:[NSString stringWithFormat:@"Saved State #%@",segIndex]];
+}
+
+-(void) loadStateButtonPressed:(id)sender {
+    NSString *segIndex = [saveStateSegmentedControl titleForSegmentAtIndex:[saveStateSegmentedControl selectedSegmentIndex]];
+    MyString dir = CDownload::getPersistentPath();
+    dir += ACTIVEGS_DIRECTORY_SEPARATOR;
+    dir += "savestates";
+    dir += ACTIVEGS_DIRECTORY_SEPARATOR;
+    dir += config.name;
+    dir += ACTIVEGS_DIRECTORY_SEPARATOR;
+    dir += "save";
+    dir += [segIndex UTF8String];
+    FILE *fHandle = fopen(dir.c_str(),"r");
+    if ( fHandle == NULL ) {
+        [pManager setNotificationText:[NSString stringWithFormat:@"State #%@ Does Not Exist",segIndex]];
+        return;
+    }
+    g_savestate.restoreState(dir.c_str());
+    [self optionsButton:nil];
+    [pManager setNotificationText:[NSString stringWithFormat:@"Loaded State #%@",segIndex]];
+}
+
 //
 -(void)addRuntimeControls
 {
@@ -904,7 +947,7 @@ extern int x_frame_rate ;
 		
 		UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT)];
 		label.text = [NSString stringWithUTF8String:runtimeControlDefs[i].name];
-		label.textAlignment = UITextAlignmentCenter;
+		label.textAlignment = NSTextAlignmentCenter;
 		label.font = [UIFont systemFontOfSize:12*res];
 		label.backgroundColor = [UIColor clearColor];
 		[self.runtimeControlsOptions addSubview:label];
@@ -933,6 +976,51 @@ extern int x_frame_rate ;
 		nbs++;
 				
 	}
+    
+    // hack in some save state controls
+    l += 2.0;
+    UILabel* saveStatelabel = [[UILabel alloc] initWithFrame:CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT)];
+    saveStatelabel.text = @"Save States";
+    saveStatelabel.textAlignment = NSTextAlignmentCenter;
+    saveStatelabel.font = [UIFont systemFontOfSize:12*res];
+    saveStatelabel.backgroundColor = [UIColor clearColor];
+    [self.runtimeControlsOptions addSubview:saveStatelabel];
+    l += LINEHEIGHT;
+    
+    saveStateSegmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(OPTIONMARGIN, l, OPTIONWIDTH, LINEHEIGHT)];
+    for (int segIndex = 0; segIndex < 6; segIndex++) {
+        [saveStateSegmentedControl insertSegmentWithTitle:[NSString stringWithFormat:@"%d",segIndex] atIndex:segIndex animated:NO];
+    }
+    [saveStateSegmentedControl setSelectedSegmentIndex:0];
+    [self.runtimeControlsOptions addSubview:saveStateSegmentedControl];
+
+    l += LINEHEIGHT;
+    l += 2.0;
+    
+    UIButton *saveStateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    saveStateButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH * 0.4,LINEHEIGHT);
+    [saveStateButton setTitle:@"Save" forState:UIControlStateNormal];
+    saveStateButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    [saveStateButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+    saveStateButton.backgroundColor = [UIColor clearColor];
+    saveStateButton.layer.borderWidth = 1.0f;
+    saveStateButton.layer.borderColor = [self.view.tintColor CGColor];
+    [saveStateButton addTarget:self action:@selector(saveStateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:saveStateButton];
+    
+    UIButton *loadStateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    loadStateButton.frame = CGRectMake((OPTIONWIDTH + OPTIONMARGIN) - (OPTIONWIDTH * 0.4),l,OPTIONWIDTH * 0.4,LINEHEIGHT);
+    [loadStateButton setTitle:@"Load" forState:UIControlStateNormal];
+    loadStateButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    loadStateButton.backgroundColor = [UIColor clearColor];
+    [loadStateButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+    loadStateButton.layer.borderWidth = 1.0f;
+    loadStateButton.layer.borderColor = [self.view.tintColor CGColor];
+    [loadStateButton addTarget:self action:@selector(loadStateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:loadStateButton];    
+    
+    l+=LINEHEIGHT;
+    nbs++;
 	
 	float w = OPTIONWIDTH+OPTIONMARGIN*2;
 
@@ -981,7 +1069,7 @@ extern int x_frame_rate ;
     CGColorSpaceRelease(colorSpace);
 
 	const float lb = ho - LINEHEIGHT - OPTIONMARGIN;
-	const float WB = 50 * res;
+	const float WB = 100 * res;
 	
 	 UIButton* button = [UIButton buttonWithType:(UIButtonType)100]; 
 	 [button addTarget:self action:@selector(optionsButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -995,7 +1083,7 @@ extern int x_frame_rate ;
 	 
 	 UIButton* buttonrestore = [UIButton buttonWithType:(UIButtonType)100]; 
 	 [buttonrestore addTarget:self action:@selector(restoreButton:) forControlEvents:UIControlEventTouchUpInside];
-	 [buttonrestore setTitle:@"Default" forState:UIControlStateNormal];
+	 [buttonrestore setTitle:@"Defaults" forState:UIControlStateNormal];
 	 
 	 buttonrestore.frame = CGRectMake(OPTIONMARGIN,lb,WB,LINEHEIGHT);
 	 
@@ -1033,9 +1121,6 @@ extern int x_frame_rate ;
 
 -(void)addDiskSelection
 {
-    
-    [self.diskSelectionOptions release];
-    [self.diskSelection release];
     
     self.diskSelectionOptions = nil;
     self.diskSelection =  nil;
@@ -1212,7 +1297,7 @@ extern int x_frame_rate ;
 	{
 		printf("removing RuntimeView");
 		[self.runtimeView removeFromSuperview];
-		[self.runtimeView release];
+		self.runtimeView;
 	}
 	
 	// position par défault
@@ -2032,7 +2117,7 @@ int x_adb_get_keypad_y()
 		for(int i=0;i<20;i++)
 			add_event_delay();	
 		caButton = TRUE;
-		self.caButtonTouch = [touch retain];;
+		self.caButtonTouch = touch;;
 		self.caButtonView.alpha = 1.0;
 #ifdef GRAPHICAL_PAD
 		self.padButton2Down.hidden = FALSE;
@@ -2764,30 +2849,8 @@ const int cycles[]=
     
     NSLog(@"---kbd dealloc");
     self.textField.delegate = nil;
-	self.textField = nil;
-	self.menuButton = nil;
-	self.optionButton = nil;
-	self.diskView = nil;
-    self.diskLoadingView = nil;
-	self.loaderLabel = nil;
-	self.debugIndicator = nil;
-	self.swipeIndicator = nil;
-	self.zoomIndicator = nil;
-	self.padIndicator = nil;
-	self.mouseButtonIndicator = nil;
-    self.inputIndicator = nil;
-	self.loader = nil;
-	self.padCircleOutter = nil;
-	self.padCircleInner = nil;
-	self.oaButtonView = nil;
-	self.caButtonView = nil;
-	self.emulatorNavItem = nil;
-	self.barView = nil;
-    self.hardwarekbdDetectionTimer = nil;
-    self.animateDiskTimer = nil;
     
 
-    [super dealloc];
 	
 }
 

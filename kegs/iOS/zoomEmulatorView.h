@@ -53,10 +53,10 @@ typedef struct orientationVar orientationVar;
 	UITouch* _secondTouch;
     	int curOrientation;
 }
-@property (retain,nonatomic) emulatorView* ew ;
-@property (retain,nonatomic) UIImageView* crt ;
-@property (retain,nonatomic) UITouch* useTouch ;
-@property (retain,nonatomic) UITouch* secondTouch ;
+@property (strong,nonatomic) emulatorView* ew ;
+@property (strong,nonatomic) UIImageView* crt ;
+@property (strong,nonatomic) UITouch* useTouch ;
+@property (strong,nonatomic) UITouch* secondTouch ;
 
 -(void)updateFrame:(CGRect)frame kbdRect:(CGRect)kbdRect;
 -(void)updateScreen:(CGRect)frame ratio:(float)ratio;

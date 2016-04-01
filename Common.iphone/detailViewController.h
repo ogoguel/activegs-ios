@@ -39,22 +39,22 @@
 }
 
 
-@property (nonatomic, retain) IBOutlet UILabel* diskName;
-@property (nonatomic, retain) IBOutlet UILabel* diskYear;
-@property (nonatomic, retain) IBOutlet UILabel* diskCompany;
-@property (nonatomic, retain) IBOutlet UITextView* diskDescription;
-@property (nonatomic, retain) IBOutlet UIImageView* diskApple2;
-@property (nonatomic, retain) IBOutlet UIImageView* diskApple2GS;
-@property (nonatomic, retain) IBOutlet UIWebView* diskWebView;
-@property (nonatomic, retain) IBOutlet UIImageView* screenShot1;
-@property (nonatomic, retain) IBOutlet UIImageView* screenShot2;
-@property (nonatomic, retain) IBOutlet UIImageView* screenShot3;
-@property (nonatomic, retain) IBOutlet UINavigationBar* navView;
+@property (nonatomic, strong) IBOutlet UILabel* diskName;
+@property (nonatomic, strong) IBOutlet UILabel* diskYear;
+@property (nonatomic, strong) IBOutlet UILabel* diskCompany;
+@property (nonatomic, strong) IBOutlet UITextView* diskDescription;
+@property (nonatomic, strong) IBOutlet UIImageView* diskApple2;
+@property (nonatomic, strong) IBOutlet UIImageView* diskApple2GS;
+@property (nonatomic, strong) IBOutlet UIWebView* diskWebView;
+@property (nonatomic, strong) IBOutlet UIImageView* screenShot1;
+@property (nonatomic, strong) IBOutlet UIImageView* screenShot2;
+@property (nonatomic, strong) IBOutlet UIImageView* screenShot3;
+@property (nonatomic, strong) IBOutlet UINavigationBar* navView;
 /*
 @property (nonatomic, retain) itemClass* diskSelected;
 @property (nonatomic, retain) activegsList* list;
  */
-@property (nonatomic, retain) UINavigationItem* navItem;
+@property (nonatomic, strong) UINavigationItem* navItem;
 
 
 - (IBAction) launchButton:(id)_sender;
