@@ -21,6 +21,7 @@
 #import "../kegs/iOS/emulatorView.h"
 #include "../kegs/src/SaveState.h"
 #include "../common/activedownload.h"
+#import "MfiGameControllerHandler.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS
     #include "UICustomKey.h"
@@ -278,6 +279,7 @@ int isHardwareKeyboard()
 @interface KBDController() {
     UISegmentedControl *saveStateSegmentedControl;
 }
+@property (nonatomic,strong) MfiGameControllerHandler *mfiControllerHandler;
 @end
 
 @implementation KBDController
@@ -565,6 +567,47 @@ extern int findCode(const char* _s);
     [self setInputMode:INPUTMODE_ACCESS+INPUTMODE_HIDDEN];
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
     
+    self.mfiControllerHandler = [[MfiGameControllerHandler alloc] init];
+    __weak typeof(self) weakSelf = self;
+    [self.mfiControllerHandler discoverController:^(GCController *gameController) {
+        [weakSelf setupMfiController:gameController];
+        [self setInputMode:inputMode&INPUTMODE_PAD];
+        [pManager setNotificationText:@"mFi Controller Connected"];
+    } disconnectedCallback:^{
+        [pManager setNotificationText:@"mFi Controller Disconnected"];
+    }];
+}
+
+-(void) setupMfiController:(GCController*)controller {
+    void (^appleJoyButton0Handler)(GCControllerButtonInput *, float, BOOL) = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+        if ( pressed ) {
+            add_event_key(0x37, 0);
+        } else {
+            add_event_key(0x37, 1);
+        }
+    };
+    void (^appleJoyButton1Handler)(GCControllerButtonInput *, float, BOOL) = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+        if ( pressed ) {
+            add_event_key(0x3a, 0);
+        } else {
+            add_event_key(0x3a, 1);
+        }
+    };
+    void (^appleJoystickhHandler)(GCControllerDirectionPad *, float, float) = ^(GCControllerDirectionPad *, float xvalue, float yvalue) {
+        joyX = xvalue;
+        joyY = yvalue * -1.0;
+    };
+    GCControllerButtonInput *buttonX = controller.extendedGamepad ? controller.extendedGamepad.buttonX : controller.gamepad.buttonX;
+    GCControllerButtonInput *buttonA = controller.extendedGamepad ? controller.extendedGamepad.buttonA : controller.gamepad.buttonA;
+    GCControllerDirectionPad *dpad = controller.extendedGamepad ? controller.extendedGamepad.dpad : controller.gamepad.dpad;
+    
+    buttonX.valueChangedHandler = appleJoyButton0Handler;
+    buttonA.valueChangedHandler = appleJoyButton1Handler;
+    dpad.valueChangedHandler = appleJoystickhHandler;
+    
+    if ( controller.extendedGamepad ) {
+        controller.extendedGamepad.leftThumbstick.valueChangedHandler = appleJoystickhHandler;
+    }
 }
 
 int hardwarekeyboard= 0;
@@ -1950,7 +1993,6 @@ void paddle_trigger_icade(double dcycs)
 	g_moremem.g_paddle_buttons |= 0xc;
 	paddle_update_trigger_dcycs(dcycs);
 }
-
 
 int x_adb_get_keypad_x()
 {
