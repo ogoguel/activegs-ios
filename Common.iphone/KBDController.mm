@@ -897,6 +897,7 @@ extern int x_frame_rate ;
     dir += "save";
     dir += [segIndex UTF8String];
     g_savestate.saveState(dir.c_str());
+    [self optionsButton:nil];
     [pManager setNotificationText:[NSString stringWithFormat:@"Saved State #%@",segIndex]];
 }
 
@@ -916,6 +917,7 @@ extern int x_frame_rate ;
         return;
     }
     g_savestate.restoreState(dir.c_str());
+    [self optionsButton:nil];
     [pManager setNotificationText:[NSString stringWithFormat:@"Loaded State #%@",segIndex]];
 }
 
@@ -1067,7 +1069,7 @@ extern int x_frame_rate ;
     CGColorSpaceRelease(colorSpace);
 
 	const float lb = ho - LINEHEIGHT - OPTIONMARGIN;
-	const float WB = 50 * res;
+	const float WB = 100 * res;
 	
 	 UIButton* button = [UIButton buttonWithType:(UIButtonType)100]; 
 	 [button addTarget:self action:@selector(optionsButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -1081,7 +1083,7 @@ extern int x_frame_rate ;
 	 
 	 UIButton* buttonrestore = [UIButton buttonWithType:(UIButtonType)100]; 
 	 [buttonrestore addTarget:self action:@selector(restoreButton:) forControlEvents:UIControlEventTouchUpInside];
-	 [buttonrestore setTitle:@"Default" forState:UIControlStateNormal];
+	 [buttonrestore setTitle:@"Defaults" forState:UIControlStateNormal];
 	 
 	 buttonrestore.frame = CGRectMake(OPTIONMARGIN,lb,WB,LINEHEIGHT);
 	 
