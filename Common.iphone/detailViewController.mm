@@ -114,19 +114,35 @@
 
 }
 
+
+
 // IOS 5 Compatibility
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-   	return YES;
+    return YES;
 }
 
-// IOS6
 - (BOOL)shouldAutorotate
 {
-   	return YES;
+    return YES;
 }
 
+// IOS 8
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//        [self updateView];
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
 
 
 

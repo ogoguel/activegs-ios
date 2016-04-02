@@ -738,7 +738,7 @@ void x_init_persistent_path(MyString& hp)
     curOrientation = orientation;
 	NSLog(@"didRotate");
 
-    
+    /*
 	if (self.primaryViewController != [pManager getEmulatorView])
 	{
         if (self.primaryViewController == [pManager getBrowserView])
@@ -747,6 +747,8 @@ void x_init_persistent_path(MyString& hp)
 			[[pManager getInfoView] updateView:orientation];
 		return ;
 	}
+     
+     */
      
    
 /*

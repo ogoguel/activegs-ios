@@ -55,8 +55,14 @@
 
 }
 
+/*
+-(void)updateView:(UIDeviceOrientation)_orientation
+{
+    
+}
+*/
 
--(void)updateView:(UIDeviceOrientation)_orientation 
+-(void)updateView
 {
 	debug_printf("updateView infoViewController");
 	
@@ -68,26 +74,8 @@
 	else 
 		 self.view = self.landscapeView;
 	
-//    self.view = self.portraitView;
-	
+    self.view = self.portraitView;
     
-	CGAffineTransform matv = CGAffineTransformIdentity;
-	matv = CGAffineTransformRotate (matv,(270-[pManager getAngle])*M_PI/180);	//Avec
-	self.view.transform = matv;
-	
-	CGRect rv2 = [[UIScreen mainScreen] applicationFrame];
-	CGRect rv3 = CGRectApplyAffineTransform(rv2,matv);
-	rv3.origin.x = 0;
-	rv3.origin.y = 0;
-	[self.view setBounds:rv3]; 
-	
-	CGRect rscreen = [[UIScreen mainScreen] applicationFrame];
-	CGRect vscreen = self.view.frame;
-					  
-	vscreen.origin.x = (rscreen.size.width - self.view.frame.size.width)/2;
-	vscreen.origin.y = (rscreen.size.height-self.view.frame.size.height)/2;	
-	[self.view setFrame:vscreen];
-	
 	// pour réactiver les gestures
 	[self viewDidAppear:FALSE];
 	
@@ -134,12 +122,28 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO;
+    return YES;
 }
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
+}
+
+// IOS 8
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self updateView];
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 @end

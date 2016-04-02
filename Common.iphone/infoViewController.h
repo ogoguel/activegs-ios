@@ -20,7 +20,8 @@
 @property (nonatomic, strong) IBOutlet UIView* portraitView;
 @property (nonatomic, strong) IBOutlet UIView* landscapeView;
 
-- (void)updateView:(UIDeviceOrientation)_orientation ;
+//- (void)updateView:(UIDeviceOrientation)_orientation ;
+- (void)updateView ;
 - (IBAction) doneButton:(id)_sender;
 - (IBAction) parametersButton:(id)_sender;
 - (IBAction) emailButton:(id)_sender;

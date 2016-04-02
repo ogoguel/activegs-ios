@@ -540,7 +540,7 @@
 		09FA607C125A7B3E00B07F77 /* activegsList.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = activegsList.mm; sourceTree = "<group>"; };
 		09FA607D125A7B3E00B07F77 /* activegsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = activegsViewController.h; sourceTree = "<group>"; };
 		09FA607E125A7B3E00B07F77 /* activegsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = activegsViewController.mm; sourceTree = "<group>"; };
-		09FA607F125A7B3E00B07F77 /* activegsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = activegsViewController.xib; sourceTree = "<group>"; };
+		09FA607F125A7B3E00B07F77 /* activegsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = activegsViewController.xib; path = ../Common.iphone/activegsViewController.xib; sourceTree = "<group>"; };
 		09FA6082125A7B3E00B07F77 /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
 		09FA6083125A7B3E00B07F77 /* asyncimageview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = asyncimageview.mm; sourceTree = "<group>"; };
 		09FA6086125A7B3E00B07F77 /* GTMUIView+SubtreeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMUIView+SubtreeDescription.h"; sourceTree = "<group>"; };
@@ -708,6 +708,7 @@
 		09B8EB85163B2C06000A9F6B /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				09FA607F125A7B3E00B07F77 /* activegsViewController.xib */,
 				0916BB03129473CE001727AF /* infoViewController-ipad.xib */,
 				09A5CE75125D422D0018DC22 /* infoViewController.xib */,
 				099CD904125E6F6E008EFD6C /* detailViewController.xib */,
@@ -974,7 +975,6 @@
 				09FA607C125A7B3E00B07F77 /* activegsList.mm */,
 				09FA607D125A7B3E00B07F77 /* activegsViewController.h */,
 				09FA607E125A7B3E00B07F77 /* activegsViewController.mm */,
-				09FA607F125A7B3E00B07F77 /* activegsViewController.xib */,
 				09FA6082125A7B3E00B07F77 /* asyncimageview.h */,
 				09FA6083125A7B3E00B07F77 /* asyncimageview.mm */,
 				09FA6086125A7B3E00B07F77 /* GTMUIView+SubtreeDescription.h */,
