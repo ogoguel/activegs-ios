@@ -1,0 +1,64 @@
+# KEGS configuration file version 0.91
+
+s5d1 = Nucleus.2mg
+s5d2 = #::
+
+s6d1 = #::dos33.dsk
+s6d2 = #::
+
+s7d1 = #
+s7d2 = #::
+s7d3 = #::
+s7d4 = #::
+s7d5 = #::
+s7d6 = #::
+s7d7 = #::
+s7d8 = #::
+s7d9 = #::
+s7d10 = #::
+s7d11 = #::
+s7d12 = #::
+s7d13 = #::
+s7d14 = #::
+s7d15 = #::
+s7d16 = #::
+s7d17 = #::
+s7d18 = #::
+s7d19 = #::
+s7d20 = #::
+s7d21 = #::
+s7d22 = #::
+s7d23 = #::
+s7d24 = #::
+s7d25 = #::
+s7d26 = #::
+s7d27 = #::
+s7d28 = #::
+s7d29 = #::
+s7d30 = #::
+s7d31 = #::
+s7d32 = #::
+
+g_joystick_type = 0
+g_sim65816.g_limit_speed = 2
+
+
+bram1[00] = 00 00 00 01 00 00 0d 06 02 01 01 00 01 00 00 00
+bram1[10] = 00 00 07 06 02 01 01 00 00 00 0f 06 06 00 05 06
+bram1[20] = 01 00 00 00 00 00 00 01 05 00 00 00 03 02 02 02
+bram1[30] = 00 00 00 00 00 00 00 00 00 00 01 02 03 04 05 06
+bram1[40] = 07 00 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d
+bram1[50] = 0e 0f ff ff ff ff ff ff ff 00 ff ff ff ff ff 81
+bram1[60] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[70] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[80] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[90] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[a0] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[b0] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[c0] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[d0] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[e0] = ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+bram1[f0] = ff ff ff ff ff ff ff ff ff ff ff ff 3c 77 96 dd
+
+
+

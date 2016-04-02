@@ -1,0 +1,1 @@
+open -a Google\ Chrome --args --disable-web-security --args --allow-file-access-from-files file://$PWD/out/index.html
