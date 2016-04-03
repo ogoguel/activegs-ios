@@ -61,6 +61,13 @@ void xmltostring(simplexml* _this,MyString& _output)
 	
 }
 
+@interface DiskImageInfo : NSObject
+@property (strong, nonatomic) NSString *name;
+@property (nonatomic) NSUInteger slotNumber;
+@end
+
+@implementation DiskImageInfo
+@end
 
 static	UIImage* defaultImage2GS = nil;
 static	UIImage* defaultImageII = nil;
@@ -101,101 +108,151 @@ static	UIImage* defaultImageII = nil;
 	
 }
 
--(void)retrieveDocumentList:(MyString&) tempXML withBaseURL:(MyString&) _baseUrl;
-{
-		
-	tempXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<list version=\"1\">";
-	tempXML += "<source>My 2GS</source>";
-	
-	NSArray *dopaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+-(void) createXmlUsingStringRef:(MyString&)tempXML withBaseURLRef:(MyString&)_baseUrl {
+
+    tempXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<list version=\"1\">";
+    tempXML += "<source>My 2GS</source>";
+    
+    NSArray *dopaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [dopaths objectAtIndex:0];
-	NSFileManager *manager = [NSFileManager defaultManager];
-//    NSArray *fileList = [manager directoryContentsAtPath:documentsDirectory];
-	NSError* err;
-	NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:&err];
-	
-	MyString ignoreList;
-	
-	const char* utf8docdir = [documentsDirectory UTF8String];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    //    NSArray *fileList = [manager directoryContentsAtPath:documentsDirectory];
+    NSError* err;
+    NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:&err];
+    
+    MyString ignoreList;
+    
+    const char* utf8docdir = [documentsDirectory UTF8String];
     listPath.Format("%s/LOCAL.ACTIVEGSXML",utf8docdir);
     _baseUrl =listPath;
-	
+    
     CDownload dl(utf8docdir);
-	dl.bNotifyDownloadFailure = true;
-	
-	
-	// parse déjà les fichier .activegsxml
-	
+    dl.bNotifyDownloadFailure = true;
+    
+    
+    // parse déjà les fichier .activegsxml
+    
     for (NSString *s in fileList)
-	{
-		const char* fn = [s UTF8String];
-		const char* ext = getext(fn);
-		
-		if (strcasecmp(ext,"activegsxml"))
-			continue;
-	
-		/*
-		MyString fullpathname = utf8docdir;
-		fullpathname += "/";
-		fullpathname += fn;
-		*/
-		MyString path;
-		MyString shortname;
-	
-		dl.retrieveFile(fn,path,shortname);
-		FILE* f= fopen(path.c_str(),"rb");
-		if (!f) continue;
-		fseek(f,0,SEEK_END);
-		int si = ftell(f);
-
-		
-		fseek(f,0,SEEK_SET);
-		char *buf = new char[si+1];
-		memset(buf,0,si+1);
-		fread(buf,1,si,f);
-		simplexml* p = new simplexml(buf);
-			if (!p) 
-			{
-				delete buf;
-				continue;
-			}
-			if (!strcasecmp(p->key(),"config"))
-			{
-				MyString temp;
-				xmltostring(p,temp);
-				printf("%s",temp.c_str());
-				tempXML += temp.c_str();
-				
-				// rajoute les images dans une liste blackliste
-				for(int i=0;i<p->number_of_children();i++)
-				{
-					simplexml* child = p->child(i);
-					if (!strcmp(child->key(),"image"))
-					{
-						int order;
-						MyString path;
-						int isLocal = dl.parseFilenameAndMakeAbsolute(child->value(), order, path);
-						if (isLocal)
-						{
-							ignoreList+="?";
-							ignoreList+=getfile(path);
-							ignoreList+="?";
-					//		printf("ignoring:%s",getfile(path.c_str()));
-						}
-					}
-				}
-			}
-		delete buf;
-		fclose(f);
-	}
-	
-	// parse les autres fichiers
-	for (NSString *s in fileList)
-	{
-		const char* fn = [s UTF8String];
-		const char* ext = getext(fn);
-		
-		if (    strcasecmp(ext,"zip")
+    {
+        const char* fn = [s UTF8String];
+        const char* ext = getext(fn);
+        
+        if (strcasecmp(ext,"activegsxml"))
+            continue;
+        
+        /*
+         MyString fullpathname = utf8docdir;
+         fullpathname += "/";
+         fullpathname += fn;
+         */
+        MyString path;
+        MyString shortname;
+        
+        dl.retrieveFile(fn,path,shortname);
+        FILE* f= fopen(path.c_str(),"rb");
+        if (!f) continue;
+        fseek(f,0,SEEK_END);
+        int si = ftell(f);
+        
+        
+        fseek(f,0,SEEK_SET);
+        char *buf = new char[si+1];
+        memset(buf,0,si+1);
+        fread(buf,1,si,f);
+        simplexml* p = new simplexml(buf);
+        if (!p)
+        {
+            delete buf;
+            continue;
+        }
+        if (!strcasecmp(p->key(),"config"))
+        {
+            MyString temp;
+            xmltostring(p,temp);
+            printf("%s",temp.c_str());
+            tempXML += temp.c_str();
+            
+            // rajoute les images dans une liste blackliste
+            for(int i=0;i<p->number_of_children();i++)
+            {
+                simplexml* child = p->child(i);
+                if (!strcmp(child->key(),"image"))
+                {
+                    int order;
+                    MyString path;
+                    int isLocal = dl.parseFilenameAndMakeAbsolute(child->value(), order, path);
+                    if (isLocal)
+                    {
+                        ignoreList+="?";
+                        ignoreList+=getfile(path);
+                        ignoreList+="?";
+                        //		printf("ignoring:%s",getfile(path.c_str()));
+                    }
+                }
+            }
+        }
+        delete buf;
+        fclose(f);
+    }
+    
+    // support multi-disk images by checking for the presence of "disk1" and create multiple disk image elements
+    
+    // setup multi disk detection
+    NSString *currentMultiDiskPrefix = nil;
+    NSMutableArray *currentMultiDiskFilenames = [NSMutableArray array];
+    
+    // block to write out xml for individual programs
+    void (^generateXmlForDiskImages)(NSArray *) = ^(NSArray *diskImages) {
+        DiskImageInfo *firstImage = [diskImages firstObject];
+        const char* cFilename = [firstImage.name UTF8String];
+        int slot = (int) firstImage.slotNumber;
+        
+        tempXML += "<config version=\"2\">";
+        tempXML += "<name>";
+        tempXML += getfilenoext(cFilename);
+        tempXML += "</name>";
+        
+        if (slot==6)
+            tempXML += "<format>APPLE 2</format>";
+        else
+            tempXML += "<format>2GS</format>";
+        
+        tempXML += "<pic type=\"thumbnail\">";
+        //			tempXML += utf8docdir;
+        //			tempXML += "/";
+        tempXML += getfilenoext(cFilename);
+        tempXML += ".png</pic>";
+        
+        MyString slotstr;
+        slotstr.Format("%d",slot);
+        
+        BOOL isIIGSMultiMoreThanTwoDisks = slot != 6 && diskImages.count > 2;
+        
+        [diskImages enumerateObjectsUsingBlock:^(DiskImageInfo *diskImage, NSUInteger idx, BOOL * _Nonnull stop) {
+            unsigned long diskIndex = idx + 1;
+            if ( slot == 6 || isIIGSMultiMoreThanTwoDisks ) {
+                // for Apple II disks, assume 1 disk drive
+                // for Apple IIGS that have more than 2 disks, use 1 drive
+                diskIndex = 1;
+            }
+            tempXML += "<image slot=\"";
+            tempXML += slotstr;
+            tempXML += [[NSString stringWithFormat:@"\" disk=\"%lu\">",diskIndex] UTF8String];
+            tempXML += [diskImage.name UTF8String];
+            tempXML += "</image>";
+        }];
+        tempXML += "<bootslot>";
+        tempXML += slotstr;
+        tempXML += "</bootslot>";
+        tempXML += "</config>";
+    };
+    
+    for (NSString *s in fileList)
+    {
+        const char* fn = [s UTF8String];
+        const char* ext = getext(fn);
+        
+        if (    strcasecmp(ext,"zip")
             &&  strcasecmp(ext,"2mg")
             &&  strcasecmp(ext,"raw")
             && strcasecmp(ext,"dsk")
@@ -203,73 +260,82 @@ static	UIImage* defaultImageII = nil;
             && strcasecmp(ext,"do")
             && strcasecmp(ext,"nib")
             && strcasecmp(ext,"bin"))
-			continue;
-		
-		// si le fichier est dans la liste des blacklistée : ignore
-		MyString pat;
-		pat.Format("?%s?",fn);
-		if (ignoreList.Find(pat)!=-1)
-			continue;
-		
-		/*
-		MyString fullpathname = utf8docdir;
-		fullpathname += "/";
-		fullpathname += fn;
-		*/
-		
-		MyString path;
-		MyString shortname;
-	//	CDownload dl;
-	//	dl.bNotifyDownloadFailure = true;
-		dl.retrieveFile(fn,path,shortname);
-		FILE* f= fopen(path.c_str(),"rb");
-		if (!f) continue;
-		fseek(f,0,SEEK_END);
-		int si = ftell(f);
-	
-			int slot;
-			if (si < 800*1024)
-				slot = 6;
-			else
-				if (si < 900*1024)
-					slot = 5;
-				else 
-					slot = 7;
-			
-			tempXML += "<config version=\"2\">";
-			tempXML += "<name>";
-			tempXML += getfilenoext(fn);
-			tempXML += "</name>";
-			
-			if (slot==6)
-				tempXML += "<format>APPLE 2</format>";
-			else
-				tempXML += "<format>2GS</format>";
-			
-			tempXML += "<pic type=\"thumbnail\">";
-//			tempXML += utf8docdir;
-//			tempXML += "/";
-			tempXML += getfilenoext(fn);
-			tempXML += ".png</pic>";
-			
-			tempXML += "<image slot=\"";
-			MyString slotstr;
-			slotstr.Format("%d",slot);
-			tempXML += slotstr;
-			tempXML += "\" disk=\"1\">";
-			tempXML += fn;
-			tempXML += "</image>";
-			tempXML += "<bootslot>";
-			tempXML += slotstr;
-			tempXML += "</bootslot>";
-			tempXML += "</config>";
-			
-		
-		fclose(f);
+            continue;
+        
+        // si le fichier est dans la liste des blacklistée : ignore
+        MyString pat;
+        pat.Format("?%s?",fn);
+        if (ignoreList.Find(pat)!=-1)
+            continue;
+        
+        // check if file exists
+        MyString path;
+        MyString shortname;
+        dl.retrieveFile(fn,path,shortname);
+        FILE* f= fopen(path.c_str(),"rb");
+        if (!f) continue;
+        
+        // determine slot based on disk size
+        fseek(f,0,SEEK_END);
+        int si = (int) ftell(f);
+        int slot;
+        if (si < 800*1024)
+            slot = 6;
+        else
+            if (si < 900*1024)
+                slot = 5;
+            else
+                slot = 7;
+        fclose(f);
+
+        // strip out the spaces in the filename to help in comparison
+        NSString *comparisonFilename = [[s stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+
+        if ( currentMultiDiskPrefix != nil && [comparisonFilename containsString:currentMultiDiskPrefix] ) {
+            // in the middle of multidisk images, add this and continue
+            DiskImageInfo *info = [[DiskImageInfo alloc] init];
+            info.name = s;
+            info.slotNumber = slot;
+            [currentMultiDiskFilenames addObject:info];
+            continue;
+        }
+
+        // finish up creating the last multidisk images, if necessary
+        if ( [currentMultiDiskFilenames count] > 0 ) {
+            generateXmlForDiskImages(currentMultiDiskFilenames);
+            [currentMultiDiskFilenames removeAllObjects];
+            currentMultiDiskPrefix = nil;
+        }
+
+        // this is a new disk image set
+        // check if multi disk
+        NSRange rangeOfMultiDiskIndicator = [comparisonFilename rangeOfString:@"disk1"];
+        if ( rangeOfMultiDiskIndicator.location != NSNotFound ) {
+            [currentMultiDiskFilenames removeAllObjects];
+            DiskImageInfo *info = [[DiskImageInfo alloc] init];
+            info.name = s;
+            info.slotNumber = slot;
+            [currentMultiDiskFilenames addObject:info];
+            currentMultiDiskPrefix = [[comparisonFilename substringWithRange:NSMakeRange(0, rangeOfMultiDiskIndicator.location)] lowercaseString];
+            continue;
+        }
+        
+        // single disk
+        DiskImageInfo *diskImage = [[DiskImageInfo alloc] init];
+        diskImage.name = s;
+        diskImage.slotNumber = slot;
+        generateXmlForDiskImages(@[diskImage]);
     }
-	
-	tempXML+="</list>";
-	printf(tempXML.c_str());
+    
+    // deal with any left over multidisk images
+    if ( [currentMultiDiskFilenames count] > 0 ) {
+        generateXmlForDiskImages(currentMultiDiskFilenames);
+        [currentMultiDiskFilenames removeAllObjects];
+        currentMultiDiskPrefix = nil;
+    }
+    
+    tempXML+="</list>";
+    printf(tempXML.c_str());
 }
 
 - (simplexml*)addList:(const char*)_listPath
@@ -293,7 +359,8 @@ static	UIImage* defaultImageII = nil;
 	else 
 	{
         MyString baseURL;
-		[self retrieveDocumentList:xmlString withBaseURL:baseURL];
+        [self createXmlUsingStringRef:xmlString withBaseURLRef:baseURL];
+//		[self retrieveDocumentList:xmlString withBaseURL:baseURL];
         list.pathName = baseURL;
         list.processString(xmlString.c_str());
 
