@@ -208,7 +208,7 @@ static int baseid=0;
 			
 				for(int i=0;i<MAX_SCREENSHOTS;i++)
 				{
-					if (!screenShots[i].c_str())
+                    if (screenShots[i].GetLength()==0)
 					{
 						screenShots[i] = fn;
 						break;
