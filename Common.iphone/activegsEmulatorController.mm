@@ -532,7 +532,11 @@ int	x_lock_zoom = 0;
         
         // primary parameters
         
-        requiredOrientation = ([pManager getAngle]/90)+1;
+        if ( abs([pManager getAngle])==90.0f )
+            requiredOrientation = 0;
+        else
+            requiredOrientation = 1;
+      //  requiredOrientation = ([pManager getAngle]/90)+1;
         kbddelta =  [self.kbdc getEmulatorDelta];
         
         NSString* systemVer = [[UIDevice currentDevice] systemVersion];

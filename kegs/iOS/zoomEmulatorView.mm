@@ -21,8 +21,8 @@
 
 
 #undef debug_printf
-#define debug_printf(...)
-//#define debug_printf printf
+//#define debug_printf(...)
+#define debug_printf printf
 //#define SHOW_COLOR
 
 @implementation zoomEmulatorView
@@ -174,6 +174,13 @@ float refScaleLandscape;
 	   
     int w = (int)viewSize.width;
     int h = (int)viewSize.height;
+    
+    // Force Portrait
+    if (w > h)
+    {
+        w  = (int)viewSize.height;
+        h = (int)viewSize.width;
+    }
     
     debug_printf("apprect %d x %d\n",w,h);
     
