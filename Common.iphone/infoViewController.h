@@ -10,18 +10,13 @@
 	
 // Properties
 	UIView* _portraitView;
-	UIView* _landscapeView;
 	UILabel* _versionUI;
-	UILabel* _versionUILandscape;
 }
 
-@property (nonatomic, strong) IBOutlet UILabel* versionUILandscape;
 @property (nonatomic, strong) IBOutlet UILabel* versionUI;
 @property (nonatomic, strong) IBOutlet UIView* portraitView;
-@property (nonatomic, strong) IBOutlet UIView* landscapeView;
+@property (nonatomic, strong) IBOutlet UIScrollView *instructionsView;
 
-//- (void)updateView:(UIDeviceOrientation)_orientation ;
-- (void)updateView ;
 - (IBAction) doneButton:(id)_sender;
 - (IBAction) parametersButton:(id)_sender;
 - (IBAction) emailButton:(id)_sender;

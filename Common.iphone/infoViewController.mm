@@ -14,11 +14,7 @@
 @implementation infoViewController
 
 @synthesize versionUI=_versionIU;
-@synthesize versionUILandscape=_versionUILandscape;
 @synthesize portraitView= _portraitView;
-@synthesize landscapeView = _landscapeView;
-
-
 
 -(void)viewDidLoad
 {
@@ -27,11 +23,7 @@
     NSString *buildVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     
     
-	self.versionUILandscape.text=
     self.versionUI.text = [NSString stringWithFormat: @"v%@.%@  -- ActiveGS "TOSTRING(ACTIVEGSMAJOR)"."TOSTRING(ACTIVEGSMINOR)"."TOSTRING(ACTIVEGSBUILD)"",appVersion,buildVersion];
-    
-    [self.portraitView setFrame:[[UIScreen mainScreen] bounds] ];
-    [self.landscapeView setFrame:[[UIScreen mainScreen] bounds] ];
     
     // [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
@@ -39,7 +31,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
 	printf("viewDidAppear");
-
+    [super viewDidAppear:animated];
 
 	// Swipe left to go back to browsing	
 	UISwipeGestureRecognizer* grswipeleft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
@@ -53,32 +45,7 @@
 	grswiperight.cancelsTouchesInView = NO;
 	[self.view addGestureRecognizer:grswiperight];
 
-}
-
-/*
--(void)updateView:(UIDeviceOrientation)_orientation
-{
-    
-}
-*/
-
--(void)updateView
-{
-	debug_printf("updateView infoViewController");
-	
-	
-	BOOL isPortrait = abs([pManager getAngle])==90.0f ;
-	
-	if (isPortrait)
-		 self.view = self.portraitView;
-	else 
-		 self.view = self.landscapeView;
-	
-    self.view = self.portraitView;
-    
-	// pour réactiver les gestures
-	[self viewDidAppear:FALSE];
-	
+    [self.instructionsView flashScrollIndicators];
 }
 
 
@@ -133,17 +100,6 @@
 // IOS 8
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self updateView];
-        
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
 }
 
 @end
