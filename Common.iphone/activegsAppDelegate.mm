@@ -13,6 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #include "asynccommand.h"
 #import <sys/utsname.h>
+#import "GameControllerKeyRemapController.h"
 
 // Application Singleton
 activegsAppDelegate* pManager = nil;
@@ -613,6 +614,10 @@ void x_init_persistent_path(MyString& hp)
     
 }
 
+- (void) showKeyRemapController {
+    GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
+    [self.viewController presentViewController:remapController animated:YES completion:nil];
+}
 
 - (void) screenDidConnect:(NSNotification *)notification
 {

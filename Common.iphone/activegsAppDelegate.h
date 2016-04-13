@@ -156,6 +156,8 @@ extern enum machineSpecsEnum machineSpecs;
 -(void)setNotificationText:(NSString*) _text; 
 -(void)updateNotificationView:(CGRect) newRect;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+- (void) showKeyRemapController;
+
 @property(nonatomic,strong,getter=getEmulatorView) activegsEmulatorController* emulatorController;
 @property(nonatomic,strong,getter=getBrowserView) ACTIVEGS_LAUNCHVIEWCONTROLLER* viewController;
 @property(nonatomic,strong,getter=getInfoView) infoViewController* infoController;

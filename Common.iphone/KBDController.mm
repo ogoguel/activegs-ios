@@ -22,6 +22,7 @@
 #include "../kegs/src/SaveState.h"
 #include "../common/activedownload.h"
 #import "MfiGameControllerHandler.h"
+#import "GameControllerKeyRemapController.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS
     #include "UICustomKey.h"
@@ -280,6 +281,7 @@ int isHardwareKeyboard()
     UISegmentedControl *saveStateSegmentedControl;
 }
 @property (nonatomic,strong) MfiGameControllerHandler *mfiControllerHandler;
+@property (nonatomic,strong) KeyMapper *keyMapper;
 @end
 
 @implementation KBDController
@@ -608,6 +610,8 @@ extern int findCode(const char* _s);
     if ( controller.extendedGamepad ) {
         controller.extendedGamepad.leftThumbstick.valueChangedHandler = appleJoystickhHandler;
     }
+    
+    self.keyMapper = [[KeyMapper alloc] init];
 }
 
 int hardwarekeyboard= 0;
@@ -964,6 +968,13 @@ extern int x_frame_rate ;
     [pManager setNotificationText:[NSString stringWithFormat:@"Loaded State #%@",segIndex]];
 }
 
+-(void) remapControlsButtonPressed:(id)sender {
+    r_sim65816.pause();
+    GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
+    remapController.keyMapper = self.keyMapper;
+    [self presentViewController:remapController animated:YES completion:nil];
+}
+
 //
 -(void)addRuntimeControls
 {
@@ -1063,6 +1074,20 @@ extern int x_frame_rate ;
     [self.runtimeControlsOptions addSubview:loadStateButton];    
     
     l+=LINEHEIGHT;
+    l += 2.0;
+    
+    UIButton *remapControlsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    remapControlsButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT);
+    [remapControlsButton setTitle:@"Remap Controls" forState:UIControlStateNormal];
+    remapControlsButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    [remapControlsButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+    remapControlsButton.backgroundColor = [UIColor clearColor];
+    remapControlsButton.layer.borderWidth = 1.0f;
+    remapControlsButton.layer.borderColor = [self.view.tintColor CGColor];
+    [remapControlsButton addTarget:self action:@selector(remapControlsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:remapControlsButton];
+
+    l += LINEHEIGHT;
     nbs++;
 	
 	float w = OPTIONWIDTH+OPTIONMARGIN*2;
