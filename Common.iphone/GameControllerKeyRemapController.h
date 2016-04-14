@@ -14,6 +14,7 @@
 @property (nonatomic, strong) IBOutlet UIView *keyboardContainerView;
 @property (nonatomic, strong) IBOutlet UIButton *saveButton;
 @property (nonatomic, strong) IBOutlet UIButton *cancelButton;
+@property (nonatomic, strong) IBOutlet UIButton *defaultsButton;
 @property (nonatomic, strong) KeyMapper *keyMapper;
 
 @property(nonatomic, copy) void (^onDismissal)();

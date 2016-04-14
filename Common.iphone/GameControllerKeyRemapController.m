@@ -31,15 +31,14 @@ struct KeyCap {
 
 struct KeyCap keyCapDefinitions[] = {
     { 1.2,"caps",KEY_CAPS,0 },
-    { 1.0,"🍎",KEY_OPTION,0 },
-    { 1.0,"",KEY_APPLE,0 },
+    { 1.5,"opt",KEY_APPLE,0 },
+    { 1.0,"",KEY_OPTION,0 },
     { 1.0,"`",KEY_TILDE,0 },
-    { 5.8," ",KEY_SPACE,0 },
-    { 1.0,"x",KEY_DOWN_CURSOR,0 },
-    { 1.0,"->",KEY_RIGHT_CURSOR,0 },
-    { 1.0,"<-",KEY_LEFT_CURSOR,0 },
-    { 1.0,"^",KEY_UP_CURSOR,0 },
-    { 1.0,"v",KEY_DOWN_CURSOR,0 },
+    { 6.3," ",KEY_SPACE,0 },
+    { 1.0,"←",KEY_LEFT_CURSOR,0 },
+    { 1.0,"→",KEY_RIGHT_CURSOR,0 },
+    { 1.0,"↑",KEY_UP_CURSOR,0 },
+    { 1.0,"↓",KEY_DOWN_CURSOR,0 },
     { -1,0,0,0 },
     { 2.5,"shift",KEY_SHIFT,0 },
     { 1.0,"Z",KEY_Z,0 },
@@ -102,6 +101,7 @@ struct KeyCap keyCapDefinitions[] = {
 @interface GameControllerKeyRemapController () <UIAlertViewDelegate>
 @property (nonatomic, strong) NSMutableArray *keyCapViews;
 @property (nonatomic, strong) UIAlertView *alertView;
+@property (nonatomic, strong) KeyMapper *keyMapperWorkingCopy;
 @end
 
 @implementation GameControllerKeyRemapController
@@ -109,10 +109,13 @@ struct KeyCap keyCapDefinitions[] = {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.keyCapViews = [NSMutableArray array];
+    self.keyMapperWorkingCopy = [self.keyMapper copy];
     self.saveButton.layer.borderWidth = 1.0f;
     self.saveButton.layer.borderColor = [self.view.tintColor CGColor];
     self.cancelButton.layer.borderWidth = 1.0f;
-    self.cancelButton.layer.borderColor = [self.view.tintColor CGColor];
+    self.cancelButton.layer.borderColor = [[UIColor redColor] CGColor];
+    self.defaultsButton.layer.borderWidth = 1.0f;
+    self.defaultsButton.layer.borderColor = [self.view.tintColor CGColor];
     [self constructKeyboard];
 }
 
@@ -166,7 +169,7 @@ struct KeyCap keyCapDefinitions[] = {
             keyCapView.translatesAutoresizingMaskIntoConstraints = NO;
             keyCapView.layer.borderWidth = 1.0f;
             keyCapView.layer.borderColor = [[UIColor blackColor] CGColor];
-            [keyCapView setupWithKeyMapper:self.keyMapper];
+            [keyCapView setupWithKeyMapper:self.keyMapperWorkingCopy];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onKeyTap:)];
             [keyCapView addGestureRecognizer:tap];
             [self.keyCapViews addObject:keyCapView];
@@ -218,7 +221,7 @@ struct KeyCap keyCapDefinitions[] = {
 
 - (void) refreshAllKeyCapViews {
     for (KeyCapView *view in self.keyCapViews) {
-        [view setupWithKeyMapper:self.keyMapper];
+        [view setupWithKeyMapper:self.keyMapperWorkingCopy];
     }
 }
 
@@ -241,62 +244,62 @@ struct KeyCap keyCapDefinitions[] = {
     if ( controller.extendedGamepad ) {
         controller.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element) {
             if ( gamepad.buttonA.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_A];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_A];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonB.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_B];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_B];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonX.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_X];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_X];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonY.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_Y];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_Y];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.leftShoulder.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_LS];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_LS];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.rightShoulder.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_RS];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_RS];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.xAxis.value > 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_RIGHT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_RIGHT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.xAxis.value < 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_LEFT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_LEFT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.yAxis.value > 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_UP];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_UP];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.yAxis.value < 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_DOWN];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_DOWN];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.rightTrigger.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_RT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_RT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.leftTrigger.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_LT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_LT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
@@ -304,52 +307,52 @@ struct KeyCap keyCapDefinitions[] = {
     } else {
         controller.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element) {
             if ( gamepad.buttonA.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_A];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_A];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonB.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_B];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_B];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonX.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_X];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_X];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.buttonY.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_Y];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_Y];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];;
                 return;
             }
             if ( gamepad.leftShoulder.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_LS];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_LS];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.rightShoulder.pressed ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_BUTTON_RS];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_BUTTON_RS];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.xAxis.value > 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_RIGHT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_RIGHT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.xAxis.value < 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_LEFT];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_LEFT];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.yAxis.value > 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_UP];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_UP];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
             if ( gamepad.dpad.yAxis.value < 0.0f ) {
-                [self.keyMapper mapKey:keyboardKey ToControl:MFI_DPAD_DOWN];
+                [self.keyMapperWorkingCopy mapKey:keyboardKey ToControl:MFI_DPAD_DOWN];
                 [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
                 return;
             }
@@ -370,16 +373,24 @@ struct KeyCap keyCapDefinitions[] = {
 }
 
 -(IBAction)saveButtonTapped:(id)sender {
+    self.keyMapper = [self.keyMapperWorkingCopy copy];
     [self.keyMapper saveKeyMapping];
+    self.keyMapperWorkingCopy = nil;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
         self.onDismissal();
     }];
 }
 
 -(IBAction)cancelButtonTapped:(id)sender {
+    self.keyMapperWorkingCopy = nil;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
         self.onDismissal();
     }];    
+}
+
+-(IBAction) defaultsButtonTapped:(id)sender {
+    [self.keyMapperWorkingCopy resetToDefaults];
+    [self refreshAllKeyCapViews];
 }
 
 #
@@ -390,7 +401,7 @@ struct KeyCap keyCapDefinitions[] = {
     [self stopRemappingControls];
     if ( buttonIndex == 1 ) {
         AppleKeyboardKey mappedKey = alertView.tag;
-        [self.keyMapper unmapKey:mappedKey];
+        [self.keyMapperWorkingCopy unmapKey:mappedKey];
     }
 }
 

@@ -9,6 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameControllerKeyRemapController">
             <connections>
                 <outlet property="cancelButton" destination="zAx-JO-gDf" id="i1M-NV-0UN"/>
+                <outlet property="defaultsButton" destination="Ih9-iG-ECT" id="Ho3-g5-rOQ"/>
                 <outlet property="keyboardContainerView" destination="PbL-95-ilz" id="UPI-70-2J7"/>
                 <outlet property="saveButton" destination="Ihv-aC-sb7" id="Byt-Gy-MVK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,11 +21,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbL-95-ilz" userLabel="Keyboard Container View">
-                    <rect key="frame" x="0.0" y="360" width="600" height="240"/>
+                    <rect key="frame" x="0.0" y="380" width="600" height="220"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="220" id="QNq-rB-Zxd"/>
+                    </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ihv-aC-sb7">
-                    <rect key="frame" x="96" y="203" width="107" height="44"/>
+                    <rect key="frame" x="88.5" y="158" width="107" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="107" id="82d-Qy-Xfg"/>
                         <constraint firstAttribute="height" constant="44" id="bOc-8m-OXA"/>
@@ -35,8 +39,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAx-JO-gDf">
-                    <rect key="frame" x="396.5" y="203" width="107" height="44"/>
-                    <state key="normal" title="Cancel"/>
+                    <rect key="frame" x="404.5" y="158" width="107" height="44"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="byq-hr-jDY"/>
                     </connections>
@@ -47,6 +53,23 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ih9-iG-ECT">
+                    <rect key="frame" x="247" y="158" width="107" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="8aa-Yx-81a"/>
+                        <constraint firstAttribute="height" constant="44" id="qBN-1t-J0B"/>
+                    </constraints>
+                    <state key="normal" title="Defaults"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="8aa-Yx-81a"/>
+                            <exclude reference="qBN-1t-J0B"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="defaultsButtonTapped:" destination="-1" eventType="touchUpInside" id="reT-vk-ZW4"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -55,17 +78,22 @@
                 <constraint firstItem="PbL-95-ilz" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.4" id="7Tq-sc-r5F"/>
                 <constraint firstItem="PbL-95-ilz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ALZ-jN-EW8"/>
                 <constraint firstItem="zAx-JO-gDf" firstAttribute="height" secondItem="Ihv-aC-sb7" secondAttribute="height" id="HFd-QQ-Vpx"/>
-                <constraint firstItem="zAx-JO-gDf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="1.5" id="Kdj-w0-y90"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="1.5" constant="8" id="Kdj-w0-y90"/>
+                <constraint firstItem="Ih9-iG-ECT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Mgp-p2-fmB"/>
+                <constraint firstItem="Ih9-iG-ECT" firstAttribute="width" secondItem="Ihv-aC-sb7" secondAttribute="width" id="R6y-RO-5t1"/>
+                <constraint firstItem="Ih9-iG-ECT" firstAttribute="top" secondItem="Ihv-aC-sb7" secondAttribute="top" id="XbU-xP-HYw"/>
                 <constraint firstItem="x2H-qm-EGT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZTO-dh-bwz"/>
                 <constraint firstItem="zAx-JO-gDf" firstAttribute="centerX" secondItem="Ihv-aC-sb7" secondAttribute="centerX" multiplier="2" id="hJc-6p-crb"/>
                 <constraint firstAttribute="bottom" secondItem="PbL-95-ilz" secondAttribute="bottom" id="kCc-QA-uYA"/>
                 <constraint firstItem="zAx-JO-gDf" firstAttribute="width" secondItem="Ihv-aC-sb7" secondAttribute="width" id="mPI-1j-gTO"/>
-                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="0.5" id="niB-eU-bnx"/>
-                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="0.75" id="vLe-Gk-22l"/>
+                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="0.5" constant="-8" id="niB-eU-bnx"/>
+                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="0.6" id="vLe-Gk-22l"/>
                 <constraint firstAttribute="trailing" secondItem="PbL-95-ilz" secondAttribute="trailing" id="zbm-Dr-7Jd"/>
+                <constraint firstItem="Ih9-iG-ECT" firstAttribute="height" secondItem="Ihv-aC-sb7" secondAttribute="height" id="zd1-zF-ZZI"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="7Tq-sc-r5F"/>
                     <exclude reference="hJc-6p-crb"/>
                 </mask>
             </variation>

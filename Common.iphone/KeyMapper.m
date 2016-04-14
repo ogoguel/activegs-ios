@@ -14,17 +14,30 @@
 
 @implementation KeyMapper
 
--(instancetype) init {
-    if ( self = [super init] ) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"keyMapping"];
-        if ( data == nil || ![data isKindOfClass:[NSData class]] ) {
-            self.keyMapping = [NSMutableDictionary dictionary];
-        } else {
-            NSDictionary *fetchedDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            self.keyMapping = [fetchedDict mutableCopy];
-        }
+-(void)loadFromDefaults {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"keyMapping"];
+    if ( data == nil || ![data isKindOfClass:[NSData class]] ) {
+        self.keyMapping = [self defaultMapping];
+    } else {
+        NSDictionary *fetchedDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        self.keyMapping = [fetchedDict mutableCopy];
     }
-    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    KeyMapper *copy = [[[self class] alloc] init];
+    copy.keyMapping = [self.keyMapping mutableCopy];
+    return copy;
+}
+
+-(NSMutableDictionary*) defaultMapping {
+    return [@{ [NSNumber numberWithInteger:MFI_BUTTON_X] : [NSNumber numberWithInteger:KEY_OPTION],
+               [NSNumber numberWithInteger:MFI_BUTTON_A] : [NSNumber numberWithInteger:KEY_APPLE]
+               } mutableCopy];
+}
+
+-(void) resetToDefaults {
+    self.keyMapping = [self defaultMapping];
 }
 
 -(void) saveKeyMapping {

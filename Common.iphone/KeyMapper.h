@@ -16,8 +16,8 @@ typedef NS_ENUM(NSInteger, AppleKeyboardKey) {
     KEY_SPACE = 0x31,
     KEY_RIGHT_CURSOR = 0x3C,
     KEY_LEFT_CURSOR = 0x3B,
-    KEY_UP_CURSOR = 0x5B,
-    KEY_DOWN_CURSOR = 0x13,
+    KEY_UP_CURSOR = 0x3E,
+    KEY_DOWN_CURSOR = 0x3D,
     KEY_SHIFT = 0x38,
     KEY_Z = 0x06,
     KEY_X = 0x07,
@@ -105,8 +105,10 @@ typedef NS_ENUM(NSInteger, KeyCapIndex) {
     KeyCapIndexShiftedKey = 3
 };
 
-@interface KeyMapper : NSObject
+@interface KeyMapper : NSObject<NSCopying>
 
+-(void)loadFromDefaults;
+-(void) resetToDefaults;
 -(void) saveKeyMapping;
 -(void) mapKey:(AppleKeyboardKey)keyboardKey ToControl:(KeyMapMappableButton)button;
 -(void) unmapKey:(AppleKeyboardKey)keyboardKey;

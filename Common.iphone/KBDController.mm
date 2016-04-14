@@ -570,6 +570,7 @@ extern int findCode(const char* _s);
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
     
     self.keyMapper = [[KeyMapper alloc] init];
+    [self.keyMapper loadFromDefaults];
     
     self.mfiControllerHandler = [[MfiGameControllerHandler alloc] init];
     __weak typeof(self) weakSelf = self;
@@ -678,13 +679,13 @@ extern int findCode(const char* _s);
         };
     }
 
-    __block AppleKeyboardKey mappedKeyRS = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RS];
-    if ( mappedKeyRS != NSNotFound ) {
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RS];
+    if ( mappedKey != NSNotFound ) {
         buttonRS.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
             if ( pressed ) {
-                add_event_key((int)mappedKeyRS, 0);
+                add_event_key((int)mappedKey, 0);
             } else {
-                add_event_key((int)mappedKeyRS, 1);
+                add_event_key((int)mappedKey, 1);
             }
         };
     }
@@ -1107,6 +1108,7 @@ extern int x_frame_rate ;
     GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
     remapController.keyMapper = self.keyMapper;
     remapController.onDismissal = ^{
+        [self.keyMapper loadFromDefaults];
         [self setupMfiController:[[GCController controllers] firstObject]];
         r_sim65816.resume();
     };
@@ -1214,6 +1216,15 @@ extern int x_frame_rate ;
     l+=LINEHEIGHT;
     l += 2.0;
     
+    UILabel* remapControlsLabel = [[UILabel alloc] initWithFrame:CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT)];
+    remapControlsLabel.text = @"Key Bindings";
+    remapControlsLabel.textAlignment = NSTextAlignmentCenter;
+    remapControlsLabel.font = [UIFont systemFontOfSize:12*res];
+    remapControlsLabel.backgroundColor = [UIColor clearColor];
+    [self.runtimeControlsOptions addSubview:remapControlsLabel];
+    l += LINEHEIGHT;
+    
+    l += 2.0;
     UIButton *remapControlsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     remapControlsButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT);
     [remapControlsButton setTitle:@"Remap Controls" forState:UIControlStateNormal];
