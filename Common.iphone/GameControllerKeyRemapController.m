@@ -10,6 +10,8 @@
 #import "GameControllerKeyRemapController.h"
 #import "KeyCapView.h"
 #import "KeyMapper.h"
+#import "MfiGameControllerHandler.h"
+
 
 const CGFloat NUMBER_OF_KEYS_IN_ROW = 15.0f;
 
@@ -102,12 +104,17 @@ struct KeyCap keyCapDefinitions[] = {
 @property (nonatomic, strong) NSMutableArray *keyCapViews;
 @property (nonatomic, strong) UIAlertView *alertView;
 @property (nonatomic, strong) KeyMapper *keyMapperWorkingCopy;
+@property (nonatomic, strong) MfiGameControllerHandler *controllerHandler;
 @end
 
 @implementation GameControllerKeyRemapController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.controllerHandler = [[MfiGameControllerHandler alloc] init];
+    [self.controllerHandler discoverController:^(GCController *gameController) {
+    } disconnectedCallback:^{
+    }];
     self.keyCapViews = [NSMutableArray array];
     self.keyMapperWorkingCopy = [self.keyMapper copy];
     self.saveButton.layer.borderWidth = 1.0f;
