@@ -31,9 +31,17 @@
         self.keyLabelAlt.text = @"";
     }
     self.mappedButtonLabel.text = @"";
-    KeyMapMappableButton mappedButton = [keyMapper getControlForMappedKey:[[self.keyDef objectAtIndex:KeyCapIndexCode] intValue]];
-    if ( mappedButton != NSNotFound ) {
-        self.mappedButtonLabel.text = [KeyMapper controlToDisplayName:mappedButton];
+    NSArray *mappedButtons = [keyMapper getControlsForMappedKey:[[self.keyDef objectAtIndex:KeyCapIndexCode] integerValue]];
+    if ( mappedButtons.count > 0 ) {
+        NSMutableString *displayText = [NSMutableString string];
+        int index = 0;
+        for (NSNumber *button in mappedButtons) {
+            if ( index++ > 0 ) {
+                [displayText appendString:@","];
+            }
+            [displayText appendString:[NSString stringWithFormat:@"%@",[KeyMapper controlToDisplayName:button.integerValue]]];
+        }
+        self.mappedButtonLabel.text = displayText;
     }
 }
 

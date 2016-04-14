@@ -100,11 +100,13 @@ struct KeyCap keyCapDefinitions[] = {
     { 0,0,0,0 }
 };
 
-@interface GameControllerKeyRemapController () <UIAlertViewDelegate>
+@interface GameControllerKeyRemapController () <UIAlertViewDelegate,UITextFieldDelegate>
 @property (nonatomic, strong) NSMutableArray *keyCapViews;
 @property (nonatomic, strong) UIAlertView *alertView;
 @property (nonatomic, strong) KeyMapper *keyMapperWorkingCopy;
 @property (nonatomic, strong) MfiGameControllerHandler *controllerHandler;
+@property (nonatomic, strong) UITextField *textFieldForICadeInput;
+@property (nonatomic, strong) NSNumber *currentlyMappingKey;
 @end
 
 @implementation GameControllerKeyRemapController
@@ -123,6 +125,13 @@ struct KeyCap keyCapDefinitions[] = {
     self.cancelButton.layer.borderColor = [[UIColor redColor] CGColor];
     self.defaultsButton.layer.borderWidth = 1.0f;
     self.defaultsButton.layer.borderColor = [self.view.tintColor CGColor];
+    
+    // for detecting icade input
+    self.textFieldForICadeInput = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.textFieldForICadeInput.delegate = self;
+    self.textFieldForICadeInput.autocapitalizationType= UITextAutocorrectionTypeNo;
+
+    self.currentlyMappingKey = nil;
     [self constructKeyboard];
 }
 
@@ -238,6 +247,11 @@ struct KeyCap keyCapDefinitions[] = {
     [self.alertView show];
     self.alertView.tag = [[view.keyDef objectAtIndex:KeyCapIndexCode] integerValue];
     [self startRemappingControlsForMfiControllerForKey:[view.keyDef objectAtIndex:KeyCapIndexCode]];
+    self.alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [self.alertView textFieldAtIndex:0].delegate = self;
+    [self.alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocorrectionTypeNo;
+    // start icade detection
+    self.currentlyMappingKey = [view.keyDef objectAtIndex:KeyCapIndexCode];
 }
 
 - (void) startRemappingControlsForMfiControllerForKey:(NSNumber*)keyCode {
@@ -377,6 +391,7 @@ struct KeyCap keyCapDefinitions[] = {
     } else {
         controller.gamepad.valueChangedHandler = nil;
     }
+    self.currentlyMappingKey = nil;
 }
 
 -(IBAction)saveButtonTapped:(id)sender {
@@ -415,6 +430,74 @@ struct KeyCap keyCapDefinitions[] = {
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self stopRemappingControls];
     [self refreshAllKeyCapViews];
+}
+
+#
+# pragma mark - UITextFieldDelegate
+#
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ( self.currentlyMappingKey == nil ) {
+        return NO;
+    }
+    const char* s = [string UTF8String];
+    char c;
+    int i=0;
+    while( (c = s[i++]) != 0)
+    {
+        switch(c) {
+            case 'e': // up released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_DPAD_UP];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'z': // down released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_DPAD_DOWN];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'q': // left released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_DPAD_LEFT];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'c': // right released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_DPAD_RIGHT];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 't': // button 1 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_1];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'r': // button 2 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_2];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'f': // button 3 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_3];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'n': // button 4 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_4];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'm': // button 5 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_5];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'p': // button 6 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_6];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'g': // button 7 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_7];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 'v': // button 8 released
+                [self.keyMapperWorkingCopy mapKey:self.currentlyMappingKey.integerValue ToControl:ICADE_BUTTON_8];
+                [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            default:
+                break;
+        }
+    }
+    return NO;
 }
 
 @end

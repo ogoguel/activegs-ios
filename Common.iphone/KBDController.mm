@@ -456,7 +456,7 @@ extern int findCode(const char* _s);
 	self.debugIndicator.hidden = TRUE;
 	self.debugIndicator.backgroundColor = [UIColor lightGrayColor];
 	self.debugIndicator.font = [UIFont systemFontOfSize:(CGFloat)12.0];
-	self.debugIndicator.lineBreakMode=UILineBreakModeClip;
+	self.debugIndicator.lineBreakMode=NSLineBreakByClipping;
 	[self.interfaceView addSubview:self.debugIndicator];
 	
 	[self  showDebug:FALSE];
@@ -2213,7 +2213,7 @@ int x_adb_get_keypad_y()
     else
     if (!bForceOnScreenKeyboard)
     {
-            
+        AppleKeyboardKey mappedKey = NSNotFound;
         char c;
         int i=0;
         while( (c = s[i++]) != 0) 
@@ -2222,44 +2222,165 @@ int x_adb_get_keypad_y()
             {
                 case 'w': // up
                     keypad_y = -32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_UP];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
-                case 'e': // !verti
-                case 'z':
+                case 'e': // !verti : up released
                     keypad_y = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_UP];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'z': // down released
+                    keypad_y = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_DOWN];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'x': // down
                     keypad_y = 32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_DOWN];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'a': // left
                     keypad_x = -32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_LEFT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
-                case 'q':   // !hori
-                case 'c':
+                case 'q':   // left released
                     keypad_x = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_LEFT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                case 'c': // right released
+                    keypad_x = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_RIGHT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'd': // right
                     keypad_x = 32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_RIGHT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'y': // button 1 pressed
                     add_event_key(0x37, 0);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_1];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 't': // button 1 depressed
-                    add_event_key(0x37, 1);
+//                    add_event_key(0x37, 1);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_1];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'h': // button 2 pressed
-                    add_event_key(0x3a, 0);
+//                    add_event_key(0x3a, 0);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_2];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'r': // button 2 depressed
-                    add_event_key(0x3a, 1);
+//                    add_event_key(0x3a, 1);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_2];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
-                case  'g': //à faire sur un keydepressed
-                    // display keyboard      
-                    printf("*** forcing on-screeen keyboard");
-                    [self OnScreenKeyboard:TRUE];        
+                case 'u': // button 3 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_3];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'f': // button 3 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_3];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'j': // button 4 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_4];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'n': // button 4 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_4];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'i': // button 5 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'm': // button 5 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'k': // button 6 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'p': // button 6 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'o':
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_6];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case  'g': //à faire sur un keydepressed : coin
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_6];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    } else {
+                        // display keyboard
+                        printf("*** forcing on-screeen keyboard");
+                        [self OnScreenKeyboard:TRUE];
+                    }
                      break;
-                case  'v': //à faire sur un keydepressed
-                    // toggle la menu bar
-                    [self setMenuBarVisibility:!bMenuBarVisibility];
+                case  'l':
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_7];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case  'v': //à faire sur un keydepressed : start
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_7];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    } else {
+                        // toggle la menu bar
+                        [self setMenuBarVisibility:!bMenuBarVisibility];
+                    }
                     break;
                 default:
                     break;

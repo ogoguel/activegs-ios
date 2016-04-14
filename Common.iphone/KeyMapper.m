@@ -32,7 +32,9 @@
 
 -(NSMutableDictionary*) defaultMapping {
     return [@{ [NSNumber numberWithInteger:MFI_BUTTON_X] : [NSNumber numberWithInteger:KEY_OPTION],
-               [NSNumber numberWithInteger:MFI_BUTTON_A] : [NSNumber numberWithInteger:KEY_APPLE]
+               [NSNumber numberWithInteger:MFI_BUTTON_A] : [NSNumber numberWithInteger:KEY_APPLE],
+               [NSNumber numberWithInteger:ICADE_BUTTON_1] : [NSNumber numberWithInteger:KEY_OPTION],
+               [NSNumber numberWithInteger:ICADE_BUTTON_2] : [NSNumber numberWithInteger:KEY_APPLE]
                } mutableCopy];
 }
 
@@ -51,9 +53,9 @@
 }
 
 -(void) unmapKey:(AppleKeyboardKey)keyboardKey {
-    KeyMapMappableButton button = [self getControlForMappedKey:keyboardKey];
-    if ( button != NSNotFound ) {
-        [self.keyMapping removeObjectForKey:[NSNumber numberWithInteger:button]];
+    NSArray *mappedButtons = [self getControlsForMappedKey:keyboardKey];
+    for (NSNumber *button in mappedButtons) {
+        [self.keyMapping removeObjectForKey:button];
     }
 }
 
@@ -67,14 +69,15 @@
     }
 }
 
--(KeyMapMappableButton) getControlForMappedKey:(AppleKeyboardKey) keyboardKey {
+-(NSArray*) getControlsForMappedKey:(AppleKeyboardKey) keyboardKey {
+    NSMutableArray *foundControls = [NSMutableArray array];
     for (NSNumber *buttonKey in self.keyMapping) {
         NSNumber *mappedKey = [self.keyMapping objectForKey:buttonKey];
         if ( mappedKey != nil && [mappedKey integerValue] == keyboardKey ) {
-            return [buttonKey integerValue];
+            [foundControls addObject:buttonKey];
         }
     }
-    return NSNotFound;
+    return foundControls;
 }
 
 +(NSString*) controlToDisplayName:(KeyMapMappableButton)button {
@@ -138,6 +141,18 @@
             break;
         case ICADE_BUTTON_8:
             return @"i8";
+            break;
+        case ICADE_DPAD_UP:
+            return @"i⬆️";
+            break;
+        case ICADE_DPAD_DOWN:
+            return @"i⬇️";
+            break;
+        case ICADE_DPAD_LEFT:
+            return @"i⬅️";
+            break;
+        case ICADE_DPAD_RIGHT:
+            return @"i➡️";
             break;
         default:
             return @"?";

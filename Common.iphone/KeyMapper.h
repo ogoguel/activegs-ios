@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, KeyCapIndex) {
 -(void) mapKey:(AppleKeyboardKey)keyboardKey ToControl:(KeyMapMappableButton)button;
 -(void) unmapKey:(AppleKeyboardKey)keyboardKey;
 -(AppleKeyboardKey) getMappedKeyForControl:(KeyMapMappableButton)button;
--(KeyMapMappableButton) getControlForMappedKey:(AppleKeyboardKey) keyboardKey;
 +(NSString*) controlToDisplayName:(KeyMapMappableButton)button;
+-(NSArray*) getControlsForMappedKey:(AppleKeyboardKey) keyboardKey;
 
 @end
