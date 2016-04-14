@@ -583,7 +583,7 @@
 		7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Spin Up Search 2.wav"; sourceTree = "<group>"; };
 		924A1BA91CB81B5800D69162 /* GameControllerKeyRemapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameControllerKeyRemapController.h; sourceTree = "<group>"; };
 		924A1BAA1CB81B5800D69162 /* GameControllerKeyRemapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameControllerKeyRemapController.m; sourceTree = "<group>"; };
-		924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameControllerKeyRemapController.xib; sourceTree = "<group>"; };
+		924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameControllerKeyRemapController.xib; path = ../Common.iphone/GameControllerKeyRemapController.xib; sourceTree = "<group>"; };
 		924A1BAE1CB9671400D69162 /* KeyCapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyCapView.xib; sourceTree = "<group>"; };
 		924A1BB01CB9685700D69162 /* KeyCapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCapView.h; sourceTree = "<group>"; };
 		924A1BB11CB9685700D69162 /* KeyCapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyCapView.m; sourceTree = "<group>"; };
@@ -726,6 +726,7 @@
 				09A5CE75125D422D0018DC22 /* infoViewController.xib */,
 				099CD904125E6F6E008EFD6C /* detailViewController.xib */,
 				924A1BAE1CB9671400D69162 /* KeyCapView.xib */,
+				924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -1001,7 +1002,6 @@
 				9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */,
 				924A1BA91CB81B5800D69162 /* GameControllerKeyRemapController.h */,
 				924A1BAA1CB81B5800D69162 /* GameControllerKeyRemapController.m */,
-				924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */,
 				924A1BB01CB9685700D69162 /* KeyCapView.h */,
 				924A1BB11CB9685700D69162 /* KeyCapView.m */,
 				924A1BB31CBA049D00D69162 /* KeyMapper.h */,
