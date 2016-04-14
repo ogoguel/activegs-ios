@@ -8,7 +8,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameControllerKeyRemapController">
             <connections>
+                <outlet property="cancelButton" destination="zAx-JO-gDf" id="i1M-NV-0UN"/>
                 <outlet property="keyboardContainerView" destination="PbL-95-ilz" id="UPI-70-2J7"/>
+                <outlet property="saveButton" destination="Ihv-aC-sb7" id="Byt-Gy-MVK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,34 +19,56 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="uys-KE-zQa">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbL-95-ilz" userLabel="Keyboard Container View">
                     <rect key="frame" x="0.0" y="360" width="600" height="240"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ihv-aC-sb7">
+                    <rect key="frame" x="96" y="203" width="107" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="82d-Qy-Xfg"/>
+                        <constraint firstAttribute="height" constant="44" id="bOc-8m-OXA"/>
+                    </constraints>
+                    <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="saveButtonTapped:" destination="-1" eventType="touchUpInside" id="dbc-hJ-1z4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAx-JO-gDf">
+                    <rect key="frame" x="396.5" y="203" width="107" height="44"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="byq-hr-jDY"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remap Keys to Gamepad Buttons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x2H-qm-EGT">
+                    <rect key="frame" x="172" y="64" width="256" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="x2H-qm-EGT" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="0.25" id="3zs-qM-hjM"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="top" secondItem="Ihv-aC-sb7" secondAttribute="top" id="6TO-tV-bng"/>
                 <constraint firstItem="PbL-95-ilz" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.4" id="7Tq-sc-r5F"/>
                 <constraint firstItem="PbL-95-ilz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ALZ-jN-EW8"/>
-                <constraint firstItem="PbL-95-ilz" firstAttribute="top" secondItem="uys-KE-zQa" secondAttribute="bottom" id="RE5-pz-I4K"/>
-                <constraint firstAttribute="bottom" secondItem="uys-KE-zQa" secondAttribute="bottom" id="UX3-iO-Kgu"/>
-                <constraint firstAttribute="trailing" secondItem="uys-KE-zQa" secondAttribute="trailing" id="ZD9-nb-sMQ"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="height" secondItem="Ihv-aC-sb7" secondAttribute="height" id="HFd-QQ-Vpx"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="1.5" id="Kdj-w0-y90"/>
+                <constraint firstItem="x2H-qm-EGT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZTO-dh-bwz"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="centerX" secondItem="Ihv-aC-sb7" secondAttribute="centerX" multiplier="2" id="hJc-6p-crb"/>
                 <constraint firstAttribute="bottom" secondItem="PbL-95-ilz" secondAttribute="bottom" id="kCc-QA-uYA"/>
-                <constraint firstItem="uys-KE-zQa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qDJ-fw-MAq"/>
-                <constraint firstItem="uys-KE-zQa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tmE-f1-uny"/>
+                <constraint firstItem="zAx-JO-gDf" firstAttribute="width" secondItem="Ihv-aC-sb7" secondAttribute="width" id="mPI-1j-gTO"/>
+                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="0.5" id="niB-eU-bnx"/>
+                <constraint firstItem="Ihv-aC-sb7" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="0.75" id="vLe-Gk-22l"/>
                 <constraint firstAttribute="trailing" secondItem="PbL-95-ilz" secondAttribute="trailing" id="zbm-Dr-7Jd"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="UX3-iO-Kgu"/>
+                    <exclude reference="hJc-6p-crb"/>
                 </mask>
             </variation>
         </view>
     </objects>
-    <resources>
-        <image name="keyboardBackground" width="512" height="165"/>
-    </resources>
 </document>

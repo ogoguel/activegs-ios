@@ -569,6 +569,8 @@ extern int findCode(const char* _s);
     [self setInputMode:INPUTMODE_ACCESS+INPUTMODE_HIDDEN];
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
     
+    self.keyMapper = [[KeyMapper alloc] init];
+    
     self.mfiControllerHandler = [[MfiGameControllerHandler alloc] init];
     __weak typeof(self) weakSelf = self;
     [self.mfiControllerHandler discoverController:^(GCController *gameController) {
@@ -578,6 +580,7 @@ extern int findCode(const char* _s);
     } disconnectedCallback:^{
         [pManager setNotificationText:@"mFi Controller Disconnected"];
     }];
+    
 }
 
 -(void) setupMfiController:(GCController*)controller {
@@ -599,8 +602,15 @@ extern int findCode(const char* _s);
         joyX = xvalue;
         joyY = yvalue * -1.0;
     };
+
     GCControllerButtonInput *buttonX = controller.extendedGamepad ? controller.extendedGamepad.buttonX : controller.gamepad.buttonX;
     GCControllerButtonInput *buttonA = controller.extendedGamepad ? controller.extendedGamepad.buttonA : controller.gamepad.buttonA;
+    GCControllerButtonInput *buttonY = controller.extendedGamepad ? controller.extendedGamepad.buttonY : controller.gamepad.buttonY;
+    GCControllerButtonInput *buttonB = controller.extendedGamepad ? controller.extendedGamepad.buttonB : controller.gamepad.buttonB;
+    GCControllerButtonInput *buttonRS = controller.extendedGamepad ? controller.extendedGamepad.rightShoulder : controller.gamepad.rightShoulder;
+    GCControllerButtonInput *buttonLS = controller.extendedGamepad ? controller.extendedGamepad.leftShoulder : controller.gamepad.leftShoulder;
+    GCControllerButtonInput *buttonRT = controller.extendedGamepad ? controller.extendedGamepad.rightTrigger : nil;
+    GCControllerButtonInput *buttonLT = controller.extendedGamepad ? controller.extendedGamepad.leftTrigger : nil;
     GCControllerDirectionPad *dpad = controller.extendedGamepad ? controller.extendedGamepad.dpad : controller.gamepad.dpad;
     
     buttonX.valueChangedHandler = appleJoyButton0Handler;
@@ -611,7 +621,131 @@ extern int findCode(const char* _s);
         controller.extendedGamepad.leftThumbstick.valueChangedHandler = appleJoystickhHandler;
     }
     
-    self.keyMapper = [[KeyMapper alloc] init];
+    //
+    // mapped keys
+    AppleKeyboardKey mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_X];
+    if ( mappedKey != NSNotFound ) {
+        buttonX.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_Y];
+    if ( mappedKey != NSNotFound ) {
+        buttonY.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_A];
+    if ( mappedKey != NSNotFound ) {
+        buttonA.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_B];
+    if ( mappedKey != NSNotFound ) {
+        buttonB.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_LS];
+    if ( mappedKey != NSNotFound ) {
+        buttonLS.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    __block AppleKeyboardKey mappedKeyRS = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RS];
+    if ( mappedKeyRS != NSNotFound ) {
+        buttonRS.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKeyRS, 0);
+            } else {
+                add_event_key((int)mappedKeyRS, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_LT];
+    if ( mappedKey != NSNotFound && buttonLT != nil ) {
+        buttonLT.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RT];
+    if ( mappedKey != NSNotFound && buttonLT != nil ) {
+        buttonRT.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+    
+    AppleKeyboardKey mappedKeyDpadUp = [self.keyMapper getMappedKeyForControl:MFI_DPAD_UP];
+    AppleKeyboardKey mappedKeyDpadDown = [self.keyMapper getMappedKeyForControl:MFI_DPAD_DOWN];
+    AppleKeyboardKey mappedKeyDpadLeft = [self.keyMapper getMappedKeyForControl:MFI_DPAD_LEFT];
+    AppleKeyboardKey mappedKeyDpadRight = [self.keyMapper getMappedKeyForControl:MFI_DPAD_RIGHT];
+    if ( mappedKeyDpadUp != NSNotFound || mappedKeyDpadDown != NSNotFound || mappedKeyDpadLeft != NSNotFound || mappedKeyDpadRight != NSNotFound ) {
+        dpad.valueChangedHandler = ^(GCControllerDirectionPad *, float xvalue, float yvalue) {
+            if ( mappedKeyDpadUp != NSNotFound && yvalue > 0.0 ) {
+                add_event_key((int)mappedKeyDpadUp, 0);
+            } else if ( mappedKeyDpadUp != NSNotFound && yvalue <= 0.0 ) {
+                add_event_key((int)mappedKeyDpadUp, 1);
+            }
+            
+            if ( mappedKeyDpadDown != NSNotFound && yvalue < 0.0 ) {
+                add_event_key((int)mappedKeyDpadDown, 0);
+            } else if ( mappedKeyDpadDown != NSNotFound && yvalue >= 0.0 ) {
+                add_event_key((int)mappedKeyDpadDown, 1);
+            }
+            
+            if ( mappedKeyDpadRight != NSNotFound && xvalue > 0.0 ) {
+                add_event_key((int)mappedKeyDpadRight, 0);
+            } else if ( mappedKeyDpadRight != NSNotFound && xvalue <= 0.0 ) {
+                add_event_key((int)mappedKeyDpadRight, 1);
+            }
+            
+            if ( mappedKeyDpadLeft != NSNotFound && xvalue < 0.0 ) {
+                add_event_key((int)mappedKeyDpadLeft, 0);
+            } else if ( mappedKeyDpadLeft != NSNotFound && xvalue >= 0.0 ) {
+                add_event_key((int)mappedKeyDpadLeft, 1);
+            }
+            
+            // pass the joystick input through
+            joyX = xvalue;
+            joyY = yvalue * -1.0;
+        };
+    }
 }
 
 int hardwarekeyboard= 0;
@@ -972,6 +1106,10 @@ extern int x_frame_rate ;
     r_sim65816.pause();
     GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
     remapController.keyMapper = self.keyMapper;
+    remapController.onDismissal = ^{
+        [self setupMfiController:[[GCController controllers] firstObject]];
+        r_sim65816.resume();
+    };
     [self presentViewController:remapController animated:YES completion:nil];
 }
 

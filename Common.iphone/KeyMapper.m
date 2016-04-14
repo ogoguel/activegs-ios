@@ -16,16 +16,19 @@
 
 -(instancetype) init {
     if ( self = [super init] ) {
-        self.keyMapping = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"keyMapping"] mutableCopy];
-        if ( self.keyMapping == nil ) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"keyMapping"];
+        if ( data == nil || ![data isKindOfClass:[NSData class]] ) {
             self.keyMapping = [NSMutableDictionary dictionary];
+        } else {
+            NSDictionary *fetchedDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            self.keyMapping = [fetchedDict mutableCopy];
         }
     }
     return self;
 }
 
 -(void) saveKeyMapping {
-    [[NSUserDefaults standardUserDefaults] setObject:self.keyMapping forKey:@"keyMapping"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:self.keyMapping] forKey:@"keyMapping"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -34,11 +37,18 @@
     [self.keyMapping setObject:[NSNumber numberWithInteger:keyboardKey] forKey:buttonKey];
 }
 
+-(void) unmapKey:(AppleKeyboardKey)keyboardKey {
+    KeyMapMappableButton button = [self getControlForMappedKey:keyboardKey];
+    if ( button != NSNotFound ) {
+        [self.keyMapping removeObjectForKey:[NSNumber numberWithInteger:button]];
+    }
+}
+
 -(AppleKeyboardKey) getMappedKeyForControl:(KeyMapMappableButton)button {
     NSNumber *buttonKey = [NSNumber numberWithInteger:button];
     NSNumber *mappedKey = [self.keyMapping objectForKey:buttonKey];
     if ( mappedKey != nil ) {
-        return [mappedKey integerValue];
+        return [mappedKey intValue];
     } else {
         return NSNotFound;
     }

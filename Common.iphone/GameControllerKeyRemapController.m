@@ -109,6 +109,10 @@ struct KeyCap keyCapDefinitions[] = {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.keyCapViews = [NSMutableArray array];
+    self.saveButton.layer.borderWidth = 1.0f;
+    self.saveButton.layer.borderColor = [self.view.tintColor CGColor];
+    self.cancelButton.layer.borderWidth = 1.0f;
+    self.cancelButton.layer.borderColor = [self.view.tintColor CGColor];
     [self constructKeyboard];
 }
 
@@ -220,8 +224,9 @@ struct KeyCap keyCapDefinitions[] = {
 
 - (void) onKeyTap:(UITapGestureRecognizer*)sender {
     KeyCapView *view = (KeyCapView*) sender.view;
-    self.alertView = [[UIAlertView alloc] initWithTitle:@"Remap Key" message:[NSString stringWithFormat:@"Press a button to map the [%@] key",[view.keyDef objectAtIndex:KeyCapIndexKey]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"Remap Key" message:[NSString stringWithFormat:@"Press a button to map the [%@] key",[view.keyDef objectAtIndex:KeyCapIndexKey]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Unbind",nil];
     [self.alertView show];
+    self.alertView.tag = [[view.keyDef objectAtIndex:KeyCapIndexCode] integerValue];
     [self startRemappingControlsForMfiControllerForKey:[view.keyDef objectAtIndex:KeyCapIndexCode]];
 }
 
@@ -364,12 +369,29 @@ struct KeyCap keyCapDefinitions[] = {
     }
 }
 
+-(IBAction)saveButtonTapped:(id)sender {
+    [self.keyMapper saveKeyMapping];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        self.onDismissal();
+    }];
+}
+
+-(IBAction)cancelButtonTapped:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        self.onDismissal();
+    }];    
+}
+
 #
 # pragma mark - UIAlertViewDelegate
 #
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self stopRemappingControls];
+    if ( buttonIndex == 1 ) {
+        AppleKeyboardKey mappedKey = alertView.tag;
+        [self.keyMapper unmapKey:mappedKey];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
