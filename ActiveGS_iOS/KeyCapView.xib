@@ -12,32 +12,32 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuS-sc-nnF" userLabel="Key">
-                    <rect key="frame" x="2" y="2" width="13" height="8.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="4" y="4" width="18" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mapped Button" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CsD-e8-zpW">
-                    <rect key="frame" x="127" y="145.5" width="54" height="8.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="100" y="140" width="79" height="12"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S-Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DoM-mH-zdu" userLabel="Key Alt Label">
-                    <rect key="frame" x="2" y="145.5" width="21" height="8.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="4" y="140" width="29" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="CsD-e8-zpW" secondAttribute="trailing" constant="2" id="0QF-nq-bp4"/>
-                <constraint firstItem="WuS-sc-nnF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="EG2-YO-isI"/>
-                <constraint firstAttribute="bottom" secondItem="DoM-mH-zdu" secondAttribute="bottom" constant="2" id="XtK-Xm-l8n"/>
-                <constraint firstAttribute="bottom" secondItem="CsD-e8-zpW" secondAttribute="bottom" constant="2" id="bLA-GT-HXu"/>
-                <constraint firstItem="DoM-mH-zdu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="2" id="iGg-gd-FfI"/>
-                <constraint firstItem="WuS-sc-nnF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="2" id="oKU-fu-MTZ"/>
+                <constraint firstAttribute="trailing" secondItem="CsD-e8-zpW" secondAttribute="trailing" constant="4" id="0QF-nq-bp4"/>
+                <constraint firstItem="WuS-sc-nnF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="EG2-YO-isI"/>
+                <constraint firstAttribute="bottom" secondItem="DoM-mH-zdu" secondAttribute="bottom" constant="4" id="XtK-Xm-l8n"/>
+                <constraint firstAttribute="bottom" secondItem="CsD-e8-zpW" secondAttribute="bottom" constant="4" id="bLA-GT-HXu"/>
+                <constraint firstItem="DoM-mH-zdu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="iGg-gd-FfI"/>
+                <constraint firstItem="WuS-sc-nnF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="oKU-fu-MTZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

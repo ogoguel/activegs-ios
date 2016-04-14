@@ -91,16 +91,16 @@
             return @"RT";
             break;
         case MFI_DPAD_UP:
-            return @"mUP";
+            return @"⬆️";
             break;
         case MFI_DPAD_DOWN:
-            return @"mDOWN";
+            return @"⬇️";
             break;
         case MFI_DPAD_LEFT:
-            return @"mLEFT";
+            return @"⬅️";
             break;
         case MFI_DPAD_RIGHT:
-            return @"mRIGHT";
+            return @"➡️";
             break;
         case ICADE_BUTTON_1:
             return @"i1";
