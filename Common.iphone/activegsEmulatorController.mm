@@ -672,10 +672,13 @@ int	x_lock_zoom = 0;
 }
 
 - (void)dealloc {
-
-    self.zv;
     self.zv = nil;
+}
 
+- (void)setVideoFx: (NSNumber*)_vfxNumber
+{
+    int vfx = [_vfxNumber intValue];
+    self.zv.crt.hidden = (vfx==VIDEOFX_CRT?0:1);
 }
 
 @end

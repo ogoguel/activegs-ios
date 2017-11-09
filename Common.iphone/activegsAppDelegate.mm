@@ -70,12 +70,14 @@ void x_notify_eject()
     @autoreleasepool {
         [[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(animateDiskEjection:) withObject:nil waitUntilDone:NO];
     }
-    
 }
 
 void x_set_video_fx(videofxenum _vfx)
 {
-    	[pManager getEmulatorView].zv.crt.hidden = (_vfx==VIDEOFX_CRT?0:1);
+     @autoreleasepool {
+         [[pManager getEmulatorView]  performSelectorOnMainThread:@selector(setVideoFx:) withObject:[NSNumber numberWithInt:_vfx] waitUntilDone:NO];
+     }
+    
 }
 
 

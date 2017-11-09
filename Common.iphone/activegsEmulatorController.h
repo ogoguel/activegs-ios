@@ -69,6 +69,7 @@ enum attachMode
 #endif
 
 -(void) updateView;
+-(void)setVideoFx: (NSNumber*)_vfxNumber;
 
 @property	(nonatomic, strong) customView* contentView;
 @property	(nonatomic, strong) zoomEmulatorView* zv;
