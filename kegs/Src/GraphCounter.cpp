@@ -7,7 +7,7 @@
 #include "defc.h"
 #include "video.h"
 #include "sim65816.h"
-#include "GraphCounter.h"
+#include "graphcounter.h"
 #include "raster.h"
 
 #ifdef ENABLE_GRAPH

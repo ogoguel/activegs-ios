@@ -6,8 +6,8 @@
 
 #import "activegsAppDelegate.h"
 #import "activegsViewController.h"
-#import "activegslist.h"
-#include "../Kegs/Src/sim65816.h"
+#import "activegsList.h"
+#include "../kegs/Src/sim65816.h"
 
 
 @implementation activegsViewController  

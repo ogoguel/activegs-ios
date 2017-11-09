@@ -6,9 +6,9 @@
 
 #import "activegsAppDelegate.h"
 #include "../Common/svnversion.h"
-#include "../Kegs/Src/adb.h"
-#include "../Kegs/Src/sim65816.h"
-#include "../Kegs/Src/driver.h"
+#include "../kegs/Src/adb.h"
+#include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/driver.h"
 #include "../Common/ki.h"
 #import <AudioToolbox/AudioToolbox.h>
 #include "asynccommand.h"

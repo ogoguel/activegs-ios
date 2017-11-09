@@ -8,13 +8,13 @@
 #error "missing DRIVER_IOS or DRIVER_OSX"
 #endif
 
-#include "../src/defc.h"
-#include "../src/protos_macdriver.h"
-#include "../src/sim65816.h"
+#include "../Src/defc.h"
+#include "../Src/protos_macdriver.h"
+#include "../Src/sim65816.h"
 #include <math.h>
-#include "../src/video.h"
-#include "../src/graphcounter.h"
-#include "../src/async_event.h"
+#include "../Src/video.h"
+#include "../Src/graphcounter.h"
+#include "../Src/async_event.h"
 #include "../Src/StdString.h"
 #include "../Src/driver.h"
 

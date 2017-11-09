@@ -5,9 +5,9 @@
 */
 
 #include "CEMulatorCtrl.h"
-#include "../kegs/src/clock.h"
-#include "../kegs/src/sim65816.h"
-#include "../kegs/src/driver.h"
+#include "../kegs/Src/clock.h"
+#include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/driver.h"
 
 
 extern void addConsole(const char*);

@@ -5,8 +5,8 @@
 */
 
 #import "activegsAppDelegate.h"
-#include "../kegs/src/protos_macdriver.h"
-#include "../kegs/src/sim65816.h"
+#include "../kegs/Src/protos_macdriver.h"
+#include "../kegs/Src/sim65816.h"
 
 #define TIME_BEFORE_REENABLING_GESTURES 1.0
 #define TIME_BEFORE_DISABLING_GESTURES 0.5

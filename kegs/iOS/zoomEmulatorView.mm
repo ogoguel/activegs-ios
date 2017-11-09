@@ -11,7 +11,7 @@
 #ifdef ACTIVEGSKARATEKA
 #import "../../ActiveGS_Karateka/KaratekaAppDelegate.h"
 #elif defined(ACTIVEGS)
-#import "../../common.iphone/activegsAppDelegate.h"
+#import "../../Common.iphone/activegsAppDelegate.h"
 
 #endif
 

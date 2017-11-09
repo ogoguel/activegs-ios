@@ -4,7 +4,7 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "activedownload.h"
+#include "ActiveDownload.h"
 //#include <sys/stat.h>
 
 #include "ki.h"

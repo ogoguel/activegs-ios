@@ -4,21 +4,21 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "cemulatorctrl.h"
+#include "CEMulatorCtrl.h"
 #include "svnversion.h"
 
-#include "../kegs/src/adb.h"
-#include "../kegs/src/clock.h"
-#include "../kegs/src/moremem.h"
-#include "../kegs/src/paddles.h"
-#include "../kegs/src/sim65816.h"
-#include "../kegs/src/iwm.h"
-#include "../kegs/src/SaveState.h"
-#include "../kegs/src/raster.h"
-#include "../kegs/src/graphcounter.h"
-#include "../kegs/src/driver.h"
-#include "../kegs/src/video.h"
-#include "../kegs/src/async_event.h"
+#include "../kegs/Src/adb.h"
+#include "../kegs/Src/clock.h"
+#include "../kegs/Src/moremem.h"
+#include "../kegs/Src/paddles.h"
+#include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/iwm.h"
+#include "../kegs/Src/SaveState.h"
+#include "../kegs/Src/raster.h"
+#include "../kegs/Src/graphcounter.h"
+#include "../kegs/Src/driver.h"
+#include "../kegs/Src/video.h"
+#include "../kegs/Src/async_event.h"
 extern void joystick_shut();
 
 #define CONFIG_VERSION 3
@@ -1139,8 +1139,9 @@ void CEmulatorConfig::loadXMLFile()
 
 void CEmulator::sendStats()
 {
+/*
 #pragma message("TODO refaire les stats!")
-	/*
+	
 #ifndef DRIVER_IOS
 	MyString str="http://analytics.freetoolsassociation.com/analytics.php?";
 	const char* app =ACTIVEGSAPP ;

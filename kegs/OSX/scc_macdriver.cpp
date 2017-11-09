@@ -4,8 +4,8 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../src/defc.h"
-#include "../src/scc.h"
+#include "../Src/defc.h"
+#include "../Src/scc.h"
 
 #ifndef _WIN32
 # include <termios.h>

@@ -11,11 +11,11 @@
 	#include <atlstr.h>
 #endif
 
-#include "../common/ActiveGSList.h"
-#include "../common/activedownload.h"
-#include "../common/ki.h"
+#include "../Common/ActiveGSList.h"
+#include "../Common/ActiveDownload.h"
+#include "../Common/ki.h"
 
-#include "../kegs/src/sound.h"
+#include "../kegs/Src/sound.h"
 
 extern int outputInfoInternal(const char*);
 

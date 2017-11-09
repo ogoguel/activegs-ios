@@ -5,8 +5,8 @@
 */
 
 #include "activegsAppDelegate.h"
-#import "AsyncImageView.h"
-#include "../common/CEmulatorCtrl.h"
+#import "asyncimageview.h"
+#include "../Common/CEMulatorCtrl.h"
 
 
 static asyncImageQueue* queue = nil;	
