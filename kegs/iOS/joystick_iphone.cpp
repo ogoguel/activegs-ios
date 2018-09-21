@@ -4,9 +4,9 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../src/defc.h"
-#include "../src/paddles.h"
-#include "../src/moremem.h"
+#include "../Src/defc.h"
+#include "../Src/paddles.h"
+#include "../Src/moremem.h"
 
 
 void

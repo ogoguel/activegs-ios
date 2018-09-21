@@ -9,7 +9,7 @@
 #include "adb.h"
 #include "async_event.h"
 #include "sim65816.h"
-#include "savestate.h"
+#include "SaveState.h"
 
 extern void x_check_system_input_events();
 extern void x_update_modifiers(word32);

@@ -5,7 +5,7 @@
 */
 
 #include "activegsAppDelegate.h"
-#include "../common/CEmulatorCtrl.h"
+#include "../Common/CEMulatorCtrl.h"
 #include "asynccommand.h"
 
 @implementation AsyncCommand

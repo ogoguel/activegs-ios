@@ -10,7 +10,7 @@
 #import "asyncimageview.h"
 #import "activegsViewController.h"
 //#include "../Common/3rdpartylib/tinyxml/tinyxml.h"
-#include "../kegs/src/sim65816.h"
+#include "../kegs/Src/sim65816.h"
 #include "asynccommand.h"
 
 extern  void x_notify_download_failure(const char*_url);

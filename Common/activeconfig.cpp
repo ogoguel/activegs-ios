@@ -4,10 +4,10 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "Cemulatorctrl.h"
+#include "CEMulatorCtrl.h"
 #include "../kegs/Src/iwm.h"
 #include "../kegs/Src/config.h"
-#include "../kegs/Src/savestate.h"
+#include "../kegs/Src/SaveState.h"
 
 void x_notify_disk_insertion(int _size,int _start, int _isprodos,int slot, int drive)
 {

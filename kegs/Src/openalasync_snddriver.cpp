@@ -529,33 +529,38 @@ int x_is_sound_playing(enum_sound _hSound)
 
 #if 1
 
+#pragma push()
+#pragma pack(1)
 /*
  * Struct to hold fmt subchunk data for WAVE files.
  */
 struct WAVE_Format {
     char subChunkID[4];
-    long subChunkSize;
+    int subChunkSize;
     short audioFormat;
     short numChannels;
-    long sampleRate;
-    long byteRate;
+    int sampleRate;
+    int byteRate;
     short blockAlign;
     short bitsPerSample;
-};
+} __attribute__((packed));
 
 /*
  * Struct to hold the data of the wave file
  */
 struct WAVE_Data {
     char subChunkID[4]; //should contain the word data
-    long subChunk2Size; //Stores the size of the data block
-};
+    int subChunk2Size; //Stores the size of the data block
+} __attribute__((packed));
 
 struct RIFF_Header {
     char chunkID[4];
-    long chunkSize;//size not including chunkSize or chunkID
+    int chunkSize;//size not including chunkSize or chunkID
     char format[4];
-};
+} __attribute__((packed));
+
+#pragma pop()
+
 
 bool loadWavFile(const char* filename, unsigned char** buffer,
                  unsigned int* size, int* frequency,

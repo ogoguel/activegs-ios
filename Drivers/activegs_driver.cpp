@@ -4,7 +4,7 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../kegs/src/driver.h"
+#include "../kegs/Src/driver.h"
 
 extern void default_config_load_roms();
 void activegs_driver()

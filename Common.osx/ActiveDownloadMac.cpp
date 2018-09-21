@@ -4,11 +4,11 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../common.osx/cemulatorctrlmac.h"
-#include "activedownload.h"
+#include "../Common.osx/cemulatorctrlmac.h"
+#include "ActiveDownload.h"
 #include <sys/types.h>
 #include <dirent.h>
-#include "../common/ki.h"
+#include "../Common/ki.h"
 #include "../kegs/Src/sim65816.h"
 
 #ifdef DRIVER_IOS

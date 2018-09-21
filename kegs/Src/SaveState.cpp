@@ -9,7 +9,7 @@
 #endif
 #include "StdString.h"
 #include "defc.h"
-#include "savestate.h"
+#include "SaveState.h"
 #include "adb.h"
 #include "async_event.h"
 #include "clock.h"

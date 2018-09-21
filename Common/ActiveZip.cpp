@@ -4,7 +4,7 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "cemulatorctrl.h"
+#include "CEMulatorCtrl.h"
 #include "ki.h"
 #include "../Libraries/unzip101e/unzip.h"
 

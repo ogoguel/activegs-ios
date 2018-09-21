@@ -5,8 +5,8 @@
 */
 
 #include "../Libraries/libpng/png.h"
-#include "cemulatorctrl.h"
-#include "../kegs/src/video.h"
+#include "CEMulatorCtrl.h"
+#include "../kegs/Src/video.h"
 #define abort_(X) { printf(X); return 0;}
 
 extern word32 g_a2palette_8to1624[256];

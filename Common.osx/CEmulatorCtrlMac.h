@@ -18,7 +18,7 @@
 #endif
 #endif
 
-#include "../Common/CEmulatorCtrl.h"
+#include "../Common/CEMulatorCtrl.h"
 
 #ifdef DRIVER_IOS
 
