@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include "simplexml.h"
-#include "../cemulatorctrl.h"
+#include "../CEMulatorCtrl.h"
 
 
 #undef debug_printf

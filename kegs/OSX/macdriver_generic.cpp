@@ -28,12 +28,12 @@
 
 #include <AudioToolbox/AudioToolbox.h>
 
-#include "../src/defc.h"
-#include "../src/protos_macdriver.h"
-#include "../src/video.h"
-#include "../src/raster.h"
-#include "../src/sound.h"
-#include "../src/StdString.h"
+#include "../Src/defc.h"
+#include "../Src/protos_macdriver.h"
+#include "../Src/video.h"
+#include "../Src/raster.h"
+#include "../Src/sound.h"
+#include "../Src/StdString.h"
 
 
 

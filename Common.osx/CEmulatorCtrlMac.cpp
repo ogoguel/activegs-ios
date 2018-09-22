@@ -4,8 +4,8 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../common.osx/CEmulatorCtrlMac.h"
-#include "../common/svnversion.h"
+#include "../Common.osx/cemulatorctrlmac.h"
+#include "../Common/svnversion.h"
 #include <sys/stat.h>
 #include "../kegs/Src/sim65816.h"
 #include <AudioToolbox/AudioToolbox.h>

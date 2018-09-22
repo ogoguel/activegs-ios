@@ -8,10 +8,10 @@
 #include <vector>
 
 #define MAX_SCREENSHOTS 10
-#include "../common/3rdpartylib/simplexml.h"
-#include "../kegs/src/StdString.h"
-#include "../kegs/src/defc.h"
-#include "../common/ki.h"
+#include "../Common/3rdpartylib/simplexml.h"
+#include "../kegs/Src/StdString.h"
+#include "../kegs/Src/defc.h"
+#include "../Common/ki.h"
 
 
 

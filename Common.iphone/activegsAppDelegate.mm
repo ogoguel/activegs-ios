@@ -6,9 +6,9 @@
 
 #import "activegsAppDelegate.h"
 #include "../Common/svnversion.h"
-#include "../Kegs/Src/adb.h"
-#include "../Kegs/Src/sim65816.h"
-#include "../Kegs/Src/driver.h"
+#include "../kegs/Src/adb.h"
+#include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/driver.h"
 #include "../Common/ki.h"
 #import <AudioToolbox/AudioToolbox.h>
 #include "asynccommand.h"
@@ -70,12 +70,14 @@ void x_notify_eject()
     @autoreleasepool {
         [[pManager getEmulatorView].kbdc performSelectorOnMainThread:@selector(animateDiskEjection:) withObject:nil waitUntilDone:NO];
     }
-    
 }
 
 void x_set_video_fx(videofxenum _vfx)
 {
-    	[pManager getEmulatorView].zv.crt.hidden = (_vfx==VIDEOFX_CRT?0:1);
+     @autoreleasepool {
+         [[pManager getEmulatorView]  performSelectorOnMainThread:@selector(setVideoFx:) withObject:[NSNumber numberWithInt:_vfx] waitUntilDone:NO];
+     }
+    
 }
 
 

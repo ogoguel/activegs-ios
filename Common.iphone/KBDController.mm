@@ -5,22 +5,22 @@
 */
 
 #import "KBDController.h"
-#include "../kegs/src/defc.h"
-#include "../kegs/src/protos_macdriver.h"
-#include "../kegs/src/sim65816.h"
-#include "../kegs/src/moremem.h"
-#include "../kegs/src/adb.h"
-#include "../kegs/src/sound.h"
-#include "../kegs/src/async_event.h"
+#include "../kegs/Src/defc.h"
+#include "../kegs/Src/protos_macdriver.h"
+#include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/moremem.h"
+#include "../kegs/Src/adb.h"
+#include "../kegs/Src/sound.h"
+#include "../kegs/Src/async_event.h"
 #include "../Common/svnversion.h"
 #import "activegsAppDelegate.h"
 #import "activegsViewController.h"
 #import <UIKit/UINavigationBar.h>
 #import <ExternalAccessory/ExternalAccessory.h>
-#include "../kegs/src/paddles.h"
+#include "../kegs/Src/paddles.h"
 #import "../kegs/iOS/emulatorView.h"
-#include "../kegs/src/SaveState.h"
-#include "../common/activedownload.h"
+#include "../kegs/Src/SaveState.h"
+#include "../Common/ActiveDownload.h"
 #import "MfiGameControllerHandler.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS

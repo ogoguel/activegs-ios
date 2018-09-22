@@ -34,7 +34,7 @@
 #include "config.h"
 #include "sound.h"
 #include "video.h"
-#include "saveState.h"
+#include "SaveState.h"
 #include "graphcounter.h"
 #include "marinetti.h"
 

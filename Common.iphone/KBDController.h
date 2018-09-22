@@ -133,6 +133,7 @@ enum
 -(void)resetSpecialKeys;
 -(void)unloadSpecialKeys;
 - (void) animateDisk:(id)_id ;
+-(void) animateDiskEjection:(id)_id;
 -(void)refreshControls:(id)sender;
 - (void) detectHardwareKeyboard:(id)_id ;
 - (void)setLoading:(NSNumber*)_nsvisible;

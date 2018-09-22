@@ -12,8 +12,8 @@
 	#include <io.h>
 #endif
 
-#include "../kegs/src/defc.h"
-#include "../kegs/src/iwm.h"
+#include "../kegs/Src/defc.h"
+#include "../kegs/Src/iwm.h"
 extern void	showStatus(const char* format,...);
 extern void	showError(const char* format,...);
 extern void	showProgress(const char* file,int percent);

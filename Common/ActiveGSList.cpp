@@ -5,7 +5,7 @@
 */
 
 #include "ActiveGSList.h"
-#include "activedownload.h"
+#include "ActiveDownload.h"
 
 ActiveGSList::~ActiveGSList()
 {

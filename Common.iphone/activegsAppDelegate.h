@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/CAAnimation.h>
-#include "../Common.osx/CEmulatorCtrlMac.h"
+#include "../Common.osx/cemulatorctrlmac.h"
 
 #define IPHONETHUMB "thumb"
 
@@ -42,7 +42,7 @@
 #endif
 
 
-#import "activeGSViewController.h"
+#import "activegsViewController.h"
 #define ACTIVEGS_LAUNCHVIEWCONTROLLER activegsViewController
 
 #ifdef BESTOFFTA

@@ -4,8 +4,8 @@
  This code is covered by the GNU GPL licence
 */
 
-#include "../common/cemulatorctrl.h"
-#include "../kegs/src/sim65816.h"
+#include "../Common/CEMulatorCtrl.h"
+#include "../kegs/Src/sim65816.h"
 
 extern word32 g_font40_even_bits[0x100][8][16/4];
 extern word32 g_font40_odd_bits[0x100][8][16/4];

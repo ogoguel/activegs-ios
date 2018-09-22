@@ -5,7 +5,7 @@
 */
 
 #include "../Common/CEMulatorCtrl.h"
-#include "../Kegs/Src/sim65816.h"
+#include "../kegs/Src/sim65816.h"
 
 void 	default_config_load_roms()
 {
