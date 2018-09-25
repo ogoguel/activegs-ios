@@ -226,17 +226,26 @@ static	UIImage* defaultImageII = nil;
         MyString slotstr;
         slotstr.Format("%d",slot);
         
+        // Some games like Immortal expect 1 disk drive :(
+        // check if name contains "_1dd_"
         BOOL isIIGSMultiMoreThanTwoDisks = slot != 6 && diskImages.count > 2;
+        NSRange rangeContaining1dd = [firstImage.name rangeOfString:@"_1dd_"];
+        if ( rangeContaining1dd.location != NSNotFound ) {
+            isIIGSMultiMoreThanTwoDisks = YES;
+        }
         
         [diskImages enumerateObjectsUsingBlock:^(DiskImageInfo *diskImage, NSUInteger idx, BOOL * _Nonnull stop) {
             unsigned long diskIndex = idx + 1;
-            if ( slot == 6 || isIIGSMultiMoreThanTwoDisks ) {
+            int slotNumber = (int) diskImage.slotNumber;
+            if ( slotNumber == 6 || isIIGSMultiMoreThanTwoDisks ) {
                 // for Apple II disks, assume 1 disk drive
                 // for Apple IIGS that have more than 2 disks, use 1 drive
                 diskIndex = 1;
             }
             tempXML += "<image slot=\"";
-            tempXML += slotstr;
+            MyString slotNumberStr;
+            slotNumberStr.Format("%d",slotNumber);
+            tempXML += slotNumberStr;
             tempXML += [[NSString stringWithFormat:@"\" disk=\"%lu\">",diskIndex] UTF8String];
             tempXML += [diskImage.name UTF8String];
             tempXML += "</image>";
@@ -259,7 +268,8 @@ static	UIImage* defaultImageII = nil;
             && strcasecmp(ext,"po")
             && strcasecmp(ext,"do")
             && strcasecmp(ext,"nib")
-            && strcasecmp(ext,"bin"))
+            && strcasecmp(ext,"bin")
+            && strcasecmp(ext, "hdv"))
             continue;
         
         // si le fichier est dans la liste des blacklistée : ignore
@@ -572,7 +582,6 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 {
     NSLog(@"activeGSList viewWillAppear %@",self);
 
-    
     // Move files from Documents/Inbox to Documents (Items arriving through iOS "Open In"
     NSLog(@"Moving files from Documents/Inbox to Documents so they're visible");
     //Turn every file inside the directory into an array
@@ -611,7 +620,6 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
     
 	[super viewDidLoad];
 	
-    
     
     // IOS8 ISSUE !!!!! DefaultRawHeight = UITableViewAutomaticDimension
     
