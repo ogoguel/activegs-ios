@@ -245,6 +245,7 @@
 		9250DCB31CAEEF990093CE9A /* MfiGameControllerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */; };
 		9250DCB51CAEFD3B0093CE9A /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9250DCB41CAEFD3B0093CE9A /* GameController.framework */; };
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
+		92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -252,6 +253,8 @@
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 			);
@@ -593,6 +596,8 @@
 		9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MfiGameControllerHandler.m; sourceTree = "<group>"; };
 		9250DCB41CAEFD3B0093CE9A /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
+		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
+		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1006,6 +1011,8 @@
 				924A1BB11CB9685700D69162 /* KeyCapView.m */,
 				924A1BB31CBA049D00D69162 /* KeyMapper.h */,
 				924A1BB41CBA049D00D69162 /* KeyMapper.m */,
+				92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */,
+				92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */,
 			);
 			name = Common.iphone;
 			path = ../Common.iphone;
@@ -1149,6 +1156,7 @@
 				LastUpgradeCheck = 0820;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
@@ -1332,6 +1340,7 @@
 				09BB434711D92F65005ADA46 /* CEmulatorCtrlMac.cpp in Sources */,
 				09BB43B011D92F70005ADA46 /* activeconfig.cpp in Sources */,
 				09BB43B111D92F70005ADA46 /* ActiveDownload.cpp in Sources */,
+				92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */,
 				09052B9419053C9F00853FAE /* uncompr.cpp in Sources */,
 				09BB43B211D92F70005ADA46 /* ActiveZip.cpp in Sources */,
 				09052B8619053C9F00853FAE /* pngwtran.cpp in Sources */,
@@ -1459,12 +1468,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1479,7 +1489,8 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
@@ -1489,6 +1500,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1500,12 +1513,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1522,7 +1536,8 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
@@ -1532,6 +1547,9 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1542,12 +1560,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1561,7 +1580,8 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
@@ -1571,6 +1591,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

@@ -256,7 +256,8 @@ static	UIImage* defaultImageII = nil;
         tempXML += "</config>";
     };
     
-    for (NSString *s in fileList)
+    NSArray *sortedFileList = [fileList sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    for (NSString *s in sortedFileList)
     {
         const char* fn = [s UTF8String];
         const char* ext = getext(fn);
@@ -637,6 +638,8 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
     
 	[self reloadData:NO];
 	
+    UILayoutGuide *lg = self.view.safeAreaLayoutGuide;
+    NSLog(@"safe area layout guide: %@",NSStringFromCGRect(lg.layoutFrame));
 	
 }
 

@@ -552,6 +552,7 @@ float refScaleLandscape;
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesBegan:touches withEvent:event];
 #ifdef ACTIVEGS
 	if ([[pManager getEmulatorView].kbdc myTouchesBegan:touches])
 	{
@@ -672,6 +673,7 @@ float refScaleLandscape;
 {
 	
 	debug_printf("touchesEnded : %d",[touches count]);
+    [super touchesEnded:touches withEvent:event];
 
 #ifdef ACTIVEGS
 	if (! [[pManager getEmulatorView].kbdc myTouchesEnded:touches])
@@ -750,7 +752,7 @@ float refScaleLandscape;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	
+    [super touchesCancelled:touches withEvent:event];
 	// on est ici car lez zoom a démarré => théoriquement, il ne doit y avoir aucun useTouch, secondTouch, ou mouseDown
 
 	if ([touches containsObject:self.useTouch])
