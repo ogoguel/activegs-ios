@@ -447,9 +447,9 @@ int	x_lock_zoom = 0;
 	[self.contentView addSubview:self.kbdc.view];
 	
     self.emuKeyboardController = [[EmulatorKeyboardController alloc] init];
-    self.emuKeyboardController.leftKeyboardView.delegate = self;
-    self.emuKeyboardController.leftKeyboardView.modifierDelegate = self;
-    self.emuKeyboardController.rightKeyboardView.delegate = self;
+    self.emuKeyboardController.leftKeyboardModel.delegate = self;
+    self.emuKeyboardController.leftKeyboardModel.modifierDelegate = self;
+    self.emuKeyboardController.rightKeyboardModel.delegate = self;
     
 	self.view = self.contentView;
  
@@ -715,10 +715,17 @@ int	x_lock_zoom = 0;
 
 #pragma mark - EmulatorKeyboardKeyPressedDelegate
 -(void)keyDown:(id<KeyCoded>)key {
+    NSLog(@"key down: %li modifier: %i",(long)key.keyCode, self.emuKeyboardController.modifierState);
+    if (self.emuKeyboardController.modifierState & shiftKey) {
+        add_event_modifier(shiftKey);
+    }
     add_event_key((int)key.keyCode, 0);
 }
 
 -(void)keyUp:(id<KeyCoded>)key {
+    if (self.emuKeyboardController.modifierState & shiftKey) {
+        add_event_modifier(0);
+    }
     add_event_key((int)key.keyCode, 1);
 }
 

@@ -10,7 +10,6 @@ import UIKit
 
 class KeyboardButton: UIButton {
     let key: KeyCoded
-    var isModifierToggle = false
     var toggleState = false
     
     // MARK: - Functions
@@ -39,14 +38,13 @@ class KeyboardButton: UIButton {
     
     override open var isSelected: Bool {
         didSet {
-            let shouldHighlight = isModifierToggle ? toggleState : isSelected
+            let shouldHighlight = key.isModifier ? toggleState : isSelected
             backgroundColor = shouldHighlight ? .red : .black
         }
     }
     
-    required init(key: KeyCoded, isModifier: Bool = false) {
+    required init(key: KeyCoded) {
         self.key = key
-        self.isModifierToggle = isModifier
         super.init(frame: .zero)
     }
     required init?(coder aDecoder: NSCoder) {
@@ -66,17 +64,28 @@ class KeyboardButton: UIButton {
 
 class EmulatorKeyboardView: UIView {
     
-    @objc weak var delegate: EmulatorKeyboardKeyPressedDelegate?
-    @objc weak var modifierDelegate: EmulatorKeyboardModifierPressedDelegate?
-    var keyRowsDataSource: KeyRowsDataSource?
+    var viewModel = EmulatorKeyboardViewModel(keys: [[KeyCoded]]()) {
+        didSet {
+            setupWithModel(viewModel)
+        }
+    }
     
-    private var keyRowsStackView: UIStackView = {
+    private lazy var keyRowsStackView: UIStackView = {
        let stackView = UIStackView()
        stackView.translatesAutoresizingMaskIntoConstraints = false
        stackView.axis = .vertical
        stackView.distribution = .equalCentering
        stackView.spacing = 16
        return stackView
+    }()
+    
+    private lazy var alternateKeyRowsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .equalCentering
+        stackView.spacing = 16
+        return stackView
     }()
     
     let dragMeView: UILabel = {
@@ -121,57 +130,44 @@ class EmulatorKeyboardView: UIView {
     
     
     @objc private func keyPressed(_ sender: KeyboardButton) {
-        let label = UILabel(frame: .zero)
-        label.text = sender.titleLabel?.text
-        // hmm need to convert frame
-        let converted = sender.convert(sender.bounds, to: self)
-        print("sender frame: \(sender.frame), bounds: \(sender.bounds), convertedBounds = \(converted)")
-        var labelFrame = converted.offsetBy(dx: 0, dy: -60)
-        labelFrame = CGRect(x: labelFrame.origin.x, y: labelFrame.origin.y, width: labelFrame.width * 2, height: labelFrame.height * 2)
-        label.backgroundColor = .purple
-        label.textColor = .green
-        label.frame = labelFrame
-        addSubview(label)
-        pressedKeyLabels[label.text ?? "😭"] = label
-        if sender.isModifierToggle {
-            let isPressed = modifierDelegate?.isModifierEnabled(key: sender.key) ?? false
-            modifierDelegate?.modifierPressedWithKey(sender.key, enable: !isPressed)
+        if viewModel.shouldShowKeyPressedVisualFeedbackForKey(sender.key) {
+            let label = UILabel(frame: .zero)
+            label.text = sender.titleLabel?.text
+            // hmm need to convert frame
+            let converted = sender.convert(sender.bounds, to: self)
+            print("sender frame: \(sender.frame), bounds: \(sender.bounds), convertedBounds = \(converted)")
+            var labelFrame = converted.offsetBy(dx: 0, dy: -60)
+            labelFrame = CGRect(x: labelFrame.origin.x, y: labelFrame.origin.y, width: labelFrame.width * 2, height: labelFrame.height * 2)
+            label.backgroundColor = .purple
+            label.textColor = .green
+            label.frame = labelFrame
+            addSubview(label)
+            pressedKeyLabels[label.text ?? "😭"] = label
         }
-        delegate?.keyDown(sender.key)
+        viewModel.keyPressed(sender.key)
     }
     
     @objc private func keyReleased(_ sender: KeyboardButton) {
-        // pass to delegate
         let title = sender.titleLabel?.text ?? "😭"
-//        pressedKeyLabels.forEach { _, value in
-//            value.removeFromSuperview()
-//        }
         if let label = pressedKeyLabels[title] {
             label.removeFromSuperview()
             pressedKeyLabels.removeValue(forKey: title)
         }
-        if sender.isModifierToggle {
-            if modifierDelegate?.isModifierEnabled(key: sender.key) ?? false {
-                sender.toggleState = true
-                sender.isSelected = true
-            } else {
-                sender.toggleState = false
-                sender.isSelected = false
-            }
-        }
-        delegate?.keyUp(sender.key)
+        let modifierState = viewModel.modifierKeyToggleStateForKey(sender.key)
+        sender.toggleState = modifierState
+        sender.isSelected = modifierState
+        viewModel.keyReleased(sender.key)
     }
     
-    func setupWithModel(_ model: AppleIIKeysCluster) {
+    func setupWithModel(_ model: EmulatorKeyboardViewModel) {
         for row in model.keys {
             let keysInRow = createKeyRow(keys: row)
             keyRowsStackView.addArrangedSubview(keysInRow)
         }
-        keyRowsDataSource = model
     }
     
     private func createKey(_ keyCoded: KeyCoded) -> UIButton {
-        let testKey = KeyboardButton(key: keyCoded, isModifier: keyCoded.isModifier)
+        let testKey = KeyboardButton(key: keyCoded)
         testKey.setTitle(keyCoded.keyLabel, for: .normal)
         testKey.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
         testKey.setTitleColor(.white, for: .normal)
@@ -242,8 +238,25 @@ struct KeyPosition {
     let column: Int
 }
 
-struct AppleIIKeysCluster: KeyRowsDataSource {
-    var keys = [[AppleIIKey]]()
+@objc class EmulatorKeyboardViewModel: NSObject, KeyRowsDataSource {
+    var keys = [[KeyCoded]]()
+    var alternateKeys: [[KeyCoded]]?
+    var modifierState: Int16 = 0
+    
+    @objc weak var delegate: EmulatorKeyboardKeyPressedDelegate?
+    @objc weak var modifierDelegate: EmulatorKeyboardModifierPressedDelegate?
+    
+    init(keys: [[KeyCoded]], alternateKeys: [[KeyCoded]]? = nil) {
+        self.keys = keys
+        self.alternateKeys = alternateKeys
+    }
+    
+    func createView() -> EmulatorKeyboardView {
+        let view = EmulatorKeyboardView()
+        view.viewModel = self
+        return view
+    }
+    
     func keyForPositionAt(_ position: KeyPosition) -> KeyCoded? {
         guard position.row < keys.count else {
             return nil
@@ -254,16 +267,46 @@ struct AppleIIKeysCluster: KeyRowsDataSource {
         }
         return row[position.column]
     }
+    
+    func shouldShowKeyPressedVisualFeedbackForKey(_ key: KeyCoded) -> Bool {
+        return !key.isModifier
+    }
+    
+    func modifierKeyToggleStateForKey(_ key: KeyCoded) -> Bool {
+        return key.isModifier && (modifierDelegate?.isModifierEnabled(key: key) ?? false)
+    }
+    
+    func keyPressed(_ key: KeyCoded) {
+        if key.isModifier {
+            let isPressed = modifierDelegate?.isModifierEnabled(key: key) ?? false
+            modifierDelegate?.modifierPressedWithKey(key, enable: !isPressed)
+        }
+        delegate?.keyDown(key)
+    }
+    
+    func keyReleased(_ key: KeyCoded) {
+        delegate?.keyUp(key)
+
+    }
+    
+    // KeyCoded can support a shifted key label
+    // view can update with shifted key labels?
+    // cluster can support alternate keys and view can swap them out?
 }
 
 @objc class EmulatorKeyboardController: UIViewController {
-    @objc let leftKeyboardView = EmulatorKeyboardView()
-    @objc let rightKeyboardView = EmulatorKeyboardView()
+    @objc lazy var leftKeyboardView: EmulatorKeyboardView = {
+        leftKeyboardModel.createView()
+    }()
+    @objc lazy var rightKeyboardView: EmulatorKeyboardView = {
+        rightKeyboardModel.createView()
+    }()
     var keyboardConstraints = [NSLayoutConstraint]()
     
+    // uses bitwise masks for the state of shift keys, control, open-apple keys, etc
     @objc var modifierState: Int16 = 0
     
-    let leftKeyboardModel = AppleIIKeysCluster(keys:
+    @objc let leftKeyboardModel = EmulatorKeyboardViewModel(keys:
         [
             [
                 AppleIIKey(label: "q", code: AppleKeyboardKey.KEY_Q.rawValue),
@@ -292,7 +335,7 @@ struct AppleIIKeysCluster: KeyRowsDataSource {
             ]
         ]
     )
-    let rightKeyboardModel = AppleIIKeysCluster(keys:
+    @objc let rightKeyboardModel = EmulatorKeyboardViewModel(keys:
         [
             [
                 AppleIIKey(label: "y", code: AppleKeyboardKey.KEY_Y.rawValue),
@@ -334,7 +377,7 @@ struct AppleIIKeysCluster: KeyRowsDataSource {
         super.viewDidLoad()
 //        setupView()
         setupViewFrames()
-        setupKeyModels()
+//        setupKeyModels()
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(draggedView(_:)))
         leftKeyboardView.dragMeView.isUserInteractionEnabled = true
@@ -376,11 +419,11 @@ struct AppleIIKeysCluster: KeyRowsDataSource {
         let keyboardWidth: CGFloat = 200.0
         let bottomLeftFrame = CGRect(
             x: self.view.safeAreaInsets.left,
-            y: screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight,
+            y: screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight - 20,
             width: keyboardWidth, height: keyboardHeight)
         let bottomRightFrame = CGRect(
             x: screenFrame.size.width - self.view.safeAreaInsets.right - keyboardWidth,
-            y:screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight,
+            y:screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight - 20,
             width: keyboardWidth, height: keyboardHeight
         )
         view.addSubview(leftKeyboardView)
