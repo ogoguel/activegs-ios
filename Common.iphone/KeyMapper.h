@@ -68,7 +68,8 @@ typedef NS_ENUM(NSInteger, AppleKeyboardKey) {
     KEY_0 = 0x1D,
     KEY_MINUS = 0x1B,
     KEY_EQUALS = 0x18,
-    KEY_DELETE = 0x33
+    KEY_DELETE = 0x33,
+    KEY_SPECIAL_TOGGLE = 0x50
 };
 
 typedef NS_ENUM(NSInteger, KeyMapMappableButton) {

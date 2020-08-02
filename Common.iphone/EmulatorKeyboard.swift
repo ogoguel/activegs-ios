@@ -5,6 +5,11 @@
 //  Created by Yoshi Sugawara on 7/30/20.
 //
 
+// TODO: shift key should change the label of the keys to uppercase (need callback mechanism?)
+// pan gesture to outer edges of keyboard view for better dragging
+// support other modifiers: ctrl, apple
+// support a blank key that takes up space?
+
 import Foundation
 import UIKit
 
@@ -31,7 +36,7 @@ class KeyboardButton: UIButton {
             if !isHighlighted && toggleState {
                 // don't update the highlught
             } else {
-                backgroundColor = isHighlighted ? .white : .black
+                backgroundColor = isHighlighted ? .white : .clear
             }
         }
     }
@@ -39,7 +44,7 @@ class KeyboardButton: UIButton {
     override open var isSelected: Bool {
         didSet {
             let shouldHighlight = key.isModifier ? toggleState : isSelected
-            backgroundColor = shouldHighlight ? .red : .black
+            backgroundColor = shouldHighlight ? .red : .clear
         }
     }
     
@@ -62,6 +67,10 @@ class KeyboardButton: UIButton {
     func isModifierEnabled(key: KeyCoded) -> Bool
 }
 
+protocol EmulatorKeyboardViewDelegate: class {
+    func toggleAlternateKeys()
+}
+
 class EmulatorKeyboardView: UIView {
     
     var viewModel = EmulatorKeyboardViewModel(keys: [[KeyCoded]]()) {
@@ -70,12 +79,14 @@ class EmulatorKeyboardView: UIView {
         }
     }
     
+    weak var delegate: EmulatorKeyboardViewDelegate?
+    
     private lazy var keyRowsStackView: UIStackView = {
        let stackView = UIStackView()
        stackView.translatesAutoresizingMaskIntoConstraints = false
        stackView.axis = .vertical
        stackView.distribution = .equalCentering
-       stackView.spacing = 16
+       stackView.spacing = 12
        return stackView
     }()
     
@@ -84,7 +95,8 @@ class EmulatorKeyboardView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
-        stackView.spacing = 16
+        stackView.spacing = 12
+        stackView.isHidden = true
         return stackView
     }()
     
@@ -121,8 +133,12 @@ class EmulatorKeyboardView: UIView {
         insetsLayoutMarginsFromSafeArea = false
         addSubview(keyRowsStackView)
         keyRowsStackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
-        keyRowsStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
-        keyRowsStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
+        keyRowsStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 4.0).isActive = true
+        keyRowsStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -4.0).isActive = true
+        addSubview(alternateKeyRowsStackView)
+        alternateKeyRowsStackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
+        alternateKeyRowsStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 4.0).isActive = true
+        alternateKeyRowsStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -4.0).isActive = true
         addSubview(dragMeView)
         dragMeView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         dragMeView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8.0).isActive = true
@@ -130,6 +146,9 @@ class EmulatorKeyboardView: UIView {
     
     
     @objc private func keyPressed(_ sender: KeyboardButton) {
+        if sender.key.keyCode == AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue {
+            return
+        }
         if viewModel.shouldShowKeyPressedVisualFeedbackForKey(sender.key) {
             let label = UILabel(frame: .zero)
             label.text = sender.titleLabel?.text
@@ -148,6 +167,10 @@ class EmulatorKeyboardView: UIView {
     }
     
     @objc private func keyReleased(_ sender: KeyboardButton) {
+        if sender.key.keyCode == AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue {
+            delegate?.toggleAlternateKeys()
+            return
+        }
         let title = sender.titleLabel?.text ?? "😭"
         if let label = pressedKeyLabels[title] {
             label.removeFromSuperview()
@@ -164,31 +187,45 @@ class EmulatorKeyboardView: UIView {
             let keysInRow = createKeyRow(keys: row)
             keyRowsStackView.addArrangedSubview(keysInRow)
         }
+        if let altKeys = model.alternateKeys {
+            for row in altKeys {
+                let keysInRow = createKeyRow(keys: row)
+                alternateKeyRowsStackView.addArrangedSubview(keysInRow)
+            }
+        }
+    }
+    
+    func toggleKeysStackView() {
+        if viewModel.alternateKeys != nil {
+            keyRowsStackView.isHidden.toggle()
+            alternateKeyRowsStackView.isHidden.toggle()
+        }
     }
     
     private func createKey(_ keyCoded: KeyCoded) -> UIButton {
-        let testKey = KeyboardButton(key: keyCoded)
-        testKey.setTitle(keyCoded.keyLabel, for: .normal)
-        testKey.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
-        testKey.setTitleColor(.white, for: .normal)
-        testKey.setTitleColor(.black, for: .highlighted)
-        testKey.translatesAutoresizingMaskIntoConstraints = false
-        testKey.widthAnchor.constraint(equalToConstant: (25 * CGFloat(keyCoded.keySize.rawValue))).isActive = true
-        testKey.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        testKey.layer.borderWidth = 1.0
-        testKey.layer.borderColor = UIColor.white.cgColor
-        testKey.addTarget(self, action: #selector(keyPressed(_:)), for: .touchDown)
-        testKey.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpInside)
-        testKey.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpOutside)
-        return testKey
+        let key = KeyboardButton(key: keyCoded)
+        key.setTitle(keyCoded.keyLabel, for: .normal)
+        key.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
+        key.setTitleColor(.white, for: .normal)
+        key.setTitleColor(.black, for: .highlighted)
+        key.translatesAutoresizingMaskIntoConstraints = false
+        key.widthAnchor.constraint(equalToConstant: (25 * CGFloat(keyCoded.keySize.rawValue))).isActive = true
+        key.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        key.layer.borderWidth = 1.0
+        key.layer.borderColor = UIColor.white.cgColor
+        key.layer.cornerRadius = 6.0
+        key.addTarget(self, action: #selector(keyPressed(_:)), for: .touchDown)
+        key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpInside)
+        key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpOutside)
+        return key
     }
 
     private func createKeyRow(keys: [KeyCoded]) -> UIStackView {
-        let spacer = UIView()
+//        let spacer = UIView()
         var subviews: [UIView] = keys.enumerated().map { index, keyCoded -> UIView in
             createKey(keyCoded)
         }
-        subviews.append(spacer)
+//        subviews.append(spacer)
         let stack = UIStackView(arrangedSubviews: subviews)
         stack.axis = .horizontal
         stack.distribution = .fill
@@ -197,11 +234,11 @@ class EmulatorKeyboardView: UIView {
     }
 }
 
-// represents a key that has an underlying code that gets sent to the emulator
 @objc enum KeySize: Int {
     case standard = 1, wide, wider
 }
 
+// represents a key that has an underlying code that gets sent to the emulator
 @objc protocol KeyCoded: AnyObject {
     var keyLabel: String { get }
     var keyCode: Int { get }
@@ -241,7 +278,6 @@ struct KeyPosition {
 @objc class EmulatorKeyboardViewModel: NSObject, KeyRowsDataSource {
     var keys = [[KeyCoded]]()
     var alternateKeys: [[KeyCoded]]?
-    var modifierState: Int16 = 0
     
     @objc weak var delegate: EmulatorKeyboardKeyPressedDelegate?
     @objc weak var modifierDelegate: EmulatorKeyboardModifierPressedDelegate?
@@ -286,7 +322,6 @@ struct KeyPosition {
     
     func keyReleased(_ key: KeyCoded) {
         delegate?.keyUp(key)
-
     }
     
     // KeyCoded can support a shifted key label
@@ -296,17 +331,23 @@ struct KeyPosition {
 
 @objc class EmulatorKeyboardController: UIViewController {
     @objc lazy var leftKeyboardView: EmulatorKeyboardView = {
-        leftKeyboardModel.createView()
+        let view = leftKeyboardModel.createView()
+        view.delegate = self
+        return view
     }()
     @objc lazy var rightKeyboardView: EmulatorKeyboardView = {
-        rightKeyboardModel.createView()
+        let view = rightKeyboardModel.createView()
+        view.delegate = self
+        return view
     }()
     var keyboardConstraints = [NSLayoutConstraint]()
     
+    // Global states for all the keyboards
     // uses bitwise masks for the state of shift keys, control, open-apple keys, etc
     @objc var modifierState: Int16 = 0
     
-    @objc let leftKeyboardModel = EmulatorKeyboardViewModel(keys:
+    @objc let leftKeyboardModel = EmulatorKeyboardViewModel(
+        keys:
         [
             [
                 AppleIIKey(label: "q", code: AppleKeyboardKey.KEY_Q.rawValue),
@@ -330,12 +371,27 @@ struct KeyPosition {
                 AppleIIKey(label: "b", code: AppleKeyboardKey.KEY_B.rawValue)
             ],
             [
+                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide),
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue, keySize: .wide, isModifier: true),
-                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wider)
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
+            ]
+        ],
+        alternateKeys:
+        [
+            [
+                AppleIIKey(label: "1", code: AppleKeyboardKey.KEY_1.rawValue),
+                AppleIIKey(label: "2", code: AppleKeyboardKey.KEY_2.rawValue),
+                AppleIIKey(label: "3", code: AppleKeyboardKey.KEY_3.rawValue),
+                AppleIIKey(label: "4", code: AppleKeyboardKey.KEY_4.rawValue),
+                AppleIIKey(label: "5", code: AppleKeyboardKey.KEY_5.rawValue),
+            ],
+            [
+                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide)
             ]
         ]
     )
-    @objc let rightKeyboardModel = EmulatorKeyboardViewModel(keys:
+    @objc let rightKeyboardModel = EmulatorKeyboardViewModel(
+        keys:
         [
             [
                 AppleIIKey(label: "y", code: AppleKeyboardKey.KEY_Y.rawValue),
@@ -356,10 +412,24 @@ struct KeyPosition {
                 AppleIIKey(label: "m", code: AppleKeyboardKey.KEY_M.rawValue),
                 AppleIIKey(label: ",", code: AppleKeyboardKey.KEY_COMMA.rawValue),
                 AppleIIKey(label: ".", code: AppleKeyboardKey.KEY_PERIOD.rawValue),
-                AppleIIKey(label: "/", code: AppleKeyboardKey.KEY_FSLASH.rawValue)
+                AppleIIKey(label: "␡", code: AppleKeyboardKey.KEY_DELETE.rawValue)
             ],
             [
-                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wider)
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
+            ]
+        ],
+        alternateKeys:
+        [
+            [
+                AppleIIKey(label: "6", code: AppleKeyboardKey.KEY_6.rawValue),
+                AppleIIKey(label: "7", code: AppleKeyboardKey.KEY_7.rawValue),
+                AppleIIKey(label: "8", code: AppleKeyboardKey.KEY_8.rawValue),
+                AppleIIKey(label: "9", code: AppleKeyboardKey.KEY_9.rawValue),
+                AppleIIKey(label: "0", code: AppleKeyboardKey.KEY_0.rawValue),
+            ],
+            [
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide),
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
             ]
         ]
     )
@@ -411,12 +481,11 @@ struct KeyPosition {
     
     func setupViewFrames() {
         // initial placement on the bottom corners
-        // assume a size of 200x180 for now
         // since we don't know the frame of this view yet until layout time,
         // assume it's taking the full screen
         let screenFrame = UIScreen.main.bounds
         let keyboardHeight: CGFloat = 180.0
-        let keyboardWidth: CGFloat = 200.0
+        let keyboardWidth: CGFloat = 173.0
         let bottomLeftFrame = CGRect(
             x: self.view.safeAreaInsets.left,
             y: screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight - 20,
@@ -467,5 +536,13 @@ struct KeyPosition {
         let translation = sender.translation(in: self.view)
         keyboardView.center = CGPoint(x: keyboardView.center.x + translation.x, y: keyboardView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+}
+
+extension EmulatorKeyboardController: EmulatorKeyboardViewDelegate {
+    func toggleAlternateKeys() {
+        for keyboard in [leftKeyboardView, rightKeyboardView] {
+            keyboard.toggleKeysStackView()
+        }
     }
 }
