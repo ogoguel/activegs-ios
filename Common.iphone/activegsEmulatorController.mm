@@ -9,6 +9,7 @@
 #include "../kegs/Src/sim65816.h"
 #include "../kegs/Src/async_event.h"
 
+#import "KeyMapper.h"
 #import "ActiveGS-Swift.h"
 
 
@@ -450,6 +451,7 @@ int	x_lock_zoom = 0;
     self.emuKeyboardController.leftKeyboardModel.delegate = self;
     self.emuKeyboardController.leftKeyboardModel.modifierDelegate = self;
     self.emuKeyboardController.rightKeyboardModel.delegate = self;
+    self.emuKeyboardController.rightKeyboardModel.modifierDelegate = self;
     
 	self.view = self.contentView;
  
@@ -731,25 +733,50 @@ int	x_lock_zoom = 0;
 
 #pragma mark - EmulatorKeyboardModifierPressedDelegate
 -(void)modifierPressedWithKey:(id<KeyCoded>)key enable:(BOOL)enable {
-    // fix this to the enum later
-    if (key.keyCode == 0x38) {
-        // shift
-        if (enable) {
-            self.emuKeyboardController.modifierState |= shiftKey;
-        } else {
-            self.emuKeyboardController.modifierState &= ~shiftKey;
-        }
-        NSLog(@"modifier = %i",self.emuKeyboardController.modifierState);
+    int modifierKey;
+    if (key.keyCode == KEY_SHIFT) {
+        modifierKey = shiftKey;
+    } else if (key.keyCode == KEY_CTRL) {
+        modifierKey = controlKey;
+    } else if (key.keyCode == KEY_APPLE) {
+        modifierKey = cmdKey;
+    } else if (key.keyCode == KEY_OPTION) {
+        modifierKey = optionKey;
+    }
+    if (enable) {
+        self.emuKeyboardController.modifierState |= modifierKey;
+        [self keyDown:key];
+    } else {
+        [self keyUp:key];
+        self.emuKeyboardController.modifierState &= ~modifierKey;
     }
 }
 
 -(BOOL)isModifierEnabledWithKey:(id<KeyCoded>)key {
-    if (key.keyCode == 0x38) {
-        // shift
-        NSLog(@"modifier = %i",self.emuKeyboardController.modifierState);
-        BOOL enabled = self.emuKeyboardController.modifierState & shiftKey;
-        NSLog(@"modifier enabled? %@",enabled ? @"YES" : @"NO");
-        return enabled;
+    BOOL enabled;
+    switch (key.keyCode) {
+        case KEY_SHIFT:
+            NSLog(@"shift modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & shiftKey;
+            NSLog(@"shift modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_CTRL:
+            NSLog(@"ctrl modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & controlKey;
+            NSLog(@"ctrl modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_APPLE:
+            NSLog(@"open-apple modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & cmdKey;
+            NSLog(@"open-apple modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_OPTION:
+            NSLog(@"closed-apple modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & optionKey;
+            NSLog(@"closed-apple modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        default:
+            break;
     }
     return NO;
 }

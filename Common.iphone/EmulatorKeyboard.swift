@@ -7,8 +7,9 @@
 
 // TODO: shift key should change the label of the keys to uppercase (need callback mechanism?)
 // pan gesture to outer edges of keyboard view for better dragging
-// support other modifiers: ctrl, apple
-// support a blank key that takes up space?
+// double tap modifier to toggle
+// taller keys?
+// alt key: add shift to left
 
 import Foundation
 import UIKit
@@ -69,6 +70,7 @@ class KeyboardButton: UIButton {
 
 protocol EmulatorKeyboardViewDelegate: class {
     func toggleAlternateKeys()
+    func refreshModifierStates()
 }
 
 class EmulatorKeyboardView: UIView {
@@ -78,6 +80,7 @@ class EmulatorKeyboardView: UIView {
             setupWithModel(viewModel)
         }
     }
+    var modifierButtons = Set<KeyboardButton>()
     
     weak var delegate: EmulatorKeyboardViewDelegate?
     
@@ -149,7 +152,7 @@ class EmulatorKeyboardView: UIView {
         if sender.key.keyCode == AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue {
             return
         }
-        if viewModel.shouldShowKeyPressedVisualFeedbackForKey(sender.key) {
+        if !sender.key.isModifier {
             let label = UILabel(frame: .zero)
             label.text = sender.titleLabel?.text
             // hmm need to convert frame
@@ -180,6 +183,7 @@ class EmulatorKeyboardView: UIView {
         sender.toggleState = modifierState
         sender.isSelected = modifierState
         viewModel.keyReleased(sender.key)
+        self.delegate?.refreshModifierStates()
     }
     
     func setupWithModel(_ model: EmulatorKeyboardViewModel) {
@@ -199,15 +203,31 @@ class EmulatorKeyboardView: UIView {
         if viewModel.alternateKeys != nil {
             keyRowsStackView.isHidden.toggle()
             alternateKeyRowsStackView.isHidden.toggle()
+            refreshModifierStates()
+        }
+    }
+    
+    func refreshModifierStates() {
+        modifierButtons.forEach{ button in
+            button.toggleState = viewModel.modifierKeyToggleStateForKey(button.key)
+            button.isSelected = button.toggleState
         }
     }
     
     private func createKey(_ keyCoded: KeyCoded) -> UIButton {
         let key = KeyboardButton(key: keyCoded)
-        key.setTitle(keyCoded.keyLabel, for: .normal)
-        key.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
-        key.setTitleColor(.white, for: .normal)
-        key.setTitleColor(.black, for: .highlighted)
+        if let imageName = keyCoded.keyImageName {
+            key.setImage(UIImage(systemName: imageName), for: .normal)
+            if let highlightedImageName = keyCoded.keyImageNameHighlighted {
+                key.setImage(UIImage(systemName: highlightedImageName), for: .highlighted)
+                key.setImage(UIImage(systemName: highlightedImageName), for: .selected)
+            }
+        } else {
+            key.setTitle(keyCoded.keyLabel, for: .normal)
+            key.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
+            key.setTitleColor(.white, for: .normal)
+            key.setTitleColor(.black, for: .highlighted)
+        }
         key.translatesAutoresizingMaskIntoConstraints = false
         key.widthAnchor.constraint(equalToConstant: (25 * CGFloat(keyCoded.keySize.rawValue))).isActive = true
         key.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -217,15 +237,22 @@ class EmulatorKeyboardView: UIView {
         key.addTarget(self, action: #selector(keyPressed(_:)), for: .touchDown)
         key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpInside)
         key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpOutside)
+        if keyCoded.isModifier {
+            modifierButtons.update(with: key)
+        }
         return key
     }
 
     private func createKeyRow(keys: [KeyCoded]) -> UIStackView {
-//        let spacer = UIView()
-        var subviews: [UIView] = keys.enumerated().map { index, keyCoded -> UIView in
-            createKey(keyCoded)
+        let subviews: [UIView] = keys.enumerated().map { index, keyCoded -> UIView in
+            if keyCoded is SpacerKey {
+                let spacer = UIView()
+                spacer.widthAnchor.constraint(equalToConstant: 25.0 * CGFloat(keyCoded.keySize.rawValue)).isActive = true
+                spacer.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+                return spacer
+            }
+            return createKey(keyCoded)
         }
-//        subviews.append(spacer)
         let stack = UIStackView(arrangedSubviews: subviews)
         stack.axis = .horizontal
         stack.distribution = .fill
@@ -241,6 +268,8 @@ class EmulatorKeyboardView: UIView {
 // represents a key that has an underlying code that gets sent to the emulator
 @objc protocol KeyCoded: AnyObject {
     var keyLabel: String { get }
+    var keyImageName: String? { get }
+    var keyImageNameHighlighted: String? { get }
     var keyCode: Int { get }
     var keySize: KeySize { get }
     var isModifier: Bool { get }
@@ -252,6 +281,8 @@ protocol KeyRowsDataSource {
 
 @objc class AppleIIKey: NSObject, KeyCoded {
     let keyLabel: String
+    var keyImageName: String?
+    var keyImageNameHighlighted: String?
     let keyCode: Int
     let keySize: KeySize
     let isModifier: Bool
@@ -259,14 +290,25 @@ protocol KeyRowsDataSource {
     override var description: String {
         return String(format: "\(keyLabel) (%02X)", keyCode)
     }
-    init(label: String, code: Int, keySize: KeySize, isModifier: Bool = false)  {
+    init(label: String, code: Int, keySize: KeySize = .standard, isModifier: Bool = false, imageName: String? = nil, imageNameHighlighted: String? = nil)  {
         self.keyLabel = label
         self.keyCode = code
         self.keySize = keySize
         self.isModifier = isModifier
+        self.keyImageName = imageName
+        self.keyImageNameHighlighted = imageNameHighlighted
     }
-    convenience init(label: String, code: Int) {
-        self.init(label: label, code: code, keySize: .standard)
+}
+
+class SpacerKey: KeyCoded {
+    let keyLabel = ""
+    let keyCode = 0
+    let keySize: KeySize
+    let isModifier = false
+    let keyImageName: String? = nil
+    let keyImageNameHighlighted: String? = nil
+    init(keySize: KeySize = .standard) {
+        self.keySize = keySize
     }
 }
 
@@ -278,6 +320,7 @@ struct KeyPosition {
 @objc class EmulatorKeyboardViewModel: NSObject, KeyRowsDataSource {
     var keys = [[KeyCoded]]()
     var alternateKeys: [[KeyCoded]]?
+    var modifiers: [Int16: KeyCoded]?
     
     @objc weak var delegate: EmulatorKeyboardKeyPressedDelegate?
     @objc weak var modifierDelegate: EmulatorKeyboardModifierPressedDelegate?
@@ -304,10 +347,6 @@ struct KeyPosition {
         return row[position.column]
     }
     
-    func shouldShowKeyPressedVisualFeedbackForKey(_ key: KeyCoded) -> Bool {
-        return !key.isModifier
-    }
-    
     func modifierKeyToggleStateForKey(_ key: KeyCoded) -> Bool {
         return key.isModifier && (modifierDelegate?.isModifierEnabled(key: key) ?? false)
     }
@@ -316,11 +355,15 @@ struct KeyPosition {
         if key.isModifier {
             let isPressed = modifierDelegate?.isModifierEnabled(key: key) ?? false
             modifierDelegate?.modifierPressedWithKey(key, enable: !isPressed)
+            return
         }
         delegate?.keyDown(key)
     }
     
     func keyReleased(_ key: KeyCoded) {
+        if key.isModifier {
+            return
+        }
         delegate?.keyUp(key)
     }
     
@@ -350,6 +393,13 @@ struct KeyPosition {
         keys:
         [
             [
+                AppleIIKey(label: "esc", code: AppleKeyboardKey.KEY_ESC.rawValue),
+                AppleIIKey(label: "tab", code: AppleKeyboardKey.KEY_TAB.rawValue, keySize: .wide),
+                SpacerKey(),
+                AppleIIKey(label: "CTRL", code: AppleKeyboardKey.KEY_CTRL.rawValue,
+                           keySize: .standard, isModifier: true, imageName: "control")
+            ],
+            [
                 AppleIIKey(label: "q", code: AppleKeyboardKey.KEY_Q.rawValue),
                 AppleIIKey(label: "w", code: AppleKeyboardKey.KEY_W.rawValue),
                 AppleIIKey(label: "e", code: AppleKeyboardKey.KEY_E.rawValue),
@@ -371,13 +421,19 @@ struct KeyPosition {
                 AppleIIKey(label: "b", code: AppleKeyboardKey.KEY_B.rawValue)
             ],
             [
-                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide),
-                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue, keySize: .wide, isModifier: true),
-                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide, imageName: "textformat.123"),
+                AppleIIKey(label: "", code: AppleKeyboardKey.KEY_APPLE.rawValue,
+                           keySize: .standard, isModifier: true)
+            ],
+            [
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue)
             ]
         ],
         alternateKeys:
         [
+            [],
             [
                 AppleIIKey(label: "1", code: AppleKeyboardKey.KEY_1.rawValue),
                 AppleIIKey(label: "2", code: AppleKeyboardKey.KEY_2.rawValue),
@@ -386,13 +442,37 @@ struct KeyPosition {
                 AppleIIKey(label: "5", code: AppleKeyboardKey.KEY_5.rawValue),
             ],
             [
-                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide)
+                AppleIIKey(label: "-", code: AppleKeyboardKey.KEY_MINUS.rawValue),
+                AppleIIKey(label: "=", code: AppleKeyboardKey.KEY_EQUALS.rawValue),
+                AppleIIKey(label: "/", code: AppleKeyboardKey.KEY_FSLASH.rawValue),
+                AppleIIKey(label: "[", code: AppleKeyboardKey.KEY_LEFT_BRACKET.rawValue),
+                AppleIIKey(label: "]", code: AppleKeyboardKey.KEY_RIGHT_BRACKET.rawValue),
+            ],
+            [
+                AppleIIKey(label: ";", code: AppleKeyboardKey.KEY_SEMICOLON.rawValue),
+                AppleIIKey(label: "~", code: AppleKeyboardKey.KEY_TILDE.rawValue)
+            ],
+            [
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide, imageName: "textformat.abc"),
+                AppleIIKey(label: "OPT", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                           keySize: .standard, isModifier: true)
+            ],
+            [
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue)
             ]
         ]
     )
     @objc let rightKeyboardModel = EmulatorKeyboardViewModel(
         keys:
         [
+            [
+                SpacerKey(),
+                SpacerKey(),
+                SpacerKey(),
+                AppleIIKey(label: "RESET", code: AppleKeyboardKey.KEY_RESET.rawValue, keySize: .wide)
+            ],
             [
                 AppleIIKey(label: "y", code: AppleKeyboardKey.KEY_Y.rawValue),
                 AppleIIKey(label: "u", code: AppleKeyboardKey.KEY_U.rawValue),
@@ -412,7 +492,7 @@ struct KeyPosition {
                 AppleIIKey(label: "m", code: AppleKeyboardKey.KEY_M.rawValue),
                 AppleIIKey(label: ",", code: AppleKeyboardKey.KEY_COMMA.rawValue),
                 AppleIIKey(label: ".", code: AppleKeyboardKey.KEY_PERIOD.rawValue),
-                AppleIIKey(label: "␡", code: AppleKeyboardKey.KEY_DELETE.rawValue)
+                AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
             ],
             [
                 AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
@@ -428,12 +508,30 @@ struct KeyPosition {
                 AppleIIKey(label: "0", code: AppleKeyboardKey.KEY_0.rawValue),
             ],
             [
+                SpacerKey(),
+                SpacerKey(),
+                AppleIIKey(label: "⬆", code: AppleKeyboardKey.KEY_UP_CURSOR.rawValue),
+                SpacerKey(),
+                SpacerKey()
+            ],
+            [
+                SpacerKey(),
+                AppleIIKey(label: "⬅", code: AppleKeyboardKey.KEY_LEFT_CURSOR.rawValue),
+                AppleIIKey(label: "⬇", code: AppleKeyboardKey.KEY_DOWN_CURSOR.rawValue),
+                AppleIIKey(label: "➡", code: AppleKeyboardKey.KEY_RIGHT_CURSOR.rawValue),
+                SpacerKey()
+            ],
+            [
                 AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide),
-                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
+            ],
+            [
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .standard)
             ]
         ]
     )
-    var arrowKeysModel = [[AppleIIKey]]()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -484,15 +582,15 @@ struct KeyPosition {
         // since we don't know the frame of this view yet until layout time,
         // assume it's taking the full screen
         let screenFrame = UIScreen.main.bounds
-        let keyboardHeight: CGFloat = 180.0
+        let keyboardHeight: CGFloat = 240.0
         let keyboardWidth: CGFloat = 173.0
         let bottomLeftFrame = CGRect(
-            x: self.view.safeAreaInsets.left,
-            y: screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight - 20,
+            x: 20,
+            y: screenFrame.size.height - 40 - keyboardHeight - 20,
             width: keyboardWidth, height: keyboardHeight)
         let bottomRightFrame = CGRect(
-            x: screenFrame.size.width - self.view.safeAreaInsets.right - keyboardWidth,
-            y:screenFrame.size.height - self.view.safeAreaInsets.bottom - keyboardHeight - 20,
+            x: screenFrame.size.width - 20 - keyboardWidth,
+            y:screenFrame.size.height - 40 - keyboardHeight - 20,
             width: keyboardWidth, height: keyboardHeight
         )
         view.addSubview(leftKeyboardView)
@@ -543,6 +641,11 @@ extension EmulatorKeyboardController: EmulatorKeyboardViewDelegate {
     func toggleAlternateKeys() {
         for keyboard in [leftKeyboardView, rightKeyboardView] {
             keyboard.toggleKeysStackView()
+        }
+    }
+    func refreshModifierStates() {
+        for keyboard in [leftKeyboardView, rightKeyboardView] {
+            keyboard.refreshModifierStates()
         }
     }
 }
