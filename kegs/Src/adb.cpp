@@ -1270,16 +1270,17 @@ update_mouse(int x, int y, int button_states, int buttons_valid)
 
 	mouse_compress_fifo(dcycs);
 
-#if 0
+//#if 0
 	printf("Update Mouse called with buttons:%d (state:%d) x,y:%d,%d, fifo:%d,%d, "
 		" a2: %d,%d\n", buttons_valid,button_states, x, y,
-		g_adb.g_mouse_fifo[0].x, g_mouse_fifo[0].y,
+		g_adb.g_mouse_fifo[0].x, g_adb.g_mouse_fifo[0].y,
 		g_adb.g_mouse_a2_x, g_adb.g_mouse_a2_y);
-#endif
+//#endif
 
 	if((buttons_valid == -1) &&(g_adb.g_warp_pointer==WARP_POINTER)) {
 		/* Warping the pointer causes it to jump here...this is not */
 		/*  real motion, just update info and get out */
+        printf("yoshi debug doing warp pointer logic!\n");
 		g_adb.g_mouse_a2_x += (x - g_adb.g_mouse_fifo[0].x);
 		g_adb.g_mouse_a2_y += (y - g_adb.g_mouse_fifo[0].y);
 		g_adb.g_mouse_fifo[0].x = x;
@@ -1287,11 +1288,11 @@ update_mouse(int x, int y, int button_states, int buttons_valid)
 		return 0;
 	}
 
-#if 0
+//#if 0
 	printf("...real move, warp: %d, %d, new x: %d, %d, a2:%d,%d\n",
 		g_adb.g_mouse_warp_x, g_adb.g_mouse_warp_y, g_adb.g_mouse_fifo[0].x,
 		g_adb.g_mouse_fifo[0].y, g_adb.g_mouse_a2_x, g_adb.g_mouse_a2_y);
-#endif
+//#endif
 
 	mouse_moved = (g_adb.g_mouse_fifo[0].x != x) || (g_adb.g_mouse_fifo[0].y != y);
 

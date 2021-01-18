@@ -246,6 +246,7 @@
 		9250DCB51CAEFD3B0093CE9A /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9250DCB41CAEFD3B0093CE9A /* GameController.framework */; };
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
 		92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */; };
+		92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2063125AADF6E00AE3F28 /* PreviewUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -598,6 +599,7 @@
 		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
 		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
 		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
+		92E2063125AADF6E00AE3F28 /* PreviewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1012,6 +1014,7 @@
 				924A1BB31CBA049D00D69162 /* KeyMapper.h */,
 				924A1BB41CBA049D00D69162 /* KeyMapper.m */,
 				92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */,
+				92E2063125AADF6E00AE3F28 /* PreviewUI.swift */,
 				92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */,
 			);
 			name = Common.iphone;
@@ -1365,6 +1368,7 @@
 				09A5CE60125D41860018DC22 /* infoViewController.mm in Sources */,
 				0972554713CF2232006194F9 /* activegsEmulatorController.mm in Sources */,
 				924A1BB51CBA049D00D69162 /* KeyMapper.m in Sources */,
+				92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */,
 				0907BCC9142F567A0051CA0A /* asynccommand.mm in Sources */,
 				09052B7D19053C9F00853FAE /* pngread.cpp in Sources */,
 				09C81A781657ACAE008539D5 /* adb.cpp in Sources */,

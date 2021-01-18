@@ -61,6 +61,7 @@ class KeyboardButton: UIButton {
 @objc protocol EmulatorKeyboardKeyPressedDelegate: class {
     func keyDown(_ key: KeyCoded)
     func keyUp(_ key: KeyCoded)
+    func updateTransparency(toAlpha alpha: CGFloat)
 }
 
 @objc protocol EmulatorKeyboardModifierPressedDelegate: class {
@@ -129,9 +130,9 @@ class EmulatorKeyboardView: UIView {
 
     private func commonInit() {
         backgroundColor = .clear
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1.0
-        layer.cornerRadius = 15.0
+//        layer.borderColor = UIColor.white.cgColor
+//        layer.borderWidth = 1.0
+//        layer.cornerRadius = 15.0
         layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 16, right: 4)
         insetsLayoutMarginsFromSafeArea = false
         addSubview(keyRowsStackView)
@@ -230,7 +231,7 @@ class EmulatorKeyboardView: UIView {
         }
         key.translatesAutoresizingMaskIntoConstraints = false
         key.widthAnchor.constraint(equalToConstant: (25 * CGFloat(keyCoded.keySize.rawValue))).isActive = true
-        key.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        key.heightAnchor.constraint(equalToConstant: 35).isActive = true
         key.layer.borderWidth = 1.0
         key.layer.borderColor = UIColor.white.cgColor
         key.layer.cornerRadius = 6.0
@@ -250,6 +251,9 @@ class EmulatorKeyboardView: UIView {
                 spacer.widthAnchor.constraint(equalToConstant: 25.0 * CGFloat(keyCoded.keySize.rawValue)).isActive = true
                 spacer.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 return spacer
+            } else if let sliderKey = keyCoded as? SliderKey {
+                sliderKey.keyboardViewModel = self.viewModel
+                return sliderKey.createView()
             }
             return createKey(keyCoded)
         }
@@ -309,6 +313,30 @@ class SpacerKey: KeyCoded {
     let keyImageNameHighlighted: String? = nil
     init(keySize: KeySize = .standard) {
         self.keySize = keySize
+    }
+}
+
+class SliderKey: KeyCoded {
+    let keyLabel = ""
+    let keyCode = 0
+    let keySize: KeySize
+    let isModifier = false
+    let keyImageName: String? = nil
+    let keyImageNameHighlighted: String? = nil
+    weak var keyboardViewModel: EmulatorKeyboardViewModel?
+    init(keySize: KeySize = .standard) {
+        self.keySize = keySize
+    }
+    func createView() -> UIView {
+        let slider = UISlider(frame: .zero)
+        slider.minimumValue = 0.1
+        slider.maximumValue = 1.0
+        slider.addTarget(self, action: #selector(adjustKeyboardAlpha(_:)), for: .valueChanged)
+        slider.value = 1.0
+        return slider
+    }
+    @objc func adjustKeyboardAlpha(_ sender: UISlider) {
+        keyboardViewModel?.delegate?.updateTransparency(toAlpha: CGFloat(sender.value))
     }
 }
 
@@ -422,18 +450,18 @@ struct KeyPosition {
             ],
             [
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
-                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
-                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide, imageName: "textformat.123"),
+                           keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.123"),
                 AppleIIKey(label: "", code: AppleKeyboardKey.KEY_APPLE.rawValue,
-                           keySize: .standard, isModifier: true)
-            ],
-            [
-                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue)
+                           keySize: .standard, isModifier: true),
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
             ]
         ],
         alternateKeys:
         [
-            [],
+            [
+                SliderKey(keySize: .standard)
+            ],
             [
                 AppleIIKey(label: "1", code: AppleKeyboardKey.KEY_1.rawValue),
                 AppleIIKey(label: "2", code: AppleKeyboardKey.KEY_2.rawValue),
@@ -454,13 +482,11 @@ struct KeyPosition {
             ],
             [
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
-                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
-                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide, imageName: "textformat.abc"),
+                           keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.abc"),
                 AppleIIKey(label: "OPT", code: AppleKeyboardKey.KEY_OPTION.rawValue,
-                           keySize: .standard, isModifier: true)
-            ],
-            [
-                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue)
+                           keySize: .standard, isModifier: true),
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
             ]
         ]
     )
@@ -532,6 +558,183 @@ struct KeyPosition {
             ]
         ]
     )
+
+    
+    @objc let leftKeyboardModel2 = EmulatorKeyboardViewModel(
+        keys:
+        [
+            [
+                AppleIIKey(label: "esc", code: AppleKeyboardKey.KEY_ESC.rawValue),
+                AppleIIKey(label: "tab", code: AppleKeyboardKey.KEY_TAB.rawValue),
+                AppleIIKey(label: "CTRL", code: AppleKeyboardKey.KEY_CTRL.rawValue,
+                           keySize: .standard, isModifier: true, imageName: "control")
+            ],
+            [
+                AppleIIKey(label: "q", code: AppleKeyboardKey.KEY_Q.rawValue),
+                AppleIIKey(label: "a", code: AppleKeyboardKey.KEY_A.rawValue),
+                AppleIIKey(label: "z", code: AppleKeyboardKey.KEY_Z.rawValue),
+            ],
+            [
+                AppleIIKey(label: "w", code: AppleKeyboardKey.KEY_W.rawValue),
+                AppleIIKey(label: "s", code: AppleKeyboardKey.KEY_S.rawValue),
+                AppleIIKey(label: "x", code: AppleKeyboardKey.KEY_X.rawValue),
+            ],
+            [
+                AppleIIKey(label: "e", code: AppleKeyboardKey.KEY_E.rawValue),
+                AppleIIKey(label: "d", code: AppleKeyboardKey.KEY_D.rawValue),
+                AppleIIKey(label: "c", code: AppleKeyboardKey.KEY_C.rawValue)
+            ],
+            [
+                AppleIIKey(label: "r", code: AppleKeyboardKey.KEY_R.rawValue),
+                AppleIIKey(label: "f", code: AppleKeyboardKey.KEY_F.rawValue),
+                AppleIIKey(label: "v", code: AppleKeyboardKey.KEY_V.rawValue),
+            ],
+            [
+                AppleIIKey(label: "t", code: AppleKeyboardKey.KEY_T.rawValue),
+                AppleIIKey(label: "g", code: AppleKeyboardKey.KEY_G.rawValue),
+                AppleIIKey(label: "b", code: AppleKeyboardKey.KEY_B.rawValue)
+            ],
+            [
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.123")
+            ],
+            [
+                AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide),
+                AppleIIKey(label: "", code: AppleKeyboardKey.KEY_APPLE.rawValue,
+                           keySize: .standard, isModifier: true)
+            ]
+        ],
+        alternateKeys:
+        [
+            [
+                AppleIIKey(label: "esc", code: AppleKeyboardKey.KEY_ESC.rawValue),
+                AppleIIKey(label: "tab", code: AppleKeyboardKey.KEY_TAB.rawValue),
+                AppleIIKey(label: "CTRL", code: AppleKeyboardKey.KEY_CTRL.rawValue,
+                           keySize: .standard, isModifier: true, imageName: "control")
+            ],
+            [
+                AppleIIKey(label: "1", code: AppleKeyboardKey.KEY_1.rawValue),
+                AppleIIKey(label: "-", code: AppleKeyboardKey.KEY_MINUS.rawValue),
+                AppleIIKey(label: "]", code: AppleKeyboardKey.KEY_RIGHT_BRACKET.rawValue)
+
+            ],
+            [
+                AppleIIKey(label: "2", code: AppleKeyboardKey.KEY_2.rawValue),
+                AppleIIKey(label: "=", code: AppleKeyboardKey.KEY_EQUALS.rawValue),
+                AppleIIKey(label: "~", code: AppleKeyboardKey.KEY_TILDE.rawValue)
+            ],
+            [
+                AppleIIKey(label: "3", code: AppleKeyboardKey.KEY_3.rawValue),
+                AppleIIKey(label: ";", code: AppleKeyboardKey.KEY_SEMICOLON.rawValue),
+            ],
+            [
+                AppleIIKey(label: "4", code: AppleKeyboardKey.KEY_4.rawValue),
+                AppleIIKey(label: "/", code: AppleKeyboardKey.KEY_FSLASH.rawValue)
+            ],
+            [
+                AppleIIKey(label: "5", code: AppleKeyboardKey.KEY_5.rawValue),
+                AppleIIKey(label: "[", code: AppleKeyboardKey.KEY_LEFT_BRACKET.rawValue)
+            ],
+            [
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .wide, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .wide, imageName: "textformat.abc"),
+            ],
+            [
+                AppleIIKey(label: "SPC", code: AppleKeyboardKey.KEY_SPACE.rawValue),
+                AppleIIKey(label: "OPT", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                           keySize: .standard, isModifier: true)
+            ]
+        ]
+    )
+
+    @objc let rightKeyboardModel2 = EmulatorKeyboardViewModel(
+        keys:
+        [
+            [
+                SpacerKey(),
+                SpacerKey(),
+                AppleIIKey(label: "RESET", code: AppleKeyboardKey.KEY_RESET.rawValue)
+            ],
+            [
+                AppleIIKey(label: "y", code: AppleKeyboardKey.KEY_Y.rawValue),
+                AppleIIKey(label: "h", code: AppleKeyboardKey.KEY_H.rawValue),
+                AppleIIKey(label: "n", code: AppleKeyboardKey.KEY_N.rawValue),
+
+            ],
+            [
+                AppleIIKey(label: "u", code: AppleKeyboardKey.KEY_U.rawValue),
+                AppleIIKey(label: "j", code: AppleKeyboardKey.KEY_J.rawValue),
+                AppleIIKey(label: "m", code: AppleKeyboardKey.KEY_M.rawValue),
+            ],
+            [
+                AppleIIKey(label: "i", code: AppleKeyboardKey.KEY_I.rawValue),
+                AppleIIKey(label: "k", code: AppleKeyboardKey.KEY_K.rawValue),
+                AppleIIKey(label: ",", code: AppleKeyboardKey.KEY_COMMA.rawValue)
+            ],
+            [
+                AppleIIKey(label: "o", code: AppleKeyboardKey.KEY_O.rawValue),
+                AppleIIKey(label: "l", code: AppleKeyboardKey.KEY_L.rawValue),
+                AppleIIKey(label: ".", code: AppleKeyboardKey.KEY_PERIOD.rawValue),
+            ],
+            [
+                AppleIIKey(label: "p", code: AppleKeyboardKey.KEY_P.rawValue),
+                AppleIIKey(label: ";", code: AppleKeyboardKey.KEY_SEMICOLON.rawValue),
+                AppleIIKey(label: "/", code: AppleKeyboardKey.KEY_FSLASH.rawValue)
+            ],
+            [
+                AppleIIKey(label: "]", code: AppleKeyboardKey.KEY_RIGHT_BRACKET.rawValue),
+                AppleIIKey(label: "'", code: AppleKeyboardKey.KEY_SQUOTE.rawValue),
+            ],
+            [
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide),
+                AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
+            ]
+        ],
+        alternateKeys:
+        [
+            [
+                AppleIIKey(label: "6", code: AppleKeyboardKey.KEY_6.rawValue),
+                SpacerKey(),
+                SpacerKey()
+            ],
+            [
+                AppleIIKey(label: "7", code: AppleKeyboardKey.KEY_7.rawValue),
+                SpacerKey(),
+                SpacerKey()
+            ],
+            [
+                AppleIIKey(label: "8", code: AppleKeyboardKey.KEY_8.rawValue),
+                SpacerKey(),
+                SpacerKey()
+            ],
+            [
+                AppleIIKey(label: "9", code: AppleKeyboardKey.KEY_9.rawValue),
+                SpacerKey(),
+                SpacerKey()
+            ],
+            [
+                AppleIIKey(label: "0", code: AppleKeyboardKey.KEY_0.rawValue),
+                AppleIIKey(label: "⬆", code: AppleKeyboardKey.KEY_UP_CURSOR.rawValue),
+                SpacerKey()
+            ],
+            [
+                AppleIIKey(label: "⬅", code: AppleKeyboardKey.KEY_LEFT_CURSOR.rawValue),
+                AppleIIKey(label: "⬇", code: AppleKeyboardKey.KEY_DOWN_CURSOR.rawValue),
+                AppleIIKey(label: "➡", code: AppleKeyboardKey.KEY_RIGHT_CURSOR.rawValue)
+            ],
+            [
+                AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
+                           keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
+                AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
+            ],
+            [
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .standard)
+            ]
+        ]
+    )
+
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -543,8 +746,8 @@ struct KeyPosition {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupView()
-        setupViewFrames()
+        setupView()
+//        setupViewFrames()
 //        setupKeyModels()
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(draggedView(_:)))
@@ -560,20 +763,20 @@ struct KeyPosition {
         keyboardConstraints.removeAll()
         leftKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(leftKeyboardView)
-        leftKeyboardView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        leftKeyboardView.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        leftKeyboardView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        leftKeyboardView.widthAnchor.constraint(equalToConstant: 175).isActive = true
         keyboardConstraints.append(contentsOf: [
             leftKeyboardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            leftKeyboardView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            leftKeyboardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         rightKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(rightKeyboardView)
         keyboardConstraints.append(contentsOf: [
             rightKeyboardView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            rightKeyboardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            rightKeyboardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        rightKeyboardView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        rightKeyboardView.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        rightKeyboardView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        rightKeyboardView.widthAnchor.constraint(equalToConstant: 175).isActive = true
         NSLayoutConstraint.activate(keyboardConstraints)
     }
     
@@ -582,10 +785,10 @@ struct KeyPosition {
         // since we don't know the frame of this view yet until layout time,
         // assume it's taking the full screen
         let screenFrame = UIScreen.main.bounds
-        let keyboardHeight: CGFloat = 240.0
-        let keyboardWidth: CGFloat = 173.0
+        let keyboardHeight: CGFloat = 250.0
+        let keyboardWidth: CGFloat = 180.0
         let bottomLeftFrame = CGRect(
-            x: 20,
+            x: 0,
             y: screenFrame.size.height - 40 - keyboardHeight - 20,
             width: keyboardWidth, height: keyboardHeight)
         let bottomRightFrame = CGRect(
@@ -601,23 +804,23 @@ struct KeyPosition {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // get relative positions of frames to size
-        for v in [leftKeyboardView, rightKeyboardView] {
-            let xPercent = v.frame.origin.x / view.frame.size.width
-            let yPercent = v.frame.origin.y / view.frame.size.height
-            var newX = size.width * xPercent
-            var newY = size.height * yPercent
-            // mmm need to check if the views fit within the frame and adjust
-            if newX + v.bounds.size.width > size.width {
-                newX = size.width - v.bounds.size.width
-            } else if newX < 0 {
-                newX = 0
-            }
-            if newY + v.bounds.size.height > size.height {
-                newY = size.height - v.bounds.size.height
-            }
-            let newFrame = CGRect(x: newX, y: newY, width: v.bounds.size.width, height: v.bounds.size.height)
-            v.frame = newFrame
-        }
+//        for v in [leftKeyboardView, rightKeyboardView] {
+//            let xPercent = v.frame.origin.x / view.frame.size.width
+//            let yPercent = v.frame.origin.y / view.frame.size.height
+//            var newX = size.width * xPercent
+//            var newY = size.height * yPercent
+//            // mmm need to check if the views fit within the frame and adjust
+//            if newX + v.bounds.size.width > size.width {
+//                newX = size.width - v.bounds.size.width
+//            } else if newX < 0 {
+//                newX = 0
+//            }
+//            if newY + v.bounds.size.height > size.height {
+//                newY = size.height - v.bounds.size.height
+//            }
+//            let newFrame = CGRect(x: newX, y: newY, width: v.bounds.size.width, height: v.bounds.size.height)
+//            v.frame = newFrame
+//        }
     }
     
     func setupKeyModels() {
@@ -646,6 +849,11 @@ extension EmulatorKeyboardController: EmulatorKeyboardViewDelegate {
     func refreshModifierStates() {
         for keyboard in [leftKeyboardView, rightKeyboardView] {
             keyboard.refreshModifierStates()
+        }
+    }
+    func updateTransparency(toAlpha alpha: Float) {
+        for keyboard in [leftKeyboardView, rightKeyboardView] {
+            keyboard.alpha = CGFloat(alpha)
         }
     }
 }

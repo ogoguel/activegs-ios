@@ -731,6 +731,10 @@ int	x_lock_zoom = 0;
     add_event_key((int)key.keyCode, 1);
 }
 
+-(void)updateTransparencyToAlpha:(CGFloat)alpha {
+    self.emuKeyboardController.view.alpha = alpha;
+}
+
 #pragma mark - EmulatorKeyboardModifierPressedDelegate
 -(void)modifierPressedWithKey:(id<KeyCoded>)key enable:(BOOL)enable {
     int modifierKey;

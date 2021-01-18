@@ -627,7 +627,7 @@ float refScaleLandscape;
 	self.useTouch = touch;
 	
 	lastMousePos = [self rotateTouch:touch];
-	
+    NSLog(@"last mouse pos = %f , %f",lastMousePos.x, lastMousePos.y);
 	add_event_mouse(lastMousePos.x,lastMousePos.y,0,-1);
 	
 	if (self.secondTouch)
@@ -802,6 +802,7 @@ float refScaleLandscape;
 	{
 		
 		lastMousePos = [self rotateTouch:self.useTouch];
+        NSLog(@"touchesmoved: last mouse pos = %f , %f",lastMousePos.x, lastMousePos.y);
 		add_event_mouse(lastMousePos.x,lastMousePos.y,mouseDown,1);
 	}
 }
