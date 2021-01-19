@@ -370,6 +370,16 @@ void x_init_persistent_path(MyString& hp)
     
     [[pManager getBrowserView] updateView ];
     
+    // fonts!
+    for (NSString *family in [UIFont familyNames]) {
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:family];
+        NSLog(@"Family: %@", family);
+        for (NSString *name in fontNames) {
+            NSLog(@"Font name: %@",name);
+        }
+        NSLog(@"");
+    }
+    
     [self.window makeKeyAndVisible];
     
 #ifdef HANDLE_URL

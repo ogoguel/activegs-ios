@@ -247,6 +247,9 @@
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
 		92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */; };
 		92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2063125AADF6E00AE3F28 /* PreviewUI.swift */; };
+		92FA0F2425B52EA200663577 /* EmuWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92FA0F2325B52EA200663577 /* EmuWrapper.mm */; };
+		92FA0F2A25B5353D00663577 /* DebugMemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */; };
+		92FA0F2D25B59EF100663577 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FA0F2C25B59EF100663577 /* PrintChar21.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -600,6 +603,10 @@
 		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
 		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
 		92E2063125AADF6E00AE3F28 /* PreviewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUI.swift; sourceTree = "<group>"; };
+		92FA0F2325B52EA200663577 /* EmuWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EmuWrapper.mm; sourceTree = "<group>"; };
+		92FA0F2625B52EC000663577 /* EmuWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmuWrapper.h; sourceTree = "<group>"; };
+		92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryViewController.swift; sourceTree = "<group>"; };
+		92FA0F2C25B59EF100663577 /* PrintChar21.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrintChar21.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1016,6 +1023,9 @@
 				92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */,
 				92E2063125AADF6E00AE3F28 /* PreviewUI.swift */,
 				92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */,
+				92FA0F2325B52EA200663577 /* EmuWrapper.mm */,
+				92FA0F2625B52EC000663577 /* EmuWrapper.h */,
+				92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */,
 			);
 			name = Common.iphone;
 			path = ../Common.iphone;
@@ -1115,6 +1125,7 @@
 				7E5148141CA6B5CE005DA0A6 /* floppy_eject.wav */,
 				7E5148151CA6B5CE005DA0A6 /* logo_apple2.png */,
 				7E5148161CA6B5CE005DA0A6 /* logo_apple2gs.png */,
+				92FA0F2C25B59EF100663577 /* PrintChar21.ttf */,
 				7E5148171CA6B5CE005DA0A6 /* Search Skip Search 1.wav */,
 				7E5148181CA6B5CE005DA0A6 /* Search Skip Search 2.wav */,
 				7E5148191CA6B5CE005DA0A6 /* Search Skip Search 3.wav */,
@@ -1306,6 +1317,7 @@
 				09AF980F1283F12200083D60 /* starwizard_4.png in Resources */,
 				09AF98101283F12200083D60 /* starwizard_5.png in Resources */,
 				09AF98111283F12200083D60 /* starwizard.png in Resources */,
+				92FA0F2D25B59EF100663577 /* PrintChar21.ttf in Resources */,
 				7E51482C1CA6B5CE005DA0A6 /* Search Skip Search 3.wav in Resources */,
 				09D8BCF91285EFE900B6D785 /* miniprix_1.png in Resources */,
 				09D8BCFC1285EFFA00B6D785 /* miniprix_2.png in Resources */,
@@ -1341,6 +1353,7 @@
 				9222DD461CBECF2300B321B9 /* main.mm in Sources */,
 				09BB434511D92F65005ADA46 /* ActiveDownloadMac.cpp in Sources */,
 				09BB434711D92F65005ADA46 /* CEmulatorCtrlMac.cpp in Sources */,
+				92FA0F2A25B5353D00663577 /* DebugMemoryViewController.swift in Sources */,
 				09BB43B011D92F70005ADA46 /* activeconfig.cpp in Sources */,
 				09BB43B111D92F70005ADA46 /* ActiveDownload.cpp in Sources */,
 				92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */,
@@ -1429,6 +1442,7 @@
 				0941E6AF16720886003E0411 /* simplexml.cpp in Sources */,
 				09520D8316AEF8130065E84A /* driver.cpp in Sources */,
 				09520D8916AEF8250065E84A /* activegs_driver.cpp in Sources */,
+				92FA0F2425B52EA200663577 /* EmuWrapper.mm in Sources */,
 				09520D8E16AEF8650065E84A /* apple2e.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

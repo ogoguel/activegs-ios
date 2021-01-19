@@ -3,3 +3,5 @@
 //
 
 #import "KeyMapper.h"
+
+#import "EmuWrapper.h"

@@ -23,6 +23,7 @@
 #include "../Common/ActiveDownload.h"
 #import "MfiGameControllerHandler.h"
 #import "GameControllerKeyRemapController.h"
+#import "ActiveGS-Swift.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS
     #include "UICustomKey.h"
@@ -1115,6 +1116,12 @@ extern int x_frame_rate ;
     [self presentViewController:remapController animated:YES completion:nil];
 }
 
+-(void) memoryDebuggerButtonPressed:(id)sender {
+    r_sim65816.pause();
+    DebugMemoryViewController *controller = [[DebugMemoryViewController alloc] init];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 //
 -(void)addRuntimeControls
 {
@@ -1236,6 +1243,19 @@ extern int x_frame_rate ;
     [remapControlsButton addTarget:self action:@selector(remapControlsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.runtimeControlsOptions addSubview:remapControlsButton];
 
+    l += LINEHEIGHT;
+    
+    l += 2.0;
+    UIButton *memoryDebuggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    memoryDebuggerButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT);
+    [memoryDebuggerButton setTitle:@"Memory Debugger" forState:UIControlStateNormal];
+    memoryDebuggerButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    memoryDebuggerButton.backgroundColor = [UIColor clearColor];
+    memoryDebuggerButton.layer.borderWidth = 1.0f;
+    memoryDebuggerButton.layer.borderColor = [self.view.tintColor CGColor];
+    [memoryDebuggerButton addTarget:self action:@selector(memoryDebuggerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:memoryDebuggerButton];
+    
     l += LINEHEIGHT;
     nbs++;
 	
