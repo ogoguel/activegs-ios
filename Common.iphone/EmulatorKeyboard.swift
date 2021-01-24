@@ -161,9 +161,11 @@ class EmulatorKeyboardView: UIView {
             print("sender frame: \(sender.frame), bounds: \(sender.bounds), convertedBounds = \(converted)")
             var labelFrame = converted.offsetBy(dx: 0, dy: -60)
             labelFrame = CGRect(x: labelFrame.origin.x, y: labelFrame.origin.y, width: labelFrame.width * 2, height: labelFrame.height * 2)
-            label.backgroundColor = .purple
-            label.textColor = .green
+            label.backgroundColor = .white
+            label.textColor = .black
             label.frame = labelFrame
+            label.font = UIFont(name: "Print Char 21", size: 12)
+            label.textAlignment = .center
             addSubview(label)
             pressedKeyLabels[label.text ?? "😭"] = label
         }
@@ -198,6 +200,9 @@ class EmulatorKeyboardView: UIView {
                 alternateKeyRowsStackView.addArrangedSubview(keysInRow)
             }
         }
+        if !model.isDraggable {
+            dragMeView.isHidden = true
+        }
     }
     
     func toggleKeysStackView() {
@@ -225,7 +230,7 @@ class EmulatorKeyboardView: UIView {
             }
         } else {
             key.setTitle(keyCoded.keyLabel, for: .normal)
-            key.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
+            key.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
             key.setTitleColor(.white, for: .normal)
             key.setTitleColor(.black, for: .highlighted)
         }
@@ -349,6 +354,8 @@ struct KeyPosition {
     var keys = [[KeyCoded]]()
     var alternateKeys: [[KeyCoded]]?
     var modifiers: [Int16: KeyCoded]?
+    
+    var isDraggable = true
     
     @objc weak var delegate: EmulatorKeyboardKeyPressedDelegate?
     @objc weak var modifierDelegate: EmulatorKeyboardModifierPressedDelegate?

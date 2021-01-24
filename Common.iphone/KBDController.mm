@@ -1119,6 +1119,7 @@ extern int x_frame_rate ;
 -(void) memoryDebuggerButtonPressed:(id)sender {
     r_sim65816.pause();
     DebugMemoryViewController *controller = [[DebugMemoryViewController alloc] init];
+    controller.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
