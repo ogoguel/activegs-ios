@@ -453,8 +453,10 @@ int	x_lock_zoom = 0;
     self.emuKeyboardController.rightKeyboardModel.delegate = self;
     self.emuKeyboardController.rightKeyboardModel.modifierDelegate = self;
     
+    self.debugMemoryViewController = [[DebugMemoryViewController alloc] init];
+    self.debugMemoryViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
 	self.view = self.contentView;
- 
 
     [self.zv disableZoom];
 }
@@ -725,6 +727,10 @@ int	x_lock_zoom = 0;
 }
 
 -(void)keyUp:(id<KeyCoded>)key {
+    if (key.keyCode == KEY_SPECIAL_DEBUGGER) {
+        [self presentViewController:self.debugMemoryViewController animated:true completion:nil];
+        return;
+    }
     if (self.emuKeyboardController.modifierState & shiftKey) {
         add_event_modifier(0);
     }

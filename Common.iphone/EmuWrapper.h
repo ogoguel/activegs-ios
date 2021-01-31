@@ -15,7 +15,7 @@
 
 
 @interface EmuWrapper: NSObject
-+(unsigned char*) slowMemory;
++(unsigned char*) memory;
 +(void)pause;
 +(void)resume;
 

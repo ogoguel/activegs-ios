@@ -77,6 +77,7 @@ enum attachMode
 @property	(nonatomic, strong) zoomEmulatorView* zv;
 @property	(nonatomic, strong) KBDController*		kbdc ;
 @property   (nonatomic, strong) EmulatorKeyboardController *emuKeyboardController;
+@property   (nonatomic, strong) DebugMemoryViewController *debugMemoryViewController;
 @property	(nonatomic, strong) NSString*		trackerName;
 
 

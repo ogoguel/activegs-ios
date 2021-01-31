@@ -459,7 +459,7 @@ struct KeyPosition {
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
                            keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
                 AppleIIKey(label: "123", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.123"),
-                AppleIIKey(label: "", code: AppleKeyboardKey.KEY_APPLE.rawValue,
+                AppleIIKey(label: "\(UnicodeScalar(0xe081)!)", code: AppleKeyboardKey.KEY_APPLE.rawValue,
                            keySize: .standard, isModifier: true),
                 AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
             ]
@@ -491,7 +491,7 @@ struct KeyPosition {
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
                            keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
                 AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.abc"),
-                AppleIIKey(label: "OPT", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                AppleIIKey(label: "\(UnicodeScalar(0xe080)!)", code: AppleKeyboardKey.KEY_OPTION.rawValue,
                            keySize: .standard, isModifier: true),
                 AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
             ]
@@ -503,7 +503,7 @@ struct KeyPosition {
             [
                 SpacerKey(),
                 SpacerKey(),
-                SpacerKey(),
+                AppleIIKey(label: "\(UnicodeScalar(0xe144)!)", code: AppleKeyboardKey.KEY_SPECIAL_DEBUGGER.rawValue),
                 AppleIIKey(label: "RESET", code: AppleKeyboardKey.KEY_RESET.rawValue, keySize: .wide)
             ],
             [

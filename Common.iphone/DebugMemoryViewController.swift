@@ -108,7 +108,7 @@ class EmuMemoryModel {
     let numToDisplayPerCell = 8
     let maxMemorySize = 128 * 1024
     
-    let slowMemory = EmuWrapper.slowMemory()
+    private(set) var memory = EmuWrapper.memory()
     
     var selectedAddress: Int?
     
@@ -127,11 +127,11 @@ class EmuMemoryModel {
             return []
         }
         var row = [String]()
-        guard let slowMemory = slowMemory else {
+        guard let memory = memory else {
             return row
         }
         for i in startIndex..<endIndex {
-            row.append(String(format: "%02X", slowMemory[i]))
+            row.append(String(format: "%02X", memory[i]))
         }
         return row
     }
@@ -147,10 +147,10 @@ class EmuMemoryModel {
             print("Cannot get memory: address out of range \(address) > \(maxMemorySize)")
             return ""
         }
-        guard let slowMemory = slowMemory else {
+        guard let memory = memory else {
             return ""
         }
-        let value = slowMemory[address]
+        let value = memory[address]
         return String(format: "%02X", value)
     }
     
@@ -163,12 +163,27 @@ class EmuMemoryModel {
             print("Cannot set memory: address out of range \(address) > \(maxMemorySize)")
             return
         }
-        guard let slowMemory = slowMemory else {
+        guard let memory = memory else {
             return
         }
-        slowMemory[address] = value
+        print("Setting memory address %04X to %02X",address,value)
+        memory[address] = value
+    }
+    
+    func getMemory(at address:Int) -> UInt8 {
+        guard address > 0 && address < maxMemorySize else {
+            print("Cannot get memory: address out of range \(address) > \(maxMemorySize)")
+            return 0
+        }
+        guard let memory = memory else {
+            return 0
+        }
+        return memory[address]
     }
 
+    func refresh() {
+        memory = EmuWrapper.memory()
+    }
 }
 
 class DebugMemoryButton: UIButton {
@@ -275,6 +290,8 @@ class DebugMemoryCell: UITableViewCell {
 @objc class DebugMemoryViewController: UIViewController {
     let memoryModel = EmuMemoryModel()
     
+    weak var delegate: DebugMemoryViewControllerDelegate?
+    
     // Landscape constraints
     var actionControllerTopToViewTopConstraint: NSLayoutConstraint?
     var actionControllerWidthConstraint: NSLayoutConstraint?
@@ -286,6 +303,12 @@ class DebugMemoryCell: UITableViewCell {
     var actionControllerTopToTableViewBottomConstraint: NSLayoutConstraint?
     var actionControllerHeightConstraint: NSLayoutConstraint?
     var tableViewTrailingToViewTrailingConstraint: NSLayoutConstraint?
+    
+    var actionControllerBottomConstraint: NSLayoutConstraint?
+    
+    var isShowingActionController = false
+    var actionControllerAnimatorProgress = 0.0
+    var animator: UIViewPropertyAnimator?
     
     let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -310,6 +333,7 @@ class DebugMemoryCell: UITableViewCell {
         let view = UITableView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
+        view.separatorStyle = .none
         return view
     }()
     
@@ -343,13 +367,15 @@ class DebugMemoryCell: UITableViewCell {
     
     func setupActionController() {
         let actionController = DebugMemoryActionViewController()
+        delegate = actionController
         actionController.delegate = self
         addChild(actionController)
         actionController.didMove(toParent: self)
         actionController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(actionController.view)
         actionController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        actionController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        actionControllerBottomConstraint = actionController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 250)
+        actionControllerBottomConstraint?.isActive = true
 
         actionControllerHeightConstraint = actionController.view.heightAnchor.constraint(equalToConstant: 320)
         actionControllerLeadingToViewLeadingConstraint = actionController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor)
@@ -360,7 +386,8 @@ class DebugMemoryCell: UITableViewCell {
         actionControllerTopToViewTopConstraint = actionController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         actionControllerLeadingToTableViewTrailingConstraint = actionController.view.leadingAnchor.constraint(equalTo: tableView.trailingAnchor)
         tableViewToViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        actionController.view.addGestureRecognizer(pan)
     }
     
     func setupActionControllerOrientationConstraints(orientation: UIInterfaceOrientation? = nil) {
@@ -385,6 +412,7 @@ class DebugMemoryCell: UITableViewCell {
             actionControllerWidthConstraint?.isActive = true
             actionControllerLeadingToTableViewTrailingConstraint?.isActive = true
             tableViewToViewBottomConstraint?.isActive = true
+            actionControllerBottomConstraint?.constant = 0
         }
     }
     
@@ -397,7 +425,37 @@ class DebugMemoryCell: UITableViewCell {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        memoryModel.refresh()
         setupActionControllerOrientationConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+        delegate?.refreshActionController()
+    }
+    
+    @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear, animations: {
+                self.actionControllerBottomConstraint?.constant = self.isShowingActionController ? 250 : 0
+                self.view.layoutIfNeeded()
+            })
+            animator?.addCompletion { _ in
+                self.isShowingActionController = !self.isShowingActionController
+            }
+            animator?.pauseAnimation()
+        case .changed:
+            let translation = recognizer.translation(in: self.view)
+            var fraction = -translation.y / 300
+            if self.isShowingActionController { fraction *= -1 }
+            animator?.fractionComplete = fraction
+        case .ended:
+            animator?.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        default:
+            break
+        }
     }
     
     @objc func closeTapped(_ sender: UIButton) {
@@ -452,6 +510,7 @@ extension DebugMemoryViewController: DebugMemoryCellDelegate {
         memoryModel.selectedAddress = address
         self.tableView.reloadData()
         // communicate selected address to action controller
+        delegate?.refreshActionController()
     }
     
     func isAddressSelected(_ address: Int) -> Bool {
@@ -463,38 +522,63 @@ extension DebugMemoryViewController: DebugMemoryCellDelegate {
     }
 }
 
+protocol DebugMemoryViewControllerDelegate: class {
+    func refreshActionController()
+}
+
 protocol DebugMemoryActionViewControllerDelegate: class {
     func jump(to address: Int)
+    func memoryHex(at address: Int) -> String
+    func updateMemory(at address: Int, with memory:UInt8)
+    var memory: UnsafeMutablePointer<UInt8>? { get }
+    var selectedAddress: Int? { get }
 }
 
 extension DebugMemoryViewController: DebugMemoryActionViewControllerDelegate {
+    func updateMemory(at address: Int, with memory:UInt8) {
+        memoryModel.setMemory(at: address, value: memory)
+        self.tableView.reloadData()
+    }
+    
     func jump(to address: Int) {
         print("jumping to address: \(String(format: "%04X",address)) decimal: \(address)")
         let indexPath = memoryModel.indexPath(for: address)
         tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
         updateSelection(to: address)
     }
+    func memoryHex(at address: Int) -> String {
+        return memoryModel.getMemoryHexString(at: address)
+    }
+    var memory: UnsafeMutablePointer<UInt8>? {
+        return memoryModel.memory
+    }
+    var selectedAddress: Int? {
+        return memoryModel.selectedAddress
+    }
 }
 
 class DebugMemoryActionViewController: UIViewController {
     
     enum Mode {
-        case jumpToAddress, changeMemory
+        case jumpToAddress, changeMemory, cheat
     }
     
     var mode: Mode = .jumpToAddress
+    var cheatFinder = CheatFinderManager()
     
     weak var delegate:DebugMemoryActionViewControllerDelegate?
     
     let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Jump to Address", "Edit Memory"])
+        let control = UISegmentedControl(items: ["Jump", "Edit", "Cheat"])
         control.translatesAutoresizingMaskIntoConstraints = false
         control.tintColor = .orange
         control.selectedSegmentIndex = 0
+        control.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+        control.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Print Char 21", size: 14)!], for: .normal)
         return control
     }()
     
-    let jumpToAddressField: UITextField = {
+    let memoryField: UITextField = {
         let field = UITextField(frame: .zero)
         field.translatesAutoresizingMaskIntoConstraints = false
         field.font = UIFont(name: "Print Char 21", size: 14)
@@ -504,16 +588,36 @@ class DebugMemoryActionViewController: UIViewController {
         field.layer.borderWidth = 1.0
         field.layer.borderColor = UIColor.cyan.cgColor
         field.textAlignment = .center
+        field.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        field.heightAnchor.constraint(equalToConstant: 40).isActive = true
         return field
     }()
     
-    let changeMemoryField: UITextField = {
-        let field = UITextField(frame: .zero)
-        field.translatesAutoresizingMaskIntoConstraints = false
-        field.font = UIFont(name: "Print Char 21", size: 14)
-        field.isUserInteractionEnabled = false
-        field.text = ""
-        return field
+    let updateMemoryButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("Update", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.orange.cgColor
+        button.addTarget(self, action: #selector(updateButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let resetMemoryButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("Reset", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.orange.cgColor
+        return button
+    }()
+    
+    lazy var editFieldsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [memoryField, updateMemoryButton, resetMemoryButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
     }()
     
     let keyboardModel: EmulatorKeyboardViewModel = {
@@ -557,7 +661,6 @@ class DebugMemoryActionViewController: UIViewController {
     
     let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Print Char 21", size: 14)
         label.text = "Memory Tools"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -565,21 +668,210 @@ class DebugMemoryActionViewController: UIViewController {
         return label
     }()
     
+    let cheatFinderNewSearchButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("New Search", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.red.cgColor
+        button.addTarget(self, action: #selector(cheatFinderNewSearchButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    let cheatFinderContinueSearchButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("Continue Search", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.red.cgColor
+        button.addTarget(self, action: #selector(cheatFinderContinueSearchButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var cheatFinderInitialActionsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderSearchEqualButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+    
+    let cheatFinderSearchLessButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("LT", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.purple.cgColor
+        button.addTarget(self, action: #selector(cheatFinderSearchButtonPressed(_:)), for: .touchUpInside)
+        button.tag = 0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return button
+    }()
+    
+    let cheatFinderSearchGreaterButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("GT", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.purple.cgColor
+        button.addTarget(self, action: #selector(cheatFinderSearchButtonPressed(_:)), for: .touchUpInside)
+        button.tag = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return button
+    }()
+
+    let cheatFinderSearchEqualButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("EQ", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.purple.cgColor
+        button.addTarget(self, action: #selector(cheatFinderSearchButtonPressed(_:)), for: .touchUpInside)
+        button.tag = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return button
+    }()
+
+//    lazy var cheatFinderSearchStackView: UIStackView = {
+//        let stackView = UIStackView(arrangedSubviews: [cheatFinderSearchLessButton, cheatFinderSearchGreaterButton])
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.axis = .horizontal
+//        stackView.spacing = 4
+//        return stackView
+//    }()
+
+    
+    let cheatFinderPromptLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = UIFont(name: "Print Char 21", size: 11)
+        label.text = "Start a new search to begin!"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .red
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var cheatFinderMatchesTableView: UITableView = {
+        let view = UITableView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.dataSource = self
+        view.delegate = self
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "CheatFinderMatchCell")
+        return view
+    }()
+    
+    @objc func cheatFinderNewSearchButtonPressed(_ sender: UIButton) {
+        if let memory = delegate?.memory {
+            cheatFinder.update(with: memory)
+        }
+        cheatFinder.uiState = .startedNewSearch
+        cheatFinderUpdateUI()
+    }
+    
+    @objc func cheatFinderContinueSearchButtonPressed(_ sender: UIButton) {
+        cheatFinder.uiState = .isSearching
+        cheatFinderUpdateUI()
+    }
+    
+    func cheatFinderSetupView() {
+        view.addSubview(cheatFinderInitialActionsStackView)
+//        view.addSubview(cheatFinderSearchStackView)
+        view.addSubview(cheatFinderPromptLabel)
+        view.addSubview(cheatFinderMatchesTableView)
+        cheatFinderInitialActionsStackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        cheatFinderInitialActionsStackView.centerXAnchor.constraint(equalTo: segmentedControl.centerXAnchor).isActive = true
+//        cheatFinderInitialActionsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+//        cheatFinderInitialActionsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+
+//        cheatFinderSearchStackView.topAnchor.constraint(equalTo: cheatFinderInitialActionsStackView.bottomAnchor, constant: 8).isActive = true
+//        cheatFinderSearchStackView.centerXAnchor.constraint(equalTo: segmentedControl.centerXAnchor).isActive = true
+        cheatFinderPromptLabel.topAnchor.constraint(equalTo: cheatFinderInitialActionsStackView.bottomAnchor, constant: 16).isActive = true
+        cheatFinderPromptLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 48).isActive = true
+        cheatFinderPromptLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -48).isActive = true
+        cheatFinderMatchesTableView.topAnchor.constraint(equalTo: cheatFinderPromptLabel.bottomAnchor, constant: 4).isActive = true
+        cheatFinderMatchesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+        cheatFinderMatchesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 24).isActive = true
+        cheatFinderMatchesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 8).isActive = true
+        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView].forEach{ $0.isHidden = true }
+    }
+
+    func cheatFinderHide() {
+        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchEqualButton].forEach{ $0.isHidden = true }
+    }
+    
+    func cheatFinderUpdateUI() {
+        cheatFinderHide()
+        switch cheatFinder.uiState {
+        case .initial:
+            [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton, cheatFinderPromptLabel].forEach{ $0.isHidden = false }
+            cheatFinderPromptLabel.text = "Start a new search to begin!"
+        case .startedNewSearch:
+            [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton,
+             cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
+             cheatFinderSearchEqualButton,
+             cheatFinderPromptLabel].forEach{ $0.isHidden = false }
+            cheatFinderPromptLabel.text = "New search started! Search to find matches..."
+        case .isSearching:
+            [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
+             cheatFinderSearchEqualButton, cheatFinderPromptLabel].forEach{ $0.isHidden = false }
+            cheatFinderPromptLabel.text = "Search for values..."
+        case .didSearch:
+            [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton,
+             cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
+             cheatFinderSearchEqualButton,
+             cheatFinderPromptLabel, cheatFinderMatchesTableView].forEach{ $0.isHidden = false }
+            cheatFinderPromptLabel.text = "Number of matches: \(cheatFinder.matchedMemoryAddresses.count)"
+            cheatFinderMatchesTableView.reloadData()
+        }
+    }
+    
+    @objc func cheatFinderSearchButtonPressed(_ sender: UIButton) {
+        guard let memory = delegate?.memory else {
+            print("Cannot proceed cheat search without reference to memory!")
+            return
+        }
+        cheatFinder.comparisonMemory = [UInt8]()
+        for address in 0..<0x95ff {
+            cheatFinder.comparisonMemory.append(memory[address])
+        }
+        switch sender.tag {
+        case 0:
+            cheatFinder.findNewMatches(searchMode: CheatFinderManager.SearchMode.less)
+        case 1:
+            cheatFinder.findNewMatches(searchMode: CheatFinderManager.SearchMode.greater)
+        case 2:
+            cheatFinder.findNewMatches(searchMode: CheatFinderManager.SearchMode.same)
+        default:
+            break
+        }
+        cheatFinder.uiState = .didSearch
+        cheatFinderUpdateUI()
+    }
+    
     func setupView() {
         view.addSubview(titleLabel)
         view.addSubview(segmentedControl)
-        view.addSubview(jumpToAddressField)
+        
+        view.addSubview(editFieldsStackView)
+        
+//        view.addSubview(memoryField)
+        
         view.addSubview(keyboardView)
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         segmentedControl.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
-        jumpToAddressField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
-        jumpToAddressField.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        jumpToAddressField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        jumpToAddressField.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
+        editFieldsStackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+//        memoryField.widthAnchor.constraint(equalToConstant: 80).isActive = true
+//        memoryField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        editFieldsStackView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
         keyboardView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
-        keyboardView.topAnchor.constraint(equalTo: jumpToAddressField.bottomAnchor, constant: 8).isActive = true
+        keyboardView.topAnchor.constraint(equalTo: editFieldsStackView.bottomAnchor, constant: 8).isActive = true
 //        keyboardView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         keyboardView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         keyboardView.viewModel.delegate = self
@@ -589,10 +881,12 @@ class DebugMemoryActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        cheatFinderSetupView()
+        update()
     }
     
     func updateTextField(with keyCode: Int) {
-        guard var text = jumpToAddressField.text else {
+        guard var text = memoryField.text else {
             print("no text in address field!")
             return
         }
@@ -603,6 +897,8 @@ class DebugMemoryActionViewController: UIViewController {
                 return 4
             case .changeMemory:
                 return 2
+            default:
+                return 4
             }
         }()
         if text.count > charLimit {
@@ -615,8 +911,63 @@ class DebugMemoryActionViewController: UIViewController {
                 delegate?.jump(to: Int(address))
             }
         }
-        jumpToAddressField.text = text
-        
+        memoryField.text = text
+    }
+    
+    @objc func segmentedControlChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            mode = .jumpToAddress
+        case 1:
+            mode = .changeMemory
+        case 2:
+            mode = .cheat
+        default:
+            mode = .jumpToAddress
+        }
+        update()
+    }
+    
+    func update() {
+        cheatFinderHide()
+        switch mode {
+        case .jumpToAddress:
+            memoryField.isHidden = false
+            memoryField.layer.borderColor = UIColor.cyan.cgColor
+            editFieldsStackView.isHidden = false
+            updateMemoryButton.isHidden = true
+            resetMemoryButton.isHidden = true
+            keyboardView.isHidden = false
+            if let selectedAddress = delegate?.selectedAddress {
+                memoryField.text = String(format: "%04X", selectedAddress)
+            }
+        case .changeMemory:
+            memoryField.isHidden = false
+            memoryField.layer.borderColor = UIColor.orange.cgColor
+            memoryField.textColor = .orange
+            editFieldsStackView.isHidden = false
+            updateMemoryButton.isHidden = false
+            resetMemoryButton.isHidden = false
+            keyboardView.isHidden = false
+            if let selectedAddress = delegate?.selectedAddress {
+                memoryField.text = delegate?.memoryHex(at: selectedAddress)
+            }
+        case .cheat:
+            memoryField.isHidden = true
+            editFieldsStackView.isHidden = true
+            keyboardView.isHidden = true
+            cheatFinderUpdateUI()
+        }
+    }
+    
+    @objc func updateButtonPressed(_ sender: UIButton) {
+        guard let selectedAddress = delegate?.selectedAddress,
+              let enteredText = memoryField.text,
+              let memory = UInt8(enteredText, radix: 16) else {
+            print("Could not get memory to update!")
+            return
+        }
+        delegate?.updateMemory(at: selectedAddress, with: memory)
     }
 }
 
@@ -633,9 +984,39 @@ extension DebugMemoryActionViewController: EmulatorKeyboardKeyPressedDelegate {
     func updateTransparency(toAlpha alpha: CGFloat) {
         // no op
     }
-    
-    
 }
 
-// delegate impl: EmulatorKeyboardKeyPressedDelegate
-// make delegate:
+extension DebugMemoryActionViewController: DebugMemoryViewControllerDelegate {
+    func refreshActionController() {
+        update()
+    }
+}
+
+extension DebugMemoryActionViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cheatFinder.matchedMemoryAddresses.keys.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CheatFinderMatchCell", for: indexPath)
+        let addresses = cheatFinder.matchedMemoryAddresses.keys
+        let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
+        let address = addresses[index]
+        cell.textLabel?.text = String(format: "%04X",address)
+        cell.textLabel?.font = UIFont(name: "Print Char 21", size: 14)
+        cell.textLabel?.textColor = .red
+        cell.textLabel?.textAlignment = .center
+        return cell
+    }
+}
+
+extension DebugMemoryActionViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let addresses = cheatFinder.matchedMemoryAddresses.keys
+        let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
+        let address = addresses[index]
+        delegate?.jump(to: address)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+

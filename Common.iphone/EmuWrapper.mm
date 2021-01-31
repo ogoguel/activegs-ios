@@ -14,8 +14,8 @@
 
 @implementation EmuWrapper
 
-+(unsigned char*) slowMemory {
-    return g_slow_memory_ptr;
++(unsigned char*) memory {
+    return g_memory_ptr;
 }
 
 +(void)pause {

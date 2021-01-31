@@ -335,7 +335,6 @@ int isHardwareKeyboard()
 
 extern int findCode(const char* _s);
 
-
 - (void)loadView
 {
     
@@ -1118,7 +1117,7 @@ extern int x_frame_rate ;
 
 -(void) memoryDebuggerButtonPressed:(id)sender {
     r_sim65816.pause();
-    DebugMemoryViewController *controller = [[DebugMemoryViewController alloc] init];
+    DebugMemoryViewController *controller = [pManager getEmulatorView].debugMemoryViewController;
     controller.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:controller animated:YES completion:nil];
 }
