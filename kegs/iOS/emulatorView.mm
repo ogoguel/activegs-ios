@@ -87,7 +87,12 @@ void x_invalidrect()
    
     CGContextRef g = UIGraphicsGetCurrentContext();
 	x_async_refresh(g,rect);
-
+    
+//    // yoshi test...
+//    CGImageRef imgRef = CGBitmapContextCreateImage(g);
+//    UIImage *image = [UIImage imageWithCGImage:imgRef];
+//    CGImageRelease(imgRef);
+//    NSLog(@"yoshi buffer image = %@",image);
 }
 
 

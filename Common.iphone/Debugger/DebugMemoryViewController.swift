@@ -27,6 +27,16 @@ struct Orientation {
     }
 }
 
+extension UIView {
+    func getSnapshot() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
+
 enum EmuMemoryMapSection: Int {
     case zeroPage = 0
     case processorStack
@@ -104,7 +114,6 @@ enum EmuMemoryMapSection: Int {
 }
 
 class EmuMemoryModel {
-    // make this static for now
     let numToDisplayPerCell = 8
     let maxMemorySize = 128 * 1024
     
@@ -180,6 +189,22 @@ class EmuMemoryModel {
         }
         return memory[address]
     }
+    
+    var memoryAsArray: [UInt8] {
+        var buffer = [UInt8]()
+        guard let memory = memory else {
+            return buffer
+        }
+        for address in 0..<0x95ff {
+            buffer.append(memory[address])
+        }
+        return buffer
+    }
+    
+    lazy var interpretedInstructions: [AddressedInstruction] = {
+        let interpreter = Debug6502Interpreter(memory: memoryAsArray)
+        return interpreter.interpret()
+    }()
 
     func refresh() {
         memory = EmuWrapper.memory()
@@ -203,6 +228,24 @@ class DebugMemoryButton: UIButton {
     @objc func tapped(_ sender: UIButton) {
         isSelected.toggle()
         onTapped?(isSelected)
+    }
+}
+
+class DebugPauseResumeButton: DebugMemoryButton {
+    override open var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? .red : .clear
+        }
+    }
+    
+    convenience init() {
+        self.init(type: .custom)
+        addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
+        setTitle("RESUME", for: .normal)
+        setTitleColor(.green, for: .normal)
+        setTitle("PAUSE", for: .selected)
+        setTitleColor(.white, for: .selected)
+        titleLabel?.font = UIFont(name: "Print Char 21", size: 11)
     }
 }
 
@@ -310,6 +353,10 @@ class DebugMemoryCell: UITableViewCell {
     var actionControllerAnimatorProgress = 0.0
     var animator: UIViewPropertyAnimator?
     
+    private var displayLink: CADisplayLink?
+    private var framesSince = 0
+    private var framesSinceUpdateScreen = 0
+    
     let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -329,12 +376,32 @@ class DebugMemoryCell: UITableViewCell {
         return button
     }()
 
+    let testCodeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("[CODE]", for: .normal)
+        button.addTarget(self, action: #selector(testCodeButtonTapped(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitleColor(.red, for: .normal)
+        return button
+    }()
+    @objc func testCodeButtonTapped(_ sender: UIButton) {
+        let controller = DebugMemoryCodeViewController(memoryModel: self.memoryModel)
+        present(controller, animated: true, completion: nil)
+    }
+
     let tableView: UITableView = {
         let view = UITableView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.separatorStyle = .none
         return view
+    }()
+    
+    let resumePauseEmulationButton: DebugPauseResumeButton = {
+        let button = DebugPauseResumeButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     init() {
@@ -349,6 +416,7 @@ class DebugMemoryCell: UITableViewCell {
         view.addSubview(titleLabel)
         view.addSubview(tableView)
         view.addSubview(dismissButton)
+        view.addSubview(resumePauseEmulationButton)
         titleLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
@@ -357,11 +425,18 @@ class DebugMemoryCell: UITableViewCell {
 //        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         dismissButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -8).isActive = true
         dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
+        resumePauseEmulationButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
+        resumePauseEmulationButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         view.backgroundColor = .black
+        
+        view.addSubview(testCodeButton)
+        testCodeButton.trailingAnchor.constraint(equalTo: dismissButton.trailingAnchor).isActive = true
+        testCodeButton.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 4).isActive = true
     }
     
     func setupTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(DebugMemoryCell.self, forCellReuseIdentifier: DebugMemoryCell.identifier)
     }
     
@@ -416,17 +491,50 @@ class DebugMemoryCell: UITableViewCell {
         }
     }
     
+    func setupPauseResumeButton() {
+        resumePauseEmulationButton.onTapped = { selected in
+            if selected {
+                EmuWrapper.resume()
+                self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateMemoryIfNeeded))
+                self.displayLink?.isPaused = false
+                self.displayLink?.add(to: RunLoop.main, forMode: .common)
+            } else {
+                EmuWrapper.pause()
+                self.displayLink?.isPaused = true
+                self.displayLink = nil
+            }
+        }
+    }
+    
+    @objc func updateMemoryIfNeeded() {
+        // maybe apply cheats here?
+        if framesSinceUpdateScreen > 3 {
+            delegate?.updateEmulatorScreen()
+            framesSinceUpdateScreen = 1
+        }
+        if framesSince > 30 {
+            memoryModel.refresh()
+            tableView.reloadData()
+            delegate?.refreshActionController()
+            framesSince = 1
+        }
+        framesSince += 1
+        framesSinceUpdateScreen += 1
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupActionController()
         setupTableView()
+        setupPauseResumeButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         memoryModel.refresh()
         setupActionControllerOrientationConstraints()
+        resumePauseEmulationButton.isSelected = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -459,6 +567,8 @@ class DebugMemoryCell: UITableViewCell {
     }
     
     @objc func closeTapped(_ sender: UIButton) {
+        displayLink?.isPaused = true
+        displayLink = nil
         dismiss(animated: true) {
             EmuWrapper.resume()
         }
@@ -505,6 +615,26 @@ extension DebugMemoryViewController: UITableViewDataSource {
     }
 }
 
+extension DebugMemoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = self.tableView(tableView, titleForHeaderInSection: section)
+        let label = UILabel(frame: .zero)
+        label.text = title
+        label.font = UIFont(name: "Print Char 21", size: 12)
+        label.textColor = .cyan
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let view = UIView(frame: .zero)
+        view.addSubview(label)
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        view.backgroundColor = .black
+        view.layer.borderColor = UIColor.cyan.cgColor
+        view.layer.borderWidth = 1.0
+        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        return view
+    }
+}
+
 extension DebugMemoryViewController: DebugMemoryCellDelegate {
     func updateSelection(to address: Int) {
         memoryModel.selectedAddress = address
@@ -524,6 +654,7 @@ extension DebugMemoryViewController: DebugMemoryCellDelegate {
 
 protocol DebugMemoryViewControllerDelegate: class {
     func refreshActionController()
+    func updateEmulatorScreen()
 }
 
 protocol DebugMemoryActionViewControllerDelegate: class {
@@ -560,7 +691,7 @@ extension DebugMemoryViewController: DebugMemoryActionViewControllerDelegate {
 class DebugMemoryActionViewController: UIViewController {
     
     enum Mode {
-        case jumpToAddress, changeMemory, cheat
+        case jumpToAddress, changeMemory, cheat, screen
     }
     
     var mode: Mode = .jumpToAddress
@@ -569,7 +700,7 @@ class DebugMemoryActionViewController: UIViewController {
     weak var delegate:DebugMemoryActionViewControllerDelegate?
     
     let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Jump", "Edit", "Cheat"])
+        let control = UISegmentedControl(items: ["Jump", "Edit", "Cheat", "Screen"])
         control.translatesAutoresizingMaskIntoConstraints = false
         control.tintColor = .orange
         control.selectedSegmentIndex = 0
@@ -665,6 +796,7 @@ class DebugMemoryActionViewController: UIViewController {
         label.text = "Memory Tools"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .orange
+        label.heightAnchor.constraint(equalToConstant: 20).isActive = true
         return label
     }()
     
@@ -673,7 +805,7 @@ class DebugMemoryActionViewController: UIViewController {
         button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
         button.setTitle("New Search", for: .normal)
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.red.cgColor
+        button.layer.borderColor = UIColor.purple.cgColor
         button.addTarget(self, action: #selector(cheatFinderNewSearchButtonPressed(_:)), for: .touchUpInside)
         return button
     }()
@@ -763,6 +895,12 @@ class DebugMemoryActionViewController: UIViewController {
         view.delegate = self
         view.register(UITableViewCell.self, forCellReuseIdentifier: "CheatFinderMatchCell")
         return view
+    }()
+    
+    lazy var emulatorScreenView: UIImageView = {
+        let screenView = UIImageView(frame: .zero)
+        screenView.translatesAutoresizingMaskIntoConstraints = false
+        return screenView
     }()
     
     @objc func cheatFinderNewSearchButtonPressed(_ sender: UIButton) {
@@ -858,6 +996,8 @@ class DebugMemoryActionViewController: UIViewController {
         view.addSubview(segmentedControl)
         
         view.addSubview(editFieldsStackView)
+
+        view.addSubview(emulatorScreenView)
         
 //        view.addSubview(memoryField)
         
@@ -875,6 +1015,13 @@ class DebugMemoryActionViewController: UIViewController {
 //        keyboardView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         keyboardView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         keyboardView.viewModel.delegate = self
+        
+        emulatorScreenView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        emulatorScreenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4.0).isActive = true
+        emulatorScreenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -4.0).isActive = true
+        emulatorScreenView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        emulatorScreenView.isHidden = true
+        
         view.backgroundColor = .black
     }
     
@@ -922,6 +1069,8 @@ class DebugMemoryActionViewController: UIViewController {
             mode = .changeMemory
         case 2:
             mode = .cheat
+        case 3:
+            mode = .screen
         default:
             mode = .jumpToAddress
         }
@@ -930,10 +1079,12 @@ class DebugMemoryActionViewController: UIViewController {
     
     func update() {
         cheatFinderHide()
+        emulatorScreenView.isHidden = true
         switch mode {
         case .jumpToAddress:
             memoryField.isHidden = false
             memoryField.layer.borderColor = UIColor.cyan.cgColor
+            memoryField.textColor = .cyan
             editFieldsStackView.isHidden = false
             updateMemoryButton.isHidden = true
             resetMemoryButton.isHidden = true
@@ -957,6 +1108,12 @@ class DebugMemoryActionViewController: UIViewController {
             editFieldsStackView.isHidden = true
             keyboardView.isHidden = true
             cheatFinderUpdateUI()
+        case .screen:
+            memoryField.isHidden = true
+            editFieldsStackView.isHidden = true
+            keyboardView.isHidden = true
+            emulatorScreenView.isHidden = false
+            updateEmulatorScreen()
         }
     }
     
@@ -989,6 +1146,13 @@ extension DebugMemoryActionViewController: EmulatorKeyboardKeyPressedDelegate {
 extension DebugMemoryActionViewController: DebugMemoryViewControllerDelegate {
     func refreshActionController() {
         update()
+    }
+    func updateEmulatorScreen() {
+        let emulatorView = EmuWrapper.getEmulatorView()
+        if let snapshot = emulatorView?.getSnapshot() {
+            let flipped = UIImage(cgImage: snapshot.cgImage!, scale: 1.0, orientation: .downMirrored)
+            emulatorScreenView.image = flipped
+        }
     }
 }
 

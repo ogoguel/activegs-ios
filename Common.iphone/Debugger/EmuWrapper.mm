@@ -6,11 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "activegsAppDelegate.h"
 #import "EmuWrapper.h"
 
-#include "../Common.osx/cemulatorctrlmac.h"
-#include "../kegs/Src/defc.h"
-#include "../kegs/Src/sim65816.h"
+#include "../../Common.osx/cemulatorctrlmac.h"
+#include "../../kegs/Src/defc.h"
+#include "../../kegs/Src/sim65816.h"
+
 
 @implementation EmuWrapper
 
@@ -24,6 +26,10 @@
 
 +(void)resume {
     r_sim65816.resume();
+}
+
++(UIView*)getEmulatorView {
+    return [pManager getEmulatorView].zv.ew;
 }
 
 @end

@@ -18,5 +18,6 @@
 +(unsigned char*) memory;
 +(void)pause;
 +(void)resume;
++(UIView*)getEmulatorView;
 
 @end

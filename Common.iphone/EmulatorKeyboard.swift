@@ -491,7 +491,7 @@ struct KeyPosition {
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
                            keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
                 AppleIIKey(label: "ABC", code: AppleKeyboardKey.KEY_SPECIAL_TOGGLE.rawValue, keySize: .standard, imageName: "textformat.abc"),
-                AppleIIKey(label: "\(UnicodeScalar(0xe080)!)", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                AppleIIKey(label: "\(UnicodeScalar(0xe081)!)", code: AppleKeyboardKey.KEY_APPLE.rawValue,
                            keySize: .standard, isModifier: true),
                 AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide)
             ]
@@ -528,6 +528,8 @@ struct KeyPosition {
                 AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
             ],
             [
+                AppleIIKey(label: "\(UnicodeScalar(0xe080)!)", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                           keySize: .standard, isModifier: true),
                 AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
             ]
         ],
@@ -543,15 +545,15 @@ struct KeyPosition {
             [
                 SpacerKey(),
                 SpacerKey(),
-                AppleIIKey(label: "⬆", code: AppleKeyboardKey.KEY_UP_CURSOR.rawValue),
+                AppleIIKey(label: "\(UnicodeScalar(0xe08b)!)", code: AppleKeyboardKey.KEY_UP_CURSOR.rawValue),
                 SpacerKey(),
                 SpacerKey()
             ],
             [
                 SpacerKey(),
-                AppleIIKey(label: "⬅", code: AppleKeyboardKey.KEY_LEFT_CURSOR.rawValue),
-                AppleIIKey(label: "⬇", code: AppleKeyboardKey.KEY_DOWN_CURSOR.rawValue),
-                AppleIIKey(label: "➡", code: AppleKeyboardKey.KEY_RIGHT_CURSOR.rawValue),
+                AppleIIKey(label: "\(UnicodeScalar(0xe088)!)", code: AppleKeyboardKey.KEY_LEFT_CURSOR.rawValue),
+                AppleIIKey(label: "\(UnicodeScalar(0xe08a)!)", code: AppleKeyboardKey.KEY_DOWN_CURSOR.rawValue),
+                AppleIIKey(label: "\(UnicodeScalar(0xe095)!)", code: AppleKeyboardKey.KEY_RIGHT_CURSOR.rawValue),
                 SpacerKey()
             ],
             [
@@ -561,7 +563,9 @@ struct KeyPosition {
                 AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
             ],
             [
-                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .standard)
+                AppleIIKey(label: "\(UnicodeScalar(0xe080)!)", code: AppleKeyboardKey.KEY_OPTION.rawValue,
+                           keySize: .standard, isModifier: true),
+                AppleIIKey(label: "RETURN", code: AppleKeyboardKey.KEY_RETURN.rawValue, keySize: .wide)
             ]
         ]
     )
