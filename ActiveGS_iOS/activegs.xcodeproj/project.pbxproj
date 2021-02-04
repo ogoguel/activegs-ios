@@ -257,6 +257,11 @@
 		927E437025C99A11008E5517 /* Debug6502Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */; };
 		927E437325C99C06008E5517 /* DebugMemoryCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */; };
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
+		92A9D66E25CC5A96008F5031 /* DebuggerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */; };
+		92A9D67125CC5AF4008F5031 /* EmuMemoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */; };
+		92A9D67525CC5B7D008F5031 /* DebugMemoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */; };
+		92A9D67925CC5BB6008F5031 /* DebugMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */; };
+		92A9D67F25CC5C66008F5031 /* DebugMemoryActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */; };
 		92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */; };
 		92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2063125AADF6E00AE3F28 /* PreviewUI.swift */; };
 		92FA0F2425B52EA200663577 /* EmuWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92FA0F2325B52EA200663577 /* EmuWrapper.mm */; };
@@ -624,6 +629,11 @@
 		927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug6502Interpreter.swift; sourceTree = "<group>"; };
 		927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryCodeViewController.swift; sourceTree = "<group>"; };
 		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
+		92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebuggerUtils.swift; sourceTree = "<group>"; };
+		92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmuMemoryModel.swift; sourceTree = "<group>"; };
+		92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryButton.swift; sourceTree = "<group>"; };
+		92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryCell.swift; sourceTree = "<group>"; };
+		92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryActionViewController.swift; sourceTree = "<group>"; };
 		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
 		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
 		92E2063125AADF6E00AE3F28 /* PreviewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUI.swift; sourceTree = "<group>"; };
@@ -1164,13 +1174,15 @@
 		927E435725C94BE7008E5517 /* Debugger */ = {
 			isa = PBXGroup;
 			children = (
-				927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */,
 				927E435825C94C12008E5517 /* 65C02Interpreter */,
+				92A9D67325CC5B63008F5031 /* Views */,
+				92A9D67B25CC5C24008F5031 /* ViewControllers */,
 				92FA0F2325B52EA200663577 /* EmuWrapper.mm */,
 				92FA0F2625B52EC000663577 /* EmuWrapper.h */,
-				92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */,
+				92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */,
 				927E431925C48592008E5517 /* CheatFinderManager.swift */,
 				927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */,
+				92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */,
 			);
 			path = Debugger;
 			sourceTree = "<group>";
@@ -1178,6 +1190,7 @@
 		927E435825C94C12008E5517 /* 65C02Interpreter */ = {
 			isa = PBXGroup;
 			children = (
+				927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */,
 				927E435925C94C12008E5517 /* Stream.swift */,
 				927E435A25C94C12008E5517 /* Bus.swift */,
 				927E435B25C94C12008E5517 /* CPU */,
@@ -1205,6 +1218,24 @@
 				927E436325C94C12008E5517 /* AddressingMode.swift */,
 			);
 			path = Instruction;
+			sourceTree = "<group>";
+		};
+		92A9D67325CC5B63008F5031 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */,
+				92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92A9D67B25CC5C24008F5031 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */,
+				92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1450,9 +1481,11 @@
 				09FA609A125A7B3E00B07F77 /* asyncimageview.mm in Sources */,
 				09FA609C125A7B3E00B07F77 /* GTMUIView+SubtreeDescription.m in Sources */,
 				09052B8F19053C9F00853FAE /* deflate.cpp in Sources */,
+				92A9D66E25CC5A96008F5031 /* DebuggerUtils.swift in Sources */,
 				09FA609F125A7B3E00B07F77 /* KBDController.mm in Sources */,
 				09AADC78125C560A00654DF1 /* detailViewController.mm in Sources */,
 				09A5CE60125D41860018DC22 /* infoViewController.mm in Sources */,
+				92A9D67525CC5B7D008F5031 /* DebugMemoryButton.swift in Sources */,
 				0972554713CF2232006194F9 /* activegsEmulatorController.mm in Sources */,
 				924A1BB51CBA049D00D69162 /* KeyMapper.m in Sources */,
 				92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */,
@@ -1468,6 +1501,7 @@
 				09C81A7D1657ACAE008539D5 /* config_generic.cpp in Sources */,
 				09052B8C19053C9F00853FAE /* adler32.cpp in Sources */,
 				09C81A7F1657ACAE008539D5 /* dis.cpp in Sources */,
+				92A9D67125CC5AF4008F5031 /* EmuMemoryModel.swift in Sources */,
 				09C81A801657ACAE008539D5 /* engine_c.cpp in Sources */,
 				09C81A811657ACAE008539D5 /* GraphCounter.cpp in Sources */,
 				09C81A821657ACAE008539D5 /* iwm.cpp in Sources */,
@@ -1505,12 +1539,14 @@
 				09C81AA81657AD18008539D5 /* joystick_iphone.cpp in Sources */,
 				09C81AA91657AD18008539D5 /* zoomEmulatorView.mm in Sources */,
 				09052B7F19053C9F00853FAE /* pngrtran.cpp in Sources */,
+				92A9D67925CC5BB6008F5031 /* DebugMemoryCell.swift in Sources */,
 				09052B7A19053C9F00853FAE /* pngget.cpp in Sources */,
 				924A1BB21CB9685700D69162 /* KeyCapView.m in Sources */,
 				09052B7919053C9F00853FAE /* pnggccrd.cpp in Sources */,
 				09052B9219053C9F00853FAE /* inftrees.cpp in Sources */,
 				927E431A25C48592008E5517 /* CheatFinderManager.swift in Sources */,
 				09052B8819053C9F00853FAE /* ioapi.cpp in Sources */,
+				92A9D67F25CC5C66008F5031 /* DebugMemoryActionViewController.swift in Sources */,
 				09052B7C19053C9F00853FAE /* pngpread.cpp in Sources */,
 				09052B8419053C9F00853FAE /* pngwio.cpp in Sources */,
 				09052B8719053C9F00853FAE /* pngwutil.cpp in Sources */,
