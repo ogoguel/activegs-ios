@@ -53,7 +53,11 @@ class DebugMemoryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateWith(delegate: DebugMemoryCellDelegate, offset: Int, hexMemoryValues: [String]) {
+    func updateWith(
+        delegate: DebugMemoryCellDelegate,
+        offset: Int,
+        hexMemoryValues: [String]
+    ) {
         self.delegate = delegate
         self.offset = offset
         stackView.arrangedSubviews.forEach{ $0.removeFromSuperview() }
@@ -79,7 +83,7 @@ class DebugMemoryCell: UITableViewCell {
         }
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        stackView.addArrangedSubview(spacer)
+        stackView.addArrangedSubview(spacer)        
     }
     
     @objc func didTapOnButton(_ button: UIButton) {

@@ -19,5 +19,6 @@
 +(void)pause;
 +(void)resume;
 +(UIView*)getEmulatorView;
++(unsigned int)cpuGetProgramCounter;
 
 @end

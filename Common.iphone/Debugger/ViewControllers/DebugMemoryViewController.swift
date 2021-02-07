@@ -135,21 +135,15 @@ protocol DebugMemoryViewControllerDelegate: class {
         return button
     }()
 
-    let testCodeButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("[CODE]", for: .normal)
-        button.addTarget(self, action: #selector(testCodeButtonTapped(_:)), for: .touchUpInside)
-        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
-        button.setTitleColor(.red, for: .normal)
-        return button
+    let dataTableView: UITableView = {
+        let view = UITableView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.separatorStyle = .none
+        return view
     }()
-    @objc func testCodeButtonTapped(_ sender: UIButton) {
-        let controller = DebugMemoryCodeViewController(memoryModel: self.memoryModel)
-        present(controller, animated: true, completion: nil)
-    }
-
-    let tableView: UITableView = {
+    
+    let codeTableView: UITableView = {
         let view = UITableView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
@@ -163,6 +157,16 @@ protocol DebugMemoryViewControllerDelegate: class {
         return button
     }()
     
+    let memoryViewModeControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["Data","Code"])
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.tintColor = .green
+        control.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Print Char 21", size: 14)!], for: .normal)
+        control.addTarget(self, action: #selector(memoryViewModeControlChanged(_:)), for: .valueChanged)
+        control.selectedSegmentIndex = 0
+        return control
+    }()
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -173,30 +177,37 @@ protocol DebugMemoryViewControllerDelegate: class {
     
     func setupView() {
         view.addSubview(titleLabel)
-        view.addSubview(tableView)
+        view.addSubview(memoryViewModeControl)
+        view.addSubview(dataTableView)
+        view.addSubview(codeTableView)
         view.addSubview(dismissButton)
         view.addSubview(resumePauseEmulationButton)
-        titleLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: dataTableView.centerXAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
+        memoryViewModeControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
+        memoryViewModeControl.centerXAnchor.constraint(equalTo: dataTableView.centerXAnchor).isActive = true
+        dataTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
 //        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
-        tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16).isActive = true
+        dataTableView.topAnchor.constraint(equalTo: memoryViewModeControl.bottomAnchor, constant: 16).isActive = true
+        codeTableView.leadingAnchor.constraint(equalTo: dataTableView.leadingAnchor).isActive = true
+        codeTableView.trailingAnchor.constraint(equalTo: dataTableView.trailingAnchor).isActive = true
+        codeTableView.topAnchor.constraint(equalTo: dataTableView.topAnchor).isActive = true
+        codeTableView.bottomAnchor.constraint(equalTo: dataTableView.bottomAnchor).isActive = true
 //        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        dismissButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -8).isActive = true
+        dismissButton.trailingAnchor.constraint(equalTo: dataTableView.trailingAnchor, constant: -8).isActive = true
         dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
         resumePauseEmulationButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
         resumePauseEmulationButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         view.backgroundColor = .black
-        
-        view.addSubview(testCodeButton)
-        testCodeButton.trailingAnchor.constraint(equalTo: dismissButton.trailingAnchor).isActive = true
-        testCodeButton.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 4).isActive = true
     }
     
     func setupTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(DebugMemoryCell.self, forCellReuseIdentifier: DebugMemoryCell.identifier)
+        dataTableView.dataSource = self
+        dataTableView.delegate = self
+        dataTableView.register(DebugMemoryCell.self, forCellReuseIdentifier: DebugMemoryCell.identifier)
+        codeTableView.dataSource = self
+        codeTableView.delegate = self
+        codeTableView.register(DebugMemoryCell.self, forCellReuseIdentifier: DebugMemoryCell.identifier)
     }
     
     func setupActionController() {
@@ -213,13 +224,13 @@ protocol DebugMemoryViewControllerDelegate: class {
 
         actionControllerHeightConstraint = actionController.view.heightAnchor.constraint(equalToConstant: 320)
         actionControllerLeadingToViewLeadingConstraint = actionController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        actionControllerTopToTableViewBottomConstraint = actionController.view.topAnchor.constraint(equalTo: tableView.bottomAnchor)
-        tableViewTrailingToViewTrailingConstraint = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
+        actionControllerTopToTableViewBottomConstraint = actionController.view.topAnchor.constraint(equalTo: dataTableView.bottomAnchor)
+        tableViewTrailingToViewTrailingConstraint = dataTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
 
         actionControllerWidthConstraint = actionController.view.widthAnchor.constraint(equalToConstant: 400)
         actionControllerTopToViewTopConstraint = actionController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        actionControllerLeadingToTableViewTrailingConstraint = actionController.view.leadingAnchor.constraint(equalTo: tableView.trailingAnchor)
-        tableViewToViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        actionControllerLeadingToTableViewTrailingConstraint = actionController.view.leadingAnchor.constraint(equalTo: dataTableView.trailingAnchor)
+        tableViewToViewBottomConstraint = dataTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         actionController.view.addGestureRecognizer(pan)
     }
@@ -265,6 +276,17 @@ protocol DebugMemoryViewControllerDelegate: class {
         }
     }
     
+    @objc func memoryViewModeControlChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 1:
+            codeTableView.isHidden = false
+            dataTableView.isHidden = true
+        default:
+            codeTableView.isHidden = true
+            dataTableView.isHidden = false
+        }
+    }
+    
     @objc func updateMemoryIfNeeded() {
         // maybe apply cheats here?
         if framesSinceUpdateScreen > 3 {
@@ -273,7 +295,7 @@ protocol DebugMemoryViewControllerDelegate: class {
         }
         if framesSince > 30 {
             memoryModel.refresh()
-            tableView.reloadData()
+            dataTableView.reloadData()
             delegate?.refreshActionController()
             framesSince = 1
         }
@@ -287,6 +309,7 @@ protocol DebugMemoryViewControllerDelegate: class {
         setupActionController()
         setupTableView()
         setupPauseResumeButton()
+        memoryViewModeControlChanged(memoryViewModeControl)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -298,7 +321,7 @@ protocol DebugMemoryViewControllerDelegate: class {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+        dataTableView.reloadData()
         delegate?.refreshActionController()
     }
     
@@ -341,55 +364,80 @@ protocol DebugMemoryViewControllerDelegate: class {
 
 extension DebugMemoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numItems = EmuMemoryMapSection(rawValue: section)!.numberOfItems
-        var numRows = numItems / memoryModel.numToDisplayPerCell
-        if numItems % memoryModel.numToDisplayPerCell > 0 {
-            numRows += 1
+        if tableView == codeTableView {
+            return memoryModel.interpretedInstructions.count
+        } else {
+            let numItems = EmuMemoryMapSection(rawValue: section)!.numberOfItems
+            var numRows = numItems / memoryModel.numToDisplayPerCell
+            if numItems % memoryModel.numToDisplayPerCell > 0 {
+                numRows += 1
+            }
+            return numRows
         }
-        return numRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DebugMemoryCell.identifier, for: indexPath) as! DebugMemoryCell
-        let memoryVals = memoryModel.hexStrings(for: indexPath)
-        let offset = memoryModel.offset(for: indexPath)
-        cell.updateWith(delegate: self, offset: offset, hexMemoryValues: memoryVals)
-        return cell
+        if tableView == codeTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DebugMemoryCell.identifier, for: indexPath) as! DebugMemoryCell
+            let instruction = memoryModel.interpretedInstructions[indexPath.row]
+            let values = [
+                instruction.instruction.mnemonic.description,
+                instruction.instruction.addressingMode.description
+            ]
+            cell.updateWith(delegate: self, offset: Int(instruction.address), hexMemoryValues: values)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DebugMemoryCell.identifier, for: indexPath) as! DebugMemoryCell
+            let memoryVals = memoryModel.hexStrings(for: indexPath)
+            let offset = memoryModel.offset(for: indexPath)
+            cell.updateWith(delegate: self, offset: offset, hexMemoryValues: memoryVals)
+            return cell
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return EmuMemoryMapSection.applesoftStringData.rawValue + 1
+        if tableView == codeTableView {
+            return 1
+        } else {
+            return EmuMemoryMapSection.applesoftStringData.rawValue + 1
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return EmuMemoryMapSection.init(rawValue: section)!.title
+        if tableView == dataTableView {
+            return EmuMemoryMapSection.init(rawValue: section)!.title
+        }
+        return nil
     }
 }
 
 extension DebugMemoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = self.tableView(tableView, titleForHeaderInSection: section)
-        let label = UILabel(frame: .zero)
-        label.text = title
-        label.font = UIFont(name: "Print Char 21", size: 12)
-        label.textColor = .cyan
-        label.translatesAutoresizingMaskIntoConstraints = false
-        let view = UIView(frame: .zero)
-        view.addSubview(label)
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        view.backgroundColor = .black
-        view.layer.borderColor = UIColor.cyan.cgColor
-        view.layer.borderWidth = 1.0
-        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        return view
+        if tableView == dataTableView {
+            let title = self.tableView(tableView, titleForHeaderInSection: section)
+            let label = UILabel(frame: .zero)
+            label.text = title
+            label.font = UIFont(name: "Print Char 21", size: 12)
+            label.textColor = .cyan
+            label.translatesAutoresizingMaskIntoConstraints = false
+            let view = UIView(frame: .zero)
+            view.addSubview(label)
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+            view.backgroundColor = .black
+            view.layer.borderColor = UIColor.cyan.cgColor
+            view.layer.borderWidth = 1.0
+            view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            return view
+        }
+        return nil
     }
 }
 
 extension DebugMemoryViewController: DebugMemoryCellDelegate {
     func updateSelection(to address: Int) {
         memoryModel.selectedAddress = address
-        self.tableView.reloadData()
+        self.dataTableView.reloadData()
         // communicate selected address to action controller
         delegate?.refreshActionController()
     }
@@ -406,13 +454,13 @@ extension DebugMemoryViewController: DebugMemoryCellDelegate {
 extension DebugMemoryViewController: DebugMemoryActionViewControllerDelegate {
     func updateMemory(at address: Int, with memory:UInt8) {
         memoryModel.setMemory(at: address, value: memory)
-        self.tableView.reloadData()
+        self.dataTableView.reloadData()
     }
     
     func jump(to address: Int) {
         print("jumping to address: \(String(format: "%04X",address)) decimal: \(address)")
         let indexPath = memoryModel.indexPath(for: address)
-        tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        dataTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
         updateSelection(to: address)
     }
     func memoryHex(at address: Int) -> String {

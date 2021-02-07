@@ -28,6 +28,10 @@
     r_sim65816.resume();
 }
 
++(word32)cpuGetProgramCounter {
+    return g_sim65816.engine.kpc;
+}
+
 +(UIView*)getEmulatorView {
     return [pManager getEmulatorView].zv.ew;
 }

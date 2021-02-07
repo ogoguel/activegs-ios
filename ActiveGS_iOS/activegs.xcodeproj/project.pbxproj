@@ -255,7 +255,6 @@
 		927E436B25C94C12008E5517 /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436225C94C12008E5517 /* Mnemonic.swift */; };
 		927E436C25C94C12008E5517 /* AddressingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436325C94C12008E5517 /* AddressingMode.swift */; };
 		927E437025C99A11008E5517 /* Debug6502Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */; };
-		927E437325C99C06008E5517 /* DebugMemoryCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */; };
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
 		92A9D66E25CC5A96008F5031 /* DebuggerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */; };
 		92A9D67125CC5AF4008F5031 /* EmuMemoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */; };
@@ -627,7 +626,6 @@
 		927E436225C94C12008E5517 /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
 		927E436325C94C12008E5517 /* AddressingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressingMode.swift; sourceTree = "<group>"; };
 		927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug6502Interpreter.swift; sourceTree = "<group>"; };
-		927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryCodeViewController.swift; sourceTree = "<group>"; };
 		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
 		92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebuggerUtils.swift; sourceTree = "<group>"; };
 		92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmuMemoryModel.swift; sourceTree = "<group>"; };
@@ -1181,7 +1179,6 @@
 				92FA0F2625B52EC000663577 /* EmuWrapper.h */,
 				92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */,
 				927E431925C48592008E5517 /* CheatFinderManager.swift */,
-				927E437225C99C06008E5517 /* DebugMemoryCodeViewController.swift */,
 				92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */,
 			);
 			path = Debugger;
@@ -1475,7 +1472,6 @@
 				927E436425C94C12008E5517 /* Stream.swift in Sources */,
 				09FA6096125A7B3E00B07F77 /* activegsList.mm in Sources */,
 				09FA6097125A7B3E00B07F77 /* activegsViewController.mm in Sources */,
-				927E437325C99C06008E5517 /* DebugMemoryCodeViewController.swift in Sources */,
 				09052B8D19053C9F00853FAE /* compress.cpp in Sources */,
 				09052B8E19053C9F00853FAE /* crc32.cpp in Sources */,
 				09FA609A125A7B3E00B07F77 /* asyncimageview.mm in Sources */,
