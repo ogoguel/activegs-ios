@@ -13,6 +13,7 @@ protocol DebugMemoryActionViewControllerDelegate: class {
     func updateMemory(at address: Int, with memory:UInt8)
     var memory: UnsafeMutablePointer<UInt8>? { get }
     var selectedAddress: Int? { get }
+    var referencedMemoryAddresses: [UInt16: [AddressedInstruction]] { get }
 }
 
 class DebugMemoryActionViewController: UIViewController {
@@ -23,6 +24,8 @@ class DebugMemoryActionViewController: UIViewController {
     
     var mode: Mode = .jumpToAddress
     var cheatFinder = CheatFinderManager()
+    
+    var matchedInstructions = [AddressedInstruction]()
     
     weak var delegate:DebugMemoryActionViewControllerDelegate?
     
@@ -193,6 +196,16 @@ class DebugMemoryActionViewController: UIViewController {
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return button
     }()
+    
+    let findCodeButton: DebugMemoryButton = {
+        let button = DebugMemoryButton()
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 9)
+        button.setTitle("Find in Code >", for: .normal)
+        button.setTitle("Cancel", for: .selected)
+        button.setTitleColor(.red, for: .selected)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
 //    lazy var cheatFinderSearchStackView: UIStackView = {
 //        let stackView = UIStackView(arrangedSubviews: [cheatFinderSearchLessButton, cheatFinderSearchGreaterButton])
@@ -260,7 +273,7 @@ class DebugMemoryActionViewController: UIViewController {
         cheatFinderPromptLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -48).isActive = true
         cheatFinderMatchesTableView.topAnchor.constraint(equalTo: cheatFinderPromptLabel.bottomAnchor, constant: 4).isActive = true
         cheatFinderMatchesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        cheatFinderMatchesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 24).isActive = true
+        cheatFinderMatchesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
         cheatFinderMatchesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 8).isActive = true
         [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView].forEach{ $0.isHidden = true }
     }
@@ -329,15 +342,14 @@ class DebugMemoryActionViewController: UIViewController {
 //        view.addSubview(memoryField)
         
         view.addSubview(keyboardView)
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         segmentedControl.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
         editFieldsStackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
 //        memoryField.widthAnchor.constraint(equalToConstant: 80).isActive = true
 //        memoryField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        editFieldsStackView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
-        keyboardView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
+        editFieldsStackView.centerXAnchor.constraint(equalTo: keyboardView.centerXAnchor).isActive = true
         keyboardView.topAnchor.constraint(equalTo: editFieldsStackView.bottomAnchor, constant: 8).isActive = true
 //        keyboardView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         keyboardView.heightAnchor.constraint(equalToConstant: 200).isActive = true
@@ -349,14 +361,125 @@ class DebugMemoryActionViewController: UIViewController {
         emulatorScreenView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         emulatorScreenView.isHidden = true
         
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.init(red: 0.14, green: 0.13, blue: 0.14, alpha: 1)
+    }
+    
+    // Jump tab: normal constraints
+    private var keyboardViewCenterXConstraint: NSLayoutConstraint!
+    private var findCodeButtonLeadingConstraint: NSLayoutConstraint!
+    private var findCodeButtonCenterYConstraint: NSLayoutConstraint!
+    private var findInCodeTableViewLeadingConstraintOutOfView: NSLayoutConstraint!
+    private var findInCodeTableViewBottomConstraintOutOfView: NSLayoutConstraint!
+    var jumpTabNormalModeConstraints: [NSLayoutConstraint] {
+        [
+            keyboardViewCenterXConstraint,
+            findCodeButtonLeadingConstraint,
+            findCodeButtonCenterYConstraint,
+            findInCodeTableViewLeadingConstraintOutOfView,
+            findInCodeTableViewBottomConstraintOutOfView
+        ]
+    }
+    
+    // Jump tab: find in code constraints
+    private var keyboardViewLeadingConstraint: NSLayoutConstraint!
+    private var findCodeButtonBottomConstraint: NSLayoutConstraint!
+    private var findCodeButtonCenterXConstraint: NSLayoutConstraint!
+    private var findInCodeTableViewLeadingConstraint: NSLayoutConstraint!
+    private var findInCodeTableViewTrailingConstraint: NSLayoutConstraint!
+    private var findInCodeTableViewBottomConstraint: NSLayoutConstraint!
+    var jumpTabFindInCodeConstraints: [NSLayoutConstraint] {
+        [
+            keyboardViewLeadingConstraint,
+            findCodeButtonBottomConstraint,
+            findInCodeTableViewLeadingConstraint,
+            findInCodeTableViewTrailingConstraint,
+            findCodeButtonCenterXConstraint,
+            findInCodeTableViewBottomConstraint
+        ]
+    }
+
+    
+    // Jump tab: find in code table
+    lazy var findInCodeResultsTableView: UITableView = {
+        let view = UITableView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.dataSource = self
+        view.delegate = self
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "FindInCodeResultsCell")
+        return view
+    }()
+    
+    func findInCodeSetupView() {
+        view.addSubview(findCodeButton)
+        view.addSubview(findInCodeResultsTableView)
+
+        // Find Code Button Normal config
+        keyboardViewCenterXConstraint = keyboardView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor)
+        findCodeButtonLeadingConstraint = findCodeButton.leadingAnchor.constraint(equalTo: keyboardView.trailingAnchor, constant: 8)
+        findCodeButtonCenterYConstraint = findCodeButton.centerYAnchor.constraint(equalTo: keyboardView.centerYAnchor)
+        findInCodeTableViewLeadingConstraintOutOfView  = findInCodeResultsTableView.leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50)
+        findInCodeTableViewBottomConstraintOutOfView = findInCodeResultsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        
+        // Find Code Button Searching Config
+        keyboardViewLeadingConstraint = keyboardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8)
+        findCodeButtonBottomConstraint = findCodeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 4)
+        findCodeButtonCenterXConstraint = findCodeButton.centerXAnchor.constraint(equalTo: findInCodeResultsTableView.centerXAnchor)
+        findInCodeTableViewBottomConstraint = findInCodeResultsTableView.bottomAnchor.constraint(equalTo: findCodeButton.topAnchor, constant: -4)
+        findInCodeResultsTableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        findInCodeTableViewLeadingConstraint = findInCodeResultsTableView.leadingAnchor.constraint(equalTo: keyboardView.trailingAnchor, constant: 8)
+        findInCodeTableViewTrailingConstraint = findInCodeResultsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8)
+
+        NSLayoutConstraint.deactivate(jumpTabFindInCodeConstraints)
+        NSLayoutConstraint.activate(jumpTabNormalModeConstraints)
+        
+        findCodeButton.onTapped = { isSelected in
+            self.updateKeyboardPosition(isFindingCode: isSelected)
+            self.updateMatchedInstructions()
+        }
+    }
+    
+    private func updateMatchedInstructions() {
+        if let delegate = delegate,
+           let text = memoryField.text,
+           let address = getAddressFromText(text) {
+            matchedInstructions = delegate.referencedMemoryAddresses[UInt16(address)] ?? [AddressedInstruction]()
+            findInCodeResultsTableView.reloadData()
+        }
+    }
+    
+    private func updateKeyboardPosition(isFindingCode: Bool = false) {
+        let animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear) {
+            if isFindingCode {
+                NSLayoutConstraint.deactivate(self.jumpTabNormalModeConstraints)
+                NSLayoutConstraint.activate(self.jumpTabFindInCodeConstraints)
+            } else {
+                NSLayoutConstraint.deactivate(self.jumpTabFindInCodeConstraints)
+                NSLayoutConstraint.activate(self.jumpTabNormalModeConstraints)
+            }
+            self.view.layoutIfNeeded()
+        }
+        animator.startAnimation()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         cheatFinderSetupView()
+        findInCodeSetupView()
         update()
+    }
+    
+    func getAddressFromText(_ text: String?) -> UInt64? {
+        guard let text = text else {
+            return nil
+        }
+        let scanner = Scanner(string: text)
+        var address: UInt64 = 0
+        if scanner.scanHexInt64(&address) && address < 0x95ff {
+            return address
+        }
+        return nil
     }
     
     func updateTextField(with keyCode: Int) {
@@ -378,11 +501,10 @@ class DebugMemoryActionViewController: UIViewController {
         if text.count > charLimit {
             text.removeFirst()
         }
-        if mode == .jumpToAddress {
-            let scanner = Scanner(string: text)
-            var address: UInt64 = 0
-            if scanner.scanHexInt64(&address) && address < 0x95ff {
-                delegate?.jump(to: Int(address))
+        if mode == .jumpToAddress, let address = getAddressFromText(text) {
+            delegate?.jump(to: Int(address))
+            if findCodeButton.isSelected {
+                updateMatchedInstructions()
             }
         }
         memoryField.text = text
@@ -407,6 +529,8 @@ class DebugMemoryActionViewController: UIViewController {
     func update() {
         cheatFinderHide()
         emulatorScreenView.isHidden = true
+        findCodeButton.isHidden = true
+        findInCodeResultsTableView.isHidden = true
         switch mode {
         case .jumpToAddress:
             memoryField.isHidden = false
@@ -416,9 +540,12 @@ class DebugMemoryActionViewController: UIViewController {
             updateMemoryButton.isHidden = true
             resetMemoryButton.isHidden = true
             keyboardView.isHidden = false
+            findCodeButton.isHidden = false
+            findInCodeResultsTableView.isHidden = false
             if let selectedAddress = delegate?.selectedAddress {
                 memoryField.text = String(format: "%04X", selectedAddress)
             }
+            updateKeyboardPosition(isFindingCode: findCodeButton.isSelected)
         case .changeMemory:
             memoryField.isHidden = false
             memoryField.layer.borderColor = UIColor.orange.cgColor
@@ -430,6 +557,7 @@ class DebugMemoryActionViewController: UIViewController {
             if let selectedAddress = delegate?.selectedAddress {
                 memoryField.text = delegate?.memoryHex(at: selectedAddress)
             }
+            updateKeyboardPosition()
         case .cheat:
             memoryField.isHidden = true
             editFieldsStackView.isHidden = true
@@ -473,6 +601,7 @@ extension DebugMemoryActionViewController: EmulatorKeyboardKeyPressedDelegate {
 extension DebugMemoryActionViewController: DebugMemoryViewControllerDelegate {
     func refreshActionController() {
         update()
+        updateMatchedInstructions()
     }
     func updateEmulatorScreen() {
         let emulatorView = EmuWrapper.getEmulatorView()
@@ -485,29 +614,49 @@ extension DebugMemoryActionViewController: DebugMemoryViewControllerDelegate {
 
 extension DebugMemoryActionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cheatFinder.matchedMemoryAddresses.keys.count
+        if tableView == findInCodeResultsTableView {
+            return matchedInstructions.count
+        } else {
+            return cheatFinder.matchedMemoryAddresses.keys.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CheatFinderMatchCell", for: indexPath)
-        let addresses = cheatFinder.matchedMemoryAddresses.keys
-        let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
-        let address = addresses[index]
-        cell.textLabel?.text = String(format: "%04X",address)
-        cell.textLabel?.font = UIFont(name: "Print Char 21", size: 14)
-        cell.textLabel?.textColor = .red
-        cell.textLabel?.textAlignment = .center
-        return cell
+        if tableView == findInCodeResultsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FindInCodeResultsCell", for: indexPath)
+            let instruction = matchedInstructions[indexPath.row]
+            cell.textLabel?.text = instruction.description
+            cell.textLabel?.font = UIFont(name: "Print Char 21", size: 11)
+            cell.textLabel?.textColor = .yellow
+            cell.textLabel?.textAlignment = .center
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CheatFinderMatchCell", for: indexPath)
+            let addresses = cheatFinder.matchedMemoryAddresses.keys
+            let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
+            let address = addresses[index]
+            cell.textLabel?.text = String(format: "%04X: %02X",address,cheatFinder.matchedMemoryAddresses[address]!)
+            cell.textLabel?.font = UIFont(name: "Print Char 21", size: 14)
+            cell.textLabel?.textColor = .red
+            cell.textLabel?.textAlignment = .center
+            return cell
+        }
     }
 }
 
 extension DebugMemoryActionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let addresses = cheatFinder.matchedMemoryAddresses.keys
-        let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
-        let address = addresses[index]
-        delegate?.jump(to: address)
-        tableView.deselectRow(at: indexPath, animated: true)
+        if tableView == findInCodeResultsTableView {
+            let instruction = matchedInstructions[indexPath.row]
+            let address = instruction.address
+            delegate?.jump(to: Int(address))
+        } else {
+            let addresses = cheatFinder.matchedMemoryAddresses.keys
+            let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
+            let address = addresses[index]
+            delegate?.jump(to: address)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 }
 

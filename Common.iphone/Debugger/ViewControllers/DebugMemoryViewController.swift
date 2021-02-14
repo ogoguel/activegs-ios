@@ -219,10 +219,10 @@ protocol DebugMemoryViewControllerDelegate: class {
         actionController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(actionController.view)
         actionController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        actionControllerBottomConstraint = actionController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 250)
+        actionControllerBottomConstraint = actionController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 250)
         actionControllerBottomConstraint?.isActive = true
 
-        actionControllerHeightConstraint = actionController.view.heightAnchor.constraint(equalToConstant: 320)
+        actionControllerHeightConstraint = actionController.view.heightAnchor.constraint(equalToConstant: 380)
         actionControllerLeadingToViewLeadingConstraint = actionController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         actionControllerTopToTableViewBottomConstraint = actionController.view.topAnchor.constraint(equalTo: dataTableView.bottomAnchor)
         tableViewTrailingToViewTrailingConstraint = dataTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
@@ -303,6 +303,17 @@ protocol DebugMemoryViewControllerDelegate: class {
         framesSinceUpdateScreen += 1
     }
     
+    func registerAppleIIFont() {
+        let fontUrl = Bundle.main.url(forResource: "PrintChar21", withExtension: "ttf")
+        CTFontManagerRegisterFontURLs([fontUrl] as CFArray, .persistent, true) { errors, done -> Bool in
+            if(done) {
+                print("Done installing custom font!")
+            }
+            print(errors as Array)
+            return true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -310,6 +321,7 @@ protocol DebugMemoryViewControllerDelegate: class {
         setupTableView()
         setupPauseResumeButton()
         memoryViewModeControlChanged(memoryViewModeControl)
+//        registerAppleIIFont()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -379,6 +391,9 @@ extension DebugMemoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == codeTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: DebugMemoryCell.identifier, for: indexPath) as! DebugMemoryCell
+            if indexPath.row >= memoryModel.interpretedInstructions.count {
+                return cell
+            }
             let instruction = memoryModel.interpretedInstructions[indexPath.row]
             let values = [
                 instruction.instruction.mnemonic.description,
@@ -461,6 +476,12 @@ extension DebugMemoryViewController: DebugMemoryActionViewControllerDelegate {
         print("jumping to address: \(String(format: "%04X",address)) decimal: \(address)")
         let indexPath = memoryModel.indexPath(for: address)
         dataTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        if let codeIndex = memoryModel.interpretedInstructions.firstIndex(where: { $0.address == address }) {
+            let indexPath = IndexPath(row: codeIndex, section: 0)
+            codeTableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+        
         updateSelection(to: address)
     }
     func memoryHex(at address: Int) -> String {
@@ -471,5 +492,8 @@ extension DebugMemoryViewController: DebugMemoryActionViewControllerDelegate {
     }
     var selectedAddress: Int? {
         return memoryModel.selectedAddress
+    }
+    var referencedMemoryAddresses: [UInt16: [AddressedInstruction]] {
+        return memoryModel.referencedAddresses
     }
 }

@@ -632,6 +632,7 @@
 		92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryButton.swift; sourceTree = "<group>"; };
 		92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryCell.swift; sourceTree = "<group>"; };
 		92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryActionViewController.swift; sourceTree = "<group>"; };
+		92AF5B1325D1B7A00025578D /* ActiveGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ActiveGS.entitlements; path = ActiveGS/ActiveGS.entitlements; sourceTree = "<group>"; };
 		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
 		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
 		92E2063125AADF6E00AE3F28 /* PreviewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUI.swift; sourceTree = "<group>"; };
@@ -1072,6 +1073,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				92AF5B1325D1B7A00025578D /* ActiveGS.entitlements */,
 				096604C819127DB700A22C51 /* activegs.plist */,
 				09052B4219053C9F00853FAE /* Libraries */,
 				09520D8516AEF8250065E84A /* Drivers */,
@@ -1600,7 +1602,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -1625,7 +1627,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1645,7 +1647,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1672,7 +1674,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1692,7 +1694,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -1716,7 +1718,7 @@
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

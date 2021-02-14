@@ -12,6 +12,7 @@ class EmuMemoryModel {
     let maxMemorySize = 128 * 1024
     
     private(set) var memory = EmuWrapper.memory()
+    private(set) var referencedAddresses = [UInt16: [AddressedInstruction]]()
     
     var selectedAddress: Int?
     
@@ -71,6 +72,7 @@ class EmuMemoryModel {
         }
         print("Setting memory address %04X to %02X",address,value)
         memory[address] = value
+        refresh()
     }
     
     func getMemory(at address:Int) -> UInt8 {
@@ -96,11 +98,40 @@ class EmuMemoryModel {
     }
     
     lazy var interpretedInstructions: [AddressedInstruction] = {
-        let interpreter = Debug6502Interpreter(memory: memoryAsArray)
-        return interpreter.interpret()
+        return interpreted()
     }()
-
+    
+    private func interpreted() -> [AddressedInstruction] {
+        let interpreter = Debug6502Interpreter(memory: memoryAsArray)
+        let instructions = interpreter.interpret()
+        referencedAddresses = [UInt16: [AddressedInstruction]]()
+        let updateBlock: ((UInt16, AddressedInstruction) -> Void) = { address, instruction in
+            var instructions: [AddressedInstruction] = {
+                if let existingInstructions = self.referencedAddresses[address] {
+                    return existingInstructions
+                }
+                return [AddressedInstruction]()
+            }()
+            instructions.append(instruction)
+            self.referencedAddresses[address] = instructions
+        }
+        for instruction in instructions {
+            switch instruction.instruction.addressingMode {
+            case .absolute(let address):
+                updateBlock(address, instruction)
+            case .zeroPage(let zeroPageAddress):
+                updateBlock(UInt16(zeroPageAddress), instruction)
+            case .indirect(let fromAddress):
+                updateBlock(fromAddress, instruction)
+            default:
+                break
+            }
+        }
+        return instructions
+    }
+    
     func refresh() {
         memory = EmuWrapper.memory()
+        interpretedInstructions = interpreted()
     }
 }

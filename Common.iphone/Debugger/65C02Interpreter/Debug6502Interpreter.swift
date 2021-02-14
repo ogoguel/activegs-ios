@@ -22,6 +22,9 @@ enum InterpreterError: Error {
 
 public class Debug6502Interpreter: Bus {
     public func read(from address: UInt16) throws -> UInt8 {
+        if address >= memory.count {
+            return 0
+        }
         return memory[Int(address)]
     }
     
