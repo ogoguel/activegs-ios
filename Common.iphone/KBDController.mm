@@ -44,6 +44,8 @@ int externalKeyboard=FALSE;
 int iCadeDetected=FALSE;
 int bForceOnScreenKeyboard = FALSE;
 
+int lastArrowKey = 0;
+
 
 enum runtimeKeysAction
 {
@@ -252,8 +254,7 @@ int isHardwareKeyboard()
 
     if (bForceOnScreenKeyboard)
         return 1;
-    
-	
+
 #ifdef ACTIVEGS_NOHARDWAREKEYBOARDDETECTION
 	// ppour la soumission appstore!
 	return option.getIntValue(OPTION_EXTERNALKBD);
@@ -576,8 +577,55 @@ extern int findCode(const char* _s);
     } disconnectedCallback:^{
         [pManager setNotificationText:@"mFi Controller Disconnected"];
     }];
+    
+   
+    }
+- (NSArray*)keyCommands
+{
+    if (lastArrowKey != 0)
+    {
+        add_event_key(lastArrowKey, 1);
+        lastArrowKey = 0;
+    }
+    UIKeyCommand *upArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
+                                                modifierFlags:0
+                                                       action:@selector(upArrow:)];
+    UIKeyCommand *downArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputDownArrow
+                                                modifierFlags:0
+                                                       action:@selector(downArrow:)];
+    UIKeyCommand *leftArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputLeftArrow
+                                                modifierFlags:0
+                                                       action:@selector(leftArrow:)];
+    UIKeyCommand *rightArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputRightArrow
+                                                modifierFlags:0
+                                                       action:@selector(rightArrow:)];
+    return @[downArrow, upArrow, leftArrow, rightArrow];
 }
 
+- (void) upArrow: (UIKeyCommand *) keyCommand
+{
+    lastArrowKey =0x3e;
+    add_event_key(0x3e, 0);
+}
+
+- (void) downArrow: (UIKeyCommand *) keyCommand
+{
+    lastArrowKey =0x3d;
+    add_event_key(0x3d, 0);
+}
+
+- (void) leftArrow: (UIKeyCommand *) keyCommand
+{
+    lastArrowKey =0x3b;
+    add_event_key(0x3b, 0);
+}
+
+- (void) rightArrow: (UIKeyCommand *) keyCommand
+{
+    lastArrowKey =0x3c;
+    add_event_key(0x3c, 0);
+}
+            
 -(void) setupMfiController:(GCController*)controller {
     void (^appleJoyButton0Handler)(GCControllerButtonInput *, float, BOOL) = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
         if ( pressed ) {
