@@ -104,14 +104,23 @@ class EmulatorKeyboardView: UIView {
         return stackView
     }()
     
-    let dragMeView: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "DRAG ME!"
-        label.textColor = UIColor.systemRed
-        return label
+    let dragMeView: UIView = {
+      let view = UIView(frame: .zero)
+      view.backgroundColor = .white
+      view.translatesAutoresizingMaskIntoConstraints = false
+      view.widthAnchor.constraint(equalToConstant: 80).isActive = true
+      view.heightAnchor.constraint(equalToConstant: 2).isActive = true
+      let outerView = UIView(frame: .zero)
+      outerView.backgroundColor = .clear
+      outerView.translatesAutoresizingMaskIntoConstraints = false
+      outerView.addSubview(view)
+      view.centerXAnchor.constraint(equalTo: outerView.centerXAnchor).isActive = true
+      view.centerYAnchor.constraint(equalTo: outerView.centerYAnchor).isActive = true
+      outerView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+      outerView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+      return outerView
     }()
-    
+
     private var pressedKeyLabels = [String: UILabel]()
     
     convenience init() {
@@ -145,7 +154,7 @@ class EmulatorKeyboardView: UIView {
         alternateKeyRowsStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -4.0).isActive = true
         addSubview(dragMeView)
         dragMeView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        dragMeView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8.0).isActive = true
+        dragMeView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     
@@ -170,6 +179,14 @@ class EmulatorKeyboardView: UIView {
             pressedKeyLabels[label.text ?? "😭"] = label
         }
         viewModel.keyPressed(sender.key)
+    }
+    
+    @objc private func keyCancelled(_ sender: KeyboardButton) {
+        let title = sender.titleLabel?.text ?? "😭"
+        if let label = pressedKeyLabels[title] {
+            label.removeFromSuperview()
+            pressedKeyLabels.removeValue(forKey: title)
+        }
     }
     
     @objc private func keyReleased(_ sender: KeyboardButton) {
@@ -243,6 +260,7 @@ class EmulatorKeyboardView: UIView {
         key.addTarget(self, action: #selector(keyPressed(_:)), for: .touchDown)
         key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpInside)
         key.addTarget(self, action: #selector(keyReleased(_:)), for: .touchUpOutside)
+        key.addTarget(self, action: #selector(keyCancelled(_:)), for: .touchCancel)
         if keyCoded.isModifier {
             modifierButtons.update(with: key)
         }
@@ -560,7 +578,7 @@ struct KeyPosition {
                 AppleIIKey(label: "SPACE", code: AppleKeyboardKey.KEY_SPACE.rawValue, keySize: .wide),
                 AppleIIKey(label: "SHIFT", code: AppleKeyboardKey.KEY_SHIFT.rawValue,
                            keySize: .standard, isModifier: true, imageName: "shift", imageNameHighlighted: "shift.fill"),
-                AppleIIKey(label: "DELETE", code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
+                AppleIIKey(label: "DELETE",   code: AppleKeyboardKey.KEY_DELETE.rawValue, imageName: "delete.left", imageNameHighlighted: "delete.left.fill")
             ],
             [
                 AppleIIKey(label: "\(UnicodeScalar(0xe080)!)", code: AppleKeyboardKey.KEY_OPTION.rawValue,
@@ -774,8 +792,8 @@ struct KeyPosition {
         keyboardConstraints.removeAll()
         leftKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(leftKeyboardView)
-        leftKeyboardView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        leftKeyboardView.widthAnchor.constraint(equalToConstant: 175).isActive = true
+        leftKeyboardView.heightAnchor.constraint(equalToConstant: 270).isActive = true
+        leftKeyboardView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         keyboardConstraints.append(contentsOf: [
             leftKeyboardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             leftKeyboardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -786,8 +804,8 @@ struct KeyPosition {
             rightKeyboardView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             rightKeyboardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        rightKeyboardView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        rightKeyboardView.widthAnchor.constraint(equalToConstant: 175).isActive = true
+        rightKeyboardView.heightAnchor.constraint(equalToConstant: 270).isActive = true
+        rightKeyboardView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         NSLayoutConstraint.activate(keyboardConstraints)
     }
     

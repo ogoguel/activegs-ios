@@ -23,7 +23,7 @@ class DebugMemoryActionViewController: UIViewController {
     }
     
     var mode: Mode = .jumpToAddress
-    var cheatFinder = CheatFinderManager()
+    let cheatFinder: CheatFinderManager
     
     var matchedInstructions = [AddressedInstruction]()
     
@@ -73,8 +73,18 @@ class DebugMemoryActionViewController: UIViewController {
         return button
     }()
     
+    let addToCheatsButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("Add to Cheats", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.orange.cgColor
+        button.addTarget(self, action: #selector(addToCheatButtonPressed(_:)), for: .touchUpInside )
+        return button
+    }()
+    
     lazy var editFieldsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [memoryField, updateMemoryButton, resetMemoryButton])
+        let stackView = UIStackView(arrangedSubviews: [memoryField, updateMemoryButton, resetMemoryButton, addToCheatsButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 4
@@ -151,7 +161,8 @@ class DebugMemoryActionViewController: UIViewController {
     }()
     
     lazy var cheatFinderInitialActionsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderSearchEqualButton])
+        let stackView = UIStackView(arrangedSubviews: [cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderSearchEqualButton,
+            cheatFinderShowSavedButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 4
@@ -197,6 +208,26 @@ class DebugMemoryActionViewController: UIViewController {
         return button
     }()
     
+    lazy var cheatFinderShowSavedButton: ToggleButton = {
+        let button = ToggleButton()
+        button.titleLabel?.font = UIFont(name: "Print Char 21", size: 12)
+        button.setTitle("Matched", for: .normal)
+        button.setTitle("Saved", for: .selected)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.purple.cgColor
+        button.onTapped = { [weak self] wasSelected in
+            if wasSelected {
+                self?.cheatFinder.uiState = .showSaved
+            } else {
+                self?.cheatFinder.uiState = .didSearch
+            }
+            self?.cheatFinderUpdateUI()
+        }
+        button.tag = 3
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     let findCodeButton: DebugMemoryButton = {
         let button = DebugMemoryButton()
         button.titleLabel?.font = UIFont(name: "Print Char 21", size: 9)
@@ -237,6 +268,25 @@ class DebugMemoryActionViewController: UIViewController {
         return view
     }()
     
+    lazy var cheatFinderSavedTableView: UITableView = {
+        let view = UITableView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.dataSource = self
+        view.delegate = self
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "CheatFinderMatchCell")
+        return view
+    }()
+    
+    init(cheatFinderManager: CheatFinderManager) {
+        self.cheatFinder = cheatFinderManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     lazy var emulatorScreenView: UIImageView = {
         let screenView = UIImageView(frame: .zero)
         screenView.translatesAutoresizingMaskIntoConstraints = false
@@ -261,6 +311,7 @@ class DebugMemoryActionViewController: UIViewController {
 //        view.addSubview(cheatFinderSearchStackView)
         view.addSubview(cheatFinderPromptLabel)
         view.addSubview(cheatFinderMatchesTableView)
+        view.addSubview(cheatFinderSavedTableView)
         cheatFinderInitialActionsStackView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
         cheatFinderInitialActionsStackView.centerXAnchor.constraint(equalTo: segmentedControl.centerXAnchor).isActive = true
 //        cheatFinderInitialActionsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
@@ -275,11 +326,15 @@ class DebugMemoryActionViewController: UIViewController {
         cheatFinderMatchesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
         cheatFinderMatchesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
         cheatFinderMatchesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 8).isActive = true
-        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView].forEach{ $0.isHidden = true }
+        cheatFinderSavedTableView.topAnchor.constraint(equalTo: cheatFinderMatchesTableView.topAnchor).isActive = true
+        cheatFinderSavedTableView.leadingAnchor.constraint(equalTo: cheatFinderMatchesTableView.leadingAnchor).isActive = true
+        cheatFinderSavedTableView.trailingAnchor.constraint(equalTo: cheatFinderMatchesTableView.trailingAnchor).isActive = true
+        cheatFinderSavedTableView.bottomAnchor.constraint(equalTo: cheatFinderMatchesTableView.bottomAnchor).isActive = true
+        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView, cheatFinderSavedTableView].forEach{ $0.isHidden = true }
     }
 
     func cheatFinderHide() {
-        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchEqualButton].forEach{ $0.isHidden = true }
+        [cheatFinderInitialActionsStackView, cheatFinderPromptLabel, cheatFinderMatchesTableView, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton, cheatFinderNewSearchButton, cheatFinderContinueSearchButton, cheatFinderSearchEqualButton, cheatFinderShowSavedButton, cheatFinderSavedTableView].forEach{ $0.isHidden = true }
     }
     
     func cheatFinderUpdateUI() {
@@ -292,19 +347,25 @@ class DebugMemoryActionViewController: UIViewController {
             [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton,
              cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
              cheatFinderSearchEqualButton,
-             cheatFinderPromptLabel].forEach{ $0.isHidden = false }
+             cheatFinderPromptLabel, cheatFinderShowSavedButton].forEach{ $0.isHidden = false }
             cheatFinderPromptLabel.text = "New search started! Search to find matches..."
         case .isSearching:
             [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton, cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
-             cheatFinderSearchEqualButton, cheatFinderPromptLabel].forEach{ $0.isHidden = false }
+             cheatFinderSearchEqualButton, cheatFinderPromptLabel, cheatFinderShowSavedButton].forEach{ $0.isHidden = false }
             cheatFinderPromptLabel.text = "Search for values..."
         case .didSearch:
             [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton,
              cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
              cheatFinderSearchEqualButton,
-             cheatFinderPromptLabel, cheatFinderMatchesTableView].forEach{ $0.isHidden = false }
+             cheatFinderPromptLabel, cheatFinderMatchesTableView, cheatFinderShowSavedButton].forEach{ $0.isHidden = false }
             cheatFinderPromptLabel.text = "Number of matches: \(cheatFinder.matchedMemoryAddresses.count)"
             cheatFinderMatchesTableView.reloadData()
+        case .showSaved:
+            [cheatFinderInitialActionsStackView, cheatFinderNewSearchButton,
+             cheatFinderSearchLessButton, cheatFinderSearchGreaterButton,
+             cheatFinderSearchEqualButton,
+             cheatFinderPromptLabel, cheatFinderShowSavedButton, cheatFinderSavedTableView].forEach{ $0.isHidden = false }
+            cheatFinderSavedTableView.reloadData()
         }
     }
     
@@ -314,7 +375,7 @@ class DebugMemoryActionViewController: UIViewController {
             return
         }
         cheatFinder.comparisonMemory = [UInt8]()
-        for address in 0..<0x95ff {
+        for address in 0..<EmuMemoryModel.maxMemorySize {
             cheatFinder.comparisonMemory.append(memory[address])
         }
         switch sender.tag {
@@ -442,7 +503,8 @@ class DebugMemoryActionViewController: UIViewController {
     private func updateMatchedInstructions() {
         if let delegate = delegate,
            let text = memoryField.text,
-           let address = getAddressFromText(text) {
+           let address = getAddressFromText(text),
+           address < 0x10000 {
             matchedInstructions = delegate.referencedMemoryAddresses[UInt16(address)] ?? [AddressedInstruction]()
             findInCodeResultsTableView.reloadData()
         }
@@ -476,7 +538,7 @@ class DebugMemoryActionViewController: UIViewController {
         }
         let scanner = Scanner(string: text)
         var address: UInt64 = 0
-        if scanner.scanHexInt64(&address) && address < 0x95ff {
+        if scanner.scanHexInt64(&address) && address < EmuMemoryModel.maxMemorySize {
             return address
         }
         return nil
@@ -491,11 +553,11 @@ class DebugMemoryActionViewController: UIViewController {
         let charLimit: Int = {
             switch mode {
             case .jumpToAddress:
-                return 4
+                return 5
             case .changeMemory:
                 return 2
             default:
-                return 4
+                return 5
             }
         }()
         if text.count > charLimit {
@@ -581,6 +643,41 @@ class DebugMemoryActionViewController: UIViewController {
         }
         delegate?.updateMemory(at: selectedAddress, with: memory)
     }
+    
+    @objc func addToCheatButtonPressed(_ sender: UIButton) {
+        guard let selectedAddress = delegate?.selectedAddress,
+              let enteredText = memoryField.text,
+              let memory = UInt8(enteredText, radix: 16) else {
+            print("Could not get memory to update!")
+            return
+        }
+        cheatFinder.savedMatches[selectedAddress] = (value: memory, enabled: true)
+        cheatFinderSavedTableView.reloadData()
+    }
+    
+    @objc func cheatTableCellActionButtonPressed(_ sender: UIButton) {
+        let address = sender.tag
+        guard let matched = cheatFinder.matchedMemoryAddresses[address] else {
+            print("Could not find matched address: \(address)")
+            return
+        }
+        if cheatFinder.savedMatches[address] != nil {
+            cheatFinder.savedMatches.removeValue(forKey: address)
+        } else {
+            cheatFinder.savedMatches[address] = (value: matched, enabled: true)
+        }
+        cheatFinderSavedTableView.reloadData()
+    }
+    
+    @objc func cheatSavedTableSwitchPressed(_ sender: UISwitch) {
+        let address = sender.tag
+        guard let matched = cheatFinder.savedMatches[address] else {
+            print("could not find saved entry!")
+            return
+        }
+        cheatFinder.savedMatches[address] = (value: matched.value, enabled: sender.isOn)
+        cheatFinderSavedTableView.reloadData()
+    }
 }
 
 extension DebugMemoryActionViewController: EmulatorKeyboardKeyPressedDelegate {
@@ -616,6 +713,8 @@ extension DebugMemoryActionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == findInCodeResultsTableView {
             return matchedInstructions.count
+        } else if tableView == cheatFinderSavedTableView {
+            return cheatFinder.savedMatches.keys.count
         } else {
             return cheatFinder.matchedMemoryAddresses.keys.count
         }
@@ -630,15 +729,39 @@ extension DebugMemoryActionViewController: UITableViewDataSource {
             cell.textLabel?.textColor = .yellow
             cell.textLabel?.textAlignment = .center
             return cell
+        } else if tableView == cheatFinderSavedTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CheatFinderMatchCell", for: indexPath)
+            let addresses = cheatFinder.savedMatches.keys.sorted()
+            let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
+            let address = addresses[index]
+            let saved = cheatFinder.savedMatches[address]!
+            cell.textLabel?.text = String(format: "%04X: %02X",address,saved.value)
+            cell.textLabel?.font = UIFont(name: "Print Char 21", size: 14)
+            cell.textLabel?.textColor = .red
+            cell.textLabel?.textAlignment = .left
+            let enableSwitch = UISwitch(frame: .zero)
+            enableSwitch.isOn = saved.enabled
+            enableSwitch.addTarget(self, action: #selector(cheatSavedTableSwitchPressed(_:)), for: .valueChanged)
+            enableSwitch.tag = address
+            cell.accessoryView = enableSwitch
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CheatFinderMatchCell", for: indexPath)
-            let addresses = cheatFinder.matchedMemoryAddresses.keys
+            let addresses = cheatFinder.matchedMemoryAddresses.keys.sorted()
             let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
             let address = addresses[index]
             cell.textLabel?.text = String(format: "%04X: %02X",address,cheatFinder.matchedMemoryAddresses[address]!)
             cell.textLabel?.font = UIFont(name: "Print Char 21", size: 14)
             cell.textLabel?.textColor = .red
             cell.textLabel?.textAlignment = .center
+            let isSaved = cheatFinder.savedMatches[address] != nil
+            let actionButton = isSaved ? UIButton(type: .custom) : UIButton(type: .contactAdd)
+            actionButton.tag = address
+            if isSaved {
+                actionButton.setTitle("Remove", for:  .normal)
+            }
+            actionButton.addTarget(self, action: #selector(cheatTableCellActionButtonPressed(_:)), for: .touchUpInside)
+            cell.accessoryView = actionButton
             return cell
         }
     }
@@ -651,7 +774,7 @@ extension DebugMemoryActionViewController: UITableViewDelegate {
             let address = instruction.address
             delegate?.jump(to: Int(address))
         } else {
-            let addresses = cheatFinder.matchedMemoryAddresses.keys
+            let addresses = tableView == cheatFinderSavedTableView ? cheatFinder.savedMatches.keys.sorted() : cheatFinder.matchedMemoryAddresses.keys.sorted()
             let index = addresses.index(addresses.startIndex, offsetBy: indexPath.row)
             let address = addresses[index]
             delegate?.jump(to: address)

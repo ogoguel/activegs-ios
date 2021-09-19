@@ -7,14 +7,8 @@
 
 import Foundation
 
-class DebugMemoryButton: UIButton {
+class ToggleButton: UIButton {
     var onTapped: ((Bool) -> Void)?
-    
-    override open var isSelected: Bool {
-        didSet {
-            backgroundColor = isSelected ? .white : .clear
-        }
-    }
 
     convenience init() {
         self.init(type: .custom)
@@ -27,7 +21,15 @@ class DebugMemoryButton: UIButton {
     }
 }
 
-class DebugPauseResumeButton: DebugMemoryButton {
+class DebugMemoryButton: ToggleButton {
+    override open var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? .white : .clear
+        }
+    }
+}
+
+class DebugPauseResumeButton: ToggleButton {
     override open var isSelected: Bool {
         didSet {
             backgroundColor = isSelected ? .red : .clear

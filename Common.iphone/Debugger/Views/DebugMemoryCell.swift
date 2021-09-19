@@ -61,7 +61,7 @@ class DebugMemoryCell: UITableViewCell {
         self.delegate = delegate
         self.offset = offset
         stackView.arrangedSubviews.forEach{ $0.removeFromSuperview() }
-        addressLabel.text = String(format: "%04X:", offset)
+        addressLabel.text = String(format: "%05X:", offset)
         stackView.addArrangedSubview(addressLabel)
         stackView.setCustomSpacing(3, after: addressLabel)
         for (index, hexValue) in hexMemoryValues.enumerated() {

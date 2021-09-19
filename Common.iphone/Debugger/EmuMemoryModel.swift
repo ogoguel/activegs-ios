@@ -9,7 +9,7 @@ import Foundation
 
 class EmuMemoryModel {
     let numToDisplayPerCell = 8
-    let maxMemorySize = 128 * 1024
+    static let maxMemorySize = 256 * 1024
     
     private(set) var memory = EmuWrapper.memory()
     private(set) var referencedAddresses = [UInt16: [AddressedInstruction]]()
@@ -47,8 +47,8 @@ class EmuMemoryModel {
     }
     
     func getMemoryHexString(at address: Int) -> String {
-        guard address > 0 && address < maxMemorySize else {
-            print("Cannot get memory: address out of range \(address) > \(maxMemorySize)")
+        guard address > 0 && address < Self.maxMemorySize else {
+            print("Cannot get memory: address out of range \(address) > \(Self.maxMemorySize)")
             return ""
         }
         guard let memory = memory else {
@@ -63,8 +63,8 @@ class EmuMemoryModel {
     }
     
     func setMemory(at address:Int, value: UInt8) {
-        guard address > 0 && address < maxMemorySize else {
-            print("Cannot set memory: address out of range \(address) > \(maxMemorySize)")
+        guard address > 0 && address < Self.maxMemorySize else {
+            print("Cannot set memory: address out of range \(address) > \(Self.maxMemorySize)")
             return
         }
         guard let memory = memory else {
@@ -76,8 +76,8 @@ class EmuMemoryModel {
     }
     
     func getMemory(at address:Int) -> UInt8 {
-        guard address > 0 && address < maxMemorySize else {
-            print("Cannot get memory: address out of range \(address) > \(maxMemorySize)")
+        guard address > 0 && address < Self.maxMemorySize else {
+            print("Cannot get memory: address out of range \(address) > \(Self.maxMemorySize)")
             return 0
         }
         guard let memory = memory else {

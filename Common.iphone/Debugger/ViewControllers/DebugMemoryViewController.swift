@@ -20,6 +20,9 @@ enum EmuMemoryMapSection: Int {
     case highResGraphicsPage1
     case highResGraphicsPage2
     case applesoftStringData
+    case ioArea
+    case bankSwitched
+    case auxBanks
     
     var range:Range<Int> {
         switch self {
@@ -33,7 +36,10 @@ enum EmuMemoryMapSection: Int {
         case .freespace2: return 0xc00..<0x2000
         case .highResGraphicsPage1: return 0x2000..<0x4000
         case .highResGraphicsPage2: return 0x4000..<0x6000
-        case .applesoftStringData: return 0x6000..<0x95ff
+        case .applesoftStringData: return 0x6000..<0xc000
+        case .ioArea: return 0xc000..<0xd000
+        case .bankSwitched: return 0xd000..<0x10000
+        case .auxBanks: return 0x10000..<0x30000
         }
     }
     
@@ -54,6 +60,9 @@ enum EmuMemoryMapSection: Int {
         case .highResGraphicsPage1: return "High Resolution Graphics Page 1"
         case .highResGraphicsPage2: return "High Resolution Graphics Page 2"
         case .applesoftStringData: return "Applesoft String Data"
+        case .ioArea: return "IO Area"
+        case .bankSwitched: return "Bank Switched"
+        case .auxBanks: return "Auxilliary Memory? 😅"
         }
     }
     
@@ -78,8 +87,16 @@ enum EmuMemoryMapSection: Int {
             return .highResGraphicsPage1
         } else if EmuMemoryMapSection.highResGraphicsPage2.range.contains(address) {
             return .highResGraphicsPage2
-        } else {
+        } else if EmuMemoryMapSection.applesoftStringData.range.contains(address) {
             return .applesoftStringData
+        } else if EmuMemoryMapSection.ioArea.range.contains(address) {
+            return .ioArea
+        } else if EmuMemoryMapSection.bankSwitched.range.contains(address) {
+            return .bankSwitched
+        } else if EmuMemoryMapSection.auxBanks.range.contains(address) {
+            return .auxBanks
+        } else {
+            return .auxBanks
         }
     }
 }
@@ -111,6 +128,8 @@ protocol DebugMemoryViewControllerDelegate: class {
     var isShowingActionController = false
     var actionControllerAnimatorProgress = 0.0
     var animator: UIViewPropertyAnimator?
+    
+    var cheatFinder = CheatFinderManager()
     
     private var displayLink: CADisplayLink?
     private var framesSince = 0
@@ -211,7 +230,7 @@ protocol DebugMemoryViewControllerDelegate: class {
     }
     
     func setupActionController() {
-        let actionController = DebugMemoryActionViewController()
+        let actionController = DebugMemoryActionViewController(cheatFinderManager: cheatFinder)
         delegate = actionController
         actionController.delegate = self
         addChild(actionController)
@@ -335,6 +354,7 @@ protocol DebugMemoryViewControllerDelegate: class {
         super.viewDidAppear(animated)
         dataTableView.reloadData()
         delegate?.refreshActionController()
+        cheatFinder.start()
     }
     
     @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
@@ -414,7 +434,7 @@ extension DebugMemoryViewController: UITableViewDataSource {
         if tableView == codeTableView {
             return 1
         } else {
-            return EmuMemoryMapSection.applesoftStringData.rawValue + 1
+            return EmuMemoryMapSection.auxBanks.rawValue + 1
         }
     }
     
