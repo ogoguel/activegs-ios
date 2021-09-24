@@ -55,7 +55,7 @@ int		 messageLineVBL=0;
 
 
 
-void x_async_refresh(CGContextRef myContext,CGRect myBoundingBox)
+void x_async_refresh(CGContextRef myContext,CGRect myBoundingBox, CGImageRef *imageRef)
 {
 	
 #ifdef ENABLEQD
@@ -92,10 +92,17 @@ void x_async_refresh(CGContextRef myContext,CGRect myBoundingBox)
 			
 			
 			CGImageRef myImage = CGBitmapContextCreateImage((CGContextRef)g_kimage_offscreen.dev_handle);
-            
-            
-            
-			CGContextDrawImage(myContext, myBoundingBox, myImage);// 6
+            *imageRef = CGBitmapContextCreateImage((CGContextRef)g_kimage_offscreen.dev_handle);
+
+            // Yoshi debugging: iOS 15 issue
+            // CGContextDrawImage draws a blank if the target rect width values in 233 ... 235
+            // Raw image size of screen is 704x221.
+            // Rect size here is 234.6667 x 77 for 3x retina size display (iPhone)
+            // Calling CGContextDrawImage using this rect results in a blank image
+            // width of 234.0 and 235.0 does not work
+            // adding 3 to the width here renders the image
+            CGRect newRect = CGRectMake(myBoundingBox.origin.x, myBoundingBox.origin.y, myBoundingBox.size.width + 3.0, myBoundingBox.size.height);
+			CGContextDrawImage(myContext, newRect, myImage);// 6
 	
 #ifndef VIDEO_SINGLEVLINE
 			if (r_sim65816.get_video_fx() == VIDEOFX_CRT)

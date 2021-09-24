@@ -86,13 +86,19 @@ void x_invalidrect()
 {
    
     CGContextRef g = UIGraphicsGetCurrentContext();
-	x_async_refresh(g,rect);
-    
-//    // yoshi test...
-//    CGImageRef imgRef = CGBitmapContextCreateImage(g);
-//    UIImage *image = [UIImage imageWithCGImage:imgRef];
-//    CGImageRelease(imgRef);
-//    NSLog(@"yoshi buffer image = %@",image);
+
+    CGImageRef imageRef;
+	x_async_refresh(g,rect,&imageRef);
+    //    // yoshi test...
+    //    CGImageRef imgRef = CGBitmapContextCreateImage(g);
+    //    UIImage *image = [UIImage imageWithCGImage:imgRef];
+    //    CGImageRelease(imgRef);
+    //    NSLog(@"yoshi buffer image = %@",image);
+//    if ( imageRef != nil ) {
+//        UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
+//        NSLog(@"yoshi debug: image = %@",image.description);
+//        CGContextDrawImage(g, CGRectMake(0, 0, 275, 77), imageRef);
+//    }
 }
 
 

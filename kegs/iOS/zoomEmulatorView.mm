@@ -133,7 +133,7 @@ float refScaleLandscape;
     self->viewSize = frame.size;
     self->dpiRatio = ratio;
     
-    CGRect r = CGRectMake(0.0,0.0,X_A2_WINDOW_WIDTH/self->dpiRatio ,X_A2_WINDOW_HEIGHT/self->dpiRatio );
+    CGRect r = CGRectMake(0.0,0.0, X_A2_WINDOW_WIDTH/self->dpiRatio, X_A2_WINDOW_HEIGHT/self->dpiRatio );
     
     self.contentSize = CGSizeMake(r.size.width,r.size.height);
     [self.ew setFrame:r];
