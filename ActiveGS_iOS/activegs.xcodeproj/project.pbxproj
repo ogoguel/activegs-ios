@@ -214,7 +214,6 @@
 		09FD36F31278CCEB009C31AB /* BLUE_HELMET.FTA in Resources */ = {isa = PBXBuildFile; fileRef = 09FD36F01278CCEB009C31AB /* BLUE_HELMET.FTA */; };
 		09FD36F41278CCEB009C31AB /* bluehelmet_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 09FD36F11278CCEB009C31AB /* bluehelmet_1.png */; };
 		09FD36F51278CCEB009C31AB /* bluehelmet_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 09FD36F21278CCEB009C31AB /* bluehelmet_2.png */; };
-		1D60589B0D05DD56006BFB54 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -237,9 +236,36 @@
 		7E51482F1CA6B5CE005DA0A6 /* ShastonHi640.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481C1CA6B5CE005DA0A6 /* ShastonHi640.ttf */; };
 		7E5148301CA6B5CE005DA0A6 /* Spin Up Search 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481D1CA6B5CE005DA0A6 /* Spin Up Search 1.wav */; };
 		7E5148311CA6B5CE005DA0A6 /* Spin Up Search 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */; };
+		9222DD461CBECF2300B321B9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
+		924A1BAC1CB81B5800D69162 /* GameControllerKeyRemapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 924A1BAA1CB81B5800D69162 /* GameControllerKeyRemapController.m */; };
+		924A1BAD1CB81B5800D69162 /* GameControllerKeyRemapController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */; };
+		924A1BAF1CB9671400D69162 /* KeyCapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 924A1BAE1CB9671400D69162 /* KeyCapView.xib */; };
+		924A1BB21CB9685700D69162 /* KeyCapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 924A1BB11CB9685700D69162 /* KeyCapView.m */; };
+		924A1BB51CBA049D00D69162 /* KeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 924A1BB41CBA049D00D69162 /* KeyMapper.m */; };
 		9250DCB31CAEEF990093CE9A /* MfiGameControllerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */; };
 		9250DCB51CAEFD3B0093CE9A /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9250DCB41CAEFD3B0093CE9A /* GameController.framework */; };
+		927E431A25C48592008E5517 /* CheatFinderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E431925C48592008E5517 /* CheatFinderManager.swift */; };
+		927E436425C94C12008E5517 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435925C94C12008E5517 /* Stream.swift */; };
+		927E436525C94C12008E5517 /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435A25C94C12008E5517 /* Bus.swift */; };
+		927E436625C94C12008E5517 /* CPU+Instructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435C25C94C12008E5517 /* CPU+Instructions.swift */; };
+		927E436725C94C12008E5517 /* CPU+Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435D25C94C12008E5517 /* CPU+Flags.swift */; };
+		927E436825C94C12008E5517 /* CPU+Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435E25C94C12008E5517 /* CPU+Stack.swift */; };
+		927E436925C94C12008E5517 /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E435F25C94C12008E5517 /* CPU.swift */; };
+		927E436A25C94C12008E5517 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436125C94C12008E5517 /* Instruction.swift */; };
+		927E436B25C94C12008E5517 /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436225C94C12008E5517 /* Mnemonic.swift */; };
+		927E436C25C94C12008E5517 /* AddressingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436325C94C12008E5517 /* AddressingMode.swift */; };
+		927E437025C99A11008E5517 /* Debug6502Interpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */; };
 		928410581CA8443A00DC5D93 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 928410571CA8443A00DC5D93 /* Images.xcassets */; };
+		92A9D66E25CC5A96008F5031 /* DebuggerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */; };
+		92A9D67125CC5AF4008F5031 /* EmuMemoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */; };
+		92A9D67525CC5B7D008F5031 /* DebugMemoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */; };
+		92A9D67925CC5BB6008F5031 /* DebugMemoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */; };
+		92A9D67F25CC5C66008F5031 /* DebugMemoryActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */; };
+		92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */; };
+		92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2063125AADF6E00AE3F28 /* PreviewUI.swift */; };
+		92FA0F2425B52EA200663577 /* EmuWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92FA0F2325B52EA200663577 /* EmuWrapper.mm */; };
+		92FA0F2A25B5353D00663577 /* DebugMemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */; };
+		92FA0F2D25B59EF100663577 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FA0F2C25B59EF100663577 /* PrintChar21.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -247,6 +273,8 @@
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 			);
@@ -576,10 +604,42 @@
 		7E51481C1CA6B5CE005DA0A6 /* ShastonHi640.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ShastonHi640.ttf; sourceTree = "<group>"; };
 		7E51481D1CA6B5CE005DA0A6 /* Spin Up Search 1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Spin Up Search 1.wav"; sourceTree = "<group>"; };
 		7E51481E1CA6B5CE005DA0A6 /* Spin Up Search 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Spin Up Search 2.wav"; sourceTree = "<group>"; };
+		924A1BA91CB81B5800D69162 /* GameControllerKeyRemapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameControllerKeyRemapController.h; sourceTree = "<group>"; };
+		924A1BAA1CB81B5800D69162 /* GameControllerKeyRemapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameControllerKeyRemapController.m; sourceTree = "<group>"; };
+		924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameControllerKeyRemapController.xib; path = ../Common.iphone/GameControllerKeyRemapController.xib; sourceTree = "<group>"; };
+		924A1BAE1CB9671400D69162 /* KeyCapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyCapView.xib; sourceTree = "<group>"; };
+		924A1BB01CB9685700D69162 /* KeyCapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCapView.h; sourceTree = "<group>"; };
+		924A1BB11CB9685700D69162 /* KeyCapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyCapView.m; sourceTree = "<group>"; };
+		924A1BB31CBA049D00D69162 /* KeyMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyMapper.h; sourceTree = "<group>"; };
+		924A1BB41CBA049D00D69162 /* KeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyMapper.m; sourceTree = "<group>"; };
 		9250DCB11CAEEF990093CE9A /* MfiGameControllerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MfiGameControllerHandler.h; sourceTree = "<group>"; };
 		9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MfiGameControllerHandler.m; sourceTree = "<group>"; };
 		9250DCB41CAEFD3B0093CE9A /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		927E431925C48592008E5517 /* CheatFinderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatFinderManager.swift; sourceTree = "<group>"; };
+		927E435925C94C12008E5517 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		927E435A25C94C12008E5517 /* Bus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		927E435C25C94C12008E5517 /* CPU+Instructions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU+Instructions.swift"; sourceTree = "<group>"; };
+		927E435D25C94C12008E5517 /* CPU+Flags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU+Flags.swift"; sourceTree = "<group>"; };
+		927E435E25C94C12008E5517 /* CPU+Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU+Stack.swift"; sourceTree = "<group>"; };
+		927E435F25C94C12008E5517 /* CPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
+		927E436125C94C12008E5517 /* Instruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
+		927E436225C94C12008E5517 /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
+		927E436325C94C12008E5517 /* AddressingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressingMode.swift; sourceTree = "<group>"; };
+		927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug6502Interpreter.swift; sourceTree = "<group>"; };
 		928410571CA8443A00DC5D93 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ActiveGS/Images.xcassets; sourceTree = "<group>"; };
+		92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebuggerUtils.swift; sourceTree = "<group>"; };
+		92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmuMemoryModel.swift; sourceTree = "<group>"; };
+		92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryButton.swift; sourceTree = "<group>"; };
+		92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryCell.swift; sourceTree = "<group>"; };
+		92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryActionViewController.swift; sourceTree = "<group>"; };
+		92AF5B1325D1B7A00025578D /* ActiveGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ActiveGS.entitlements; path = ActiveGS/ActiveGS.entitlements; sourceTree = "<group>"; };
+		92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActiveGS-Bridging-Header.h"; sourceTree = "<group>"; };
+		92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorKeyboard.swift; sourceTree = "<group>"; };
+		92E2063125AADF6E00AE3F28 /* PreviewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUI.swift; sourceTree = "<group>"; };
+		92FA0F2325B52EA200663577 /* EmuWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EmuWrapper.mm; sourceTree = "<group>"; };
+		92FA0F2625B52EC000663577 /* EmuWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmuWrapper.h; sourceTree = "<group>"; };
+		92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryViewController.swift; sourceTree = "<group>"; };
+		92FA0F2C25B59EF100663577 /* PrintChar21.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrintChar21.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -712,6 +772,8 @@
 				0916BB03129473CE001727AF /* infoViewController-ipad.xib */,
 				09A5CE75125D422D0018DC22 /* infoViewController.xib */,
 				099CD904125E6F6E008EFD6C /* detailViewController.xib */,
+				924A1BAE1CB9671400D69162 /* KeyCapView.xib */,
+				924A1BAB1CB81B5800D69162 /* GameControllerKeyRemapController.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -985,6 +1047,16 @@
 				09FA608B125A7B3E00B07F77 /* KBDController.mm */,
 				9250DCB11CAEEF990093CE9A /* MfiGameControllerHandler.h */,
 				9250DCB21CAEEF990093CE9A /* MfiGameControllerHandler.m */,
+				924A1BA91CB81B5800D69162 /* GameControllerKeyRemapController.h */,
+				924A1BAA1CB81B5800D69162 /* GameControllerKeyRemapController.m */,
+				924A1BB01CB9685700D69162 /* KeyCapView.h */,
+				924A1BB11CB9685700D69162 /* KeyCapView.m */,
+				924A1BB31CBA049D00D69162 /* KeyMapper.h */,
+				924A1BB41CBA049D00D69162 /* KeyMapper.m */,
+				92B9EADE24D3369700E6CFB2 /* EmulatorKeyboard.swift */,
+				92E2063125AADF6E00AE3F28 /* PreviewUI.swift */,
+				92B9EADD24D3369600E6CFB2 /* ActiveGS-Bridging-Header.h */,
+				927E435725C94BE7008E5517 /* Debugger */,
 			);
 			name = Common.iphone;
 			path = ../Common.iphone;
@@ -1001,6 +1073,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				92AF5B1325D1B7A00025578D /* ActiveGS.entitlements */,
 				096604C819127DB700A22C51 /* activegs.plist */,
 				09052B4219053C9F00853FAE /* Libraries */,
 				09520D8516AEF8250065E84A /* Drivers */,
@@ -1084,6 +1157,7 @@
 				7E5148141CA6B5CE005DA0A6 /* floppy_eject.wav */,
 				7E5148151CA6B5CE005DA0A6 /* logo_apple2.png */,
 				7E5148161CA6B5CE005DA0A6 /* logo_apple2gs.png */,
+				92FA0F2C25B59EF100663577 /* PrintChar21.ttf */,
 				7E5148171CA6B5CE005DA0A6 /* Search Skip Search 1.wav */,
 				7E5148181CA6B5CE005DA0A6 /* Search Skip Search 2.wav */,
 				7E5148191CA6B5CE005DA0A6 /* Search Skip Search 3.wav */,
@@ -1096,6 +1170,72 @@
 			name = Common.res;
 			path = ../Common.res;
 			sourceTree = SOURCE_ROOT;
+		};
+		927E435725C94BE7008E5517 /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				927E435825C94C12008E5517 /* 65C02Interpreter */,
+				92A9D67325CC5B63008F5031 /* Views */,
+				92A9D67B25CC5C24008F5031 /* ViewControllers */,
+				92FA0F2325B52EA200663577 /* EmuWrapper.mm */,
+				92FA0F2625B52EC000663577 /* EmuWrapper.h */,
+				92A9D67025CC5AF4008F5031 /* EmuMemoryModel.swift */,
+				927E431925C48592008E5517 /* CheatFinderManager.swift */,
+				92A9D66D25CC5A96008F5031 /* DebuggerUtils.swift */,
+			);
+			path = Debugger;
+			sourceTree = "<group>";
+		};
+		927E435825C94C12008E5517 /* 65C02Interpreter */ = {
+			isa = PBXGroup;
+			children = (
+				927E436F25C99A11008E5517 /* Debug6502Interpreter.swift */,
+				927E435925C94C12008E5517 /* Stream.swift */,
+				927E435A25C94C12008E5517 /* Bus.swift */,
+				927E435B25C94C12008E5517 /* CPU */,
+				927E436025C94C12008E5517 /* Instruction */,
+			);
+			path = 65C02Interpreter;
+			sourceTree = "<group>";
+		};
+		927E435B25C94C12008E5517 /* CPU */ = {
+			isa = PBXGroup;
+			children = (
+				927E435C25C94C12008E5517 /* CPU+Instructions.swift */,
+				927E435D25C94C12008E5517 /* CPU+Flags.swift */,
+				927E435E25C94C12008E5517 /* CPU+Stack.swift */,
+				927E435F25C94C12008E5517 /* CPU.swift */,
+			);
+			path = CPU;
+			sourceTree = "<group>";
+		};
+		927E436025C94C12008E5517 /* Instruction */ = {
+			isa = PBXGroup;
+			children = (
+				927E436125C94C12008E5517 /* Instruction.swift */,
+				927E436225C94C12008E5517 /* Mnemonic.swift */,
+				927E436325C94C12008E5517 /* AddressingMode.swift */,
+			);
+			path = Instruction;
+			sourceTree = "<group>";
+		};
+		92A9D67325CC5B63008F5031 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92A9D67425CC5B7D008F5031 /* DebugMemoryButton.swift */,
+				92A9D67825CC5BB6008F5031 /* DebugMemoryCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92A9D67B25CC5C24008F5031 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				92FA0F2925B5353D00663577 /* DebugMemoryViewController.swift */,
+				92A9D67E25CC5C66008F5031 /* DebugMemoryActionViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1128,6 +1268,7 @@
 				LastUpgradeCheck = 0820;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
@@ -1212,6 +1353,7 @@
 				09087F3B12244C0500C52D88 /* delta_2.png in Resources */,
 				09087F3C12244C0500C52D88 /* delta_3.png in Resources */,
 				09087F3D12244C0500C52D88 /* delta_4.png in Resources */,
+				924A1BAD1CB81B5800D69162 /* GameControllerKeyRemapController.xib in Resources */,
 				09087F3E12244C0500C52D88 /* delta_5.png in Resources */,
 				09087F3F12244C0500C52D88 /* delta_6.png in Resources */,
 				7E5148311CA6B5CE005DA0A6 /* Spin Up Search 2.wav in Resources */,
@@ -1267,11 +1409,13 @@
 				09AF98051283F0DF00083D60 /* Oil_Landers.fta in Resources */,
 				09AF980C1283F12200083D60 /* StarWizard (2002).fta in Resources */,
 				09AF980D1283F12200083D60 /* starwizard_2.png in Resources */,
+				924A1BAF1CB9671400D69162 /* KeyCapView.xib in Resources */,
 				09AF980E1283F12200083D60 /* starwizard_3.png in Resources */,
 				7E5148271CA6B5CE005DA0A6 /* floppy_eject.wav in Resources */,
 				09AF980F1283F12200083D60 /* starwizard_4.png in Resources */,
 				09AF98101283F12200083D60 /* starwizard_5.png in Resources */,
 				09AF98111283F12200083D60 /* starwizard.png in Resources */,
+				92FA0F2D25B59EF100663577 /* PrintChar21.ttf in Resources */,
 				7E51482C1CA6B5CE005DA0A6 /* Search Skip Search 3.wav in Resources */,
 				09D8BCF91285EFE900B6D785 /* miniprix_1.png in Resources */,
 				09D8BCFC1285EFFA00B6D785 /* miniprix_2.png in Resources */,
@@ -1304,15 +1448,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589B0D05DD56006BFB54 /* main.mm in Sources */,
+				9222DD461CBECF2300B321B9 /* main.mm in Sources */,
 				09BB434511D92F65005ADA46 /* ActiveDownloadMac.cpp in Sources */,
 				09BB434711D92F65005ADA46 /* CEmulatorCtrlMac.cpp in Sources */,
+				92FA0F2A25B5353D00663577 /* DebugMemoryViewController.swift in Sources */,
 				09BB43B011D92F70005ADA46 /* activeconfig.cpp in Sources */,
 				09BB43B111D92F70005ADA46 /* ActiveDownload.cpp in Sources */,
+				92B9EADF24D3369700E6CFB2 /* EmulatorKeyboard.swift in Sources */,
+				927E436B25C94C12008E5517 /* Mnemonic.swift in Sources */,
 				09052B9419053C9F00853FAE /* uncompr.cpp in Sources */,
 				09BB43B211D92F70005ADA46 /* ActiveZip.cpp in Sources */,
 				09052B8619053C9F00853FAE /* pngwtran.cpp in Sources */,
 				09052B8B19053C9F00853FAE /* zip.cpp in Sources */,
+				927E436825C94C12008E5517 /* CPU+Stack.swift in Sources */,
+				927E436725C94C12008E5517 /* CPU+Flags.swift in Sources */,
+				927E436925C94C12008E5517 /* CPU.swift in Sources */,
 				09BB43B311D92F70005ADA46 /* CA2Text.cpp in Sources */,
 				09BB43B411D92F70005ADA46 /* CEmulatorCtrl.cpp in Sources */,
 				09BB43B511D92F70005ADA46 /* interface.cpp in Sources */,
@@ -1321,6 +1471,7 @@
 				09BB43B711D92F70005ADA46 /* rom.cpp in Sources */,
 				09FA6095125A7B3E00B07F77 /* activegsAppDelegate.mm in Sources */,
 				09052B8119053C9F00853FAE /* pngset.cpp in Sources */,
+				927E436425C94C12008E5517 /* Stream.swift in Sources */,
 				09FA6096125A7B3E00B07F77 /* activegsList.mm in Sources */,
 				09FA6097125A7B3E00B07F77 /* activegsViewController.mm in Sources */,
 				09052B8D19053C9F00853FAE /* compress.cpp in Sources */,
@@ -1328,14 +1479,19 @@
 				09FA609A125A7B3E00B07F77 /* asyncimageview.mm in Sources */,
 				09FA609C125A7B3E00B07F77 /* GTMUIView+SubtreeDescription.m in Sources */,
 				09052B8F19053C9F00853FAE /* deflate.cpp in Sources */,
+				92A9D66E25CC5A96008F5031 /* DebuggerUtils.swift in Sources */,
 				09FA609F125A7B3E00B07F77 /* KBDController.mm in Sources */,
 				09AADC78125C560A00654DF1 /* detailViewController.mm in Sources */,
 				09A5CE60125D41860018DC22 /* infoViewController.mm in Sources */,
+				92A9D67525CC5B7D008F5031 /* DebugMemoryButton.swift in Sources */,
 				0972554713CF2232006194F9 /* activegsEmulatorController.mm in Sources */,
+				924A1BB51CBA049D00D69162 /* KeyMapper.m in Sources */,
+				92E2063225AADFB000AE3F28 /* PreviewUI.swift in Sources */,
 				0907BCC9142F567A0051CA0A /* asynccommand.mm in Sources */,
 				09052B7D19053C9F00853FAE /* pngread.cpp in Sources */,
 				09C81A781657ACAE008539D5 /* adb.cpp in Sources */,
 				09C81A791657ACAE008539D5 /* async_event.cpp in Sources */,
+				927E437025C99A11008E5517 /* Debug6502Interpreter.swift in Sources */,
 				09C81A7A1657ACAE008539D5 /* clock.cpp in Sources */,
 				09052B9119053C9F00853FAE /* inflate.cpp in Sources */,
 				09C81A7B1657ACAE008539D5 /* compile_time.cpp in Sources */,
@@ -1343,6 +1499,7 @@
 				09C81A7D1657ACAE008539D5 /* config_generic.cpp in Sources */,
 				09052B8C19053C9F00853FAE /* adler32.cpp in Sources */,
 				09C81A7F1657ACAE008539D5 /* dis.cpp in Sources */,
+				92A9D67125CC5AF4008F5031 /* EmuMemoryModel.swift in Sources */,
 				09C81A801657ACAE008539D5 /* engine_c.cpp in Sources */,
 				09C81A811657ACAE008539D5 /* GraphCounter.cpp in Sources */,
 				09C81A821657ACAE008539D5 /* iwm.cpp in Sources */,
@@ -1353,13 +1510,17 @@
 				09C81A861657ACAE008539D5 /* openalasync_snddriver.cpp in Sources */,
 				09052B8219053C9F00853FAE /* pngtrans.cpp in Sources */,
 				09C81A871657ACAE008539D5 /* paddles.cpp in Sources */,
+				924A1BAC1CB81B5800D69162 /* GameControllerKeyRemapController.m in Sources */,
 				09C81A881657ACAE008539D5 /* SaveState.cpp in Sources */,
 				09C81A891657ACAE008539D5 /* scc.cpp in Sources */,
+				927E436625C94C12008E5517 /* CPU+Instructions.swift in Sources */,
 				09C81A8A1657ACAE008539D5 /* scc_socket_driver.cpp in Sources */,
 				09052B8319053C9F00853FAE /* pngvcrd.cpp in Sources */,
+				927E436C25C94C12008E5517 /* AddressingMode.swift in Sources */,
 				09C81A8B1657ACAE008539D5 /* sim65816.cpp in Sources */,
 				09C81A8C1657ACAE008539D5 /* smartport.cpp in Sources */,
 				09052B9019053C9F00853FAE /* inffast.cpp in Sources */,
+				927E436A25C94C12008E5517 /* Instruction.swift in Sources */,
 				09C81A8D1657ACAE008539D5 /* sound.cpp in Sources */,
 				09052B7819053C9F00853FAE /* pngerror.cpp in Sources */,
 				09052B7B19053C9F00853FAE /* pngmem.cpp in Sources */,
@@ -1371,14 +1532,19 @@
 				09C81A9C1657ACDD008539D5 /* macdriver_generic.cpp in Sources */,
 				09052B8919053C9F00853FAE /* iowin32.cpp in Sources */,
 				09C81A9F1657ACDD008539D5 /* scc_macdriver.cpp in Sources */,
+				927E436525C94C12008E5517 /* Bus.swift in Sources */,
 				09C81AA71657AD18008539D5 /* emulatorView.mm in Sources */,
 				09C81AA81657AD18008539D5 /* joystick_iphone.cpp in Sources */,
 				09C81AA91657AD18008539D5 /* zoomEmulatorView.mm in Sources */,
 				09052B7F19053C9F00853FAE /* pngrtran.cpp in Sources */,
+				92A9D67925CC5BB6008F5031 /* DebugMemoryCell.swift in Sources */,
 				09052B7A19053C9F00853FAE /* pngget.cpp in Sources */,
+				924A1BB21CB9685700D69162 /* KeyCapView.m in Sources */,
 				09052B7919053C9F00853FAE /* pnggccrd.cpp in Sources */,
 				09052B9219053C9F00853FAE /* inftrees.cpp in Sources */,
+				927E431A25C48592008E5517 /* CheatFinderManager.swift in Sources */,
 				09052B8819053C9F00853FAE /* ioapi.cpp in Sources */,
+				92A9D67F25CC5C66008F5031 /* DebugMemoryActionViewController.swift in Sources */,
 				09052B7C19053C9F00853FAE /* pngpread.cpp in Sources */,
 				09052B8419053C9F00853FAE /* pngwio.cpp in Sources */,
 				09052B8719053C9F00853FAE /* pngwutil.cpp in Sources */,
@@ -1390,6 +1556,7 @@
 				0941E6AF16720886003E0411 /* simplexml.cpp in Sources */,
 				09520D8316AEF8130065E84A /* driver.cpp in Sources */,
 				09520D8916AEF8250065E84A /* activegs_driver.cpp in Sources */,
+				92FA0F2425B52EA200663577 /* EmuWrapper.mm in Sources */,
 				09520D8E16AEF8650065E84A /* apple2e.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1433,12 +1600,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1453,16 +1621,19 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1474,12 +1645,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1496,16 +1668,20 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1516,12 +1692,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ActiveGS/ActiveGS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = TFQRCMRWP4;
+				DEVELOPMENT_TEAM = R72X3BF4KE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = activegs_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1535,16 +1712,19 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = activegs.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks/GraphicsServices.framework\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.activeGS.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoshisuga.activeGS;
 				PRODUCT_NAME = ActiveGS;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "../Common.iphone/ActiveGS-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

@@ -9,6 +9,8 @@
 #import "../kegs/iOS/emulatorView.h"
 #import "KBDController.h"
 
+#import "ActiveGS-Swift.h"
+
 enum gestureModes
 {
 	
@@ -58,7 +60,7 @@ enum attachMode
     ATTACH_SECONDARY
 };
 
-@interface activegsEmulatorController : UIVIEWCONTROLLERROOT
+@interface activegsEmulatorController : UIVIEWCONTROLLERROOT<EmulatorKeyboardKeyPressedDelegate, EmulatorKeyboardModifierPressedDelegate>
 {
 @public
     int    attachedTo;
@@ -74,7 +76,9 @@ enum attachMode
 @property	(nonatomic, strong) customView* contentView;
 @property	(nonatomic, strong) zoomEmulatorView* zv;
 @property	(nonatomic, strong) KBDController*		kbdc ;
-@property	(nonatomic, strong) NSString*		trackerName ;
+@property   (nonatomic, strong) EmulatorKeyboardController *emuKeyboardController;
+@property   (nonatomic, strong) DebugMemoryViewController *debugMemoryViewController;
+@property	(nonatomic, strong) NSString*		trackerName;
 
 
 @end

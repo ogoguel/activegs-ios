@@ -13,6 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #include "asynccommand.h"
 #import <sys/utsname.h>
+#import "GameControllerKeyRemapController.h"
 
 // Application Singleton
 activegsAppDelegate* pManager = nil;
@@ -369,6 +370,16 @@ void x_init_persistent_path(MyString& hp)
     
     [[pManager getBrowserView] updateView ];
     
+    // fonts!
+    for (NSString *family in [UIFont familyNames]) {
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:family];
+        NSLog(@"Family: %@", family);
+        for (NSString *name in fontNames) {
+            NSLog(@"Font name: %@",name);
+        }
+        NSLog(@"");
+    }
+    
     [self.window makeKeyAndVisible];
     
 #ifdef HANDLE_URL
@@ -615,6 +626,10 @@ void x_init_persistent_path(MyString& hp)
     
 }
 
+- (void) showKeyRemapController {
+    GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
+    [self.viewController presentViewController:remapController animated:YES completion:nil];
+}
 
 - (void) screenDidConnect:(NSNotification *)notification
 {

@@ -133,7 +133,7 @@ float refScaleLandscape;
     self->viewSize = frame.size;
     self->dpiRatio = ratio;
     
-    CGRect r = CGRectMake(0.0,0.0,X_A2_WINDOW_WIDTH/self->dpiRatio ,X_A2_WINDOW_HEIGHT/self->dpiRatio );
+    CGRect r = CGRectMake(0.0,0.0, X_A2_WINDOW_WIDTH/self->dpiRatio, X_A2_WINDOW_HEIGHT/self->dpiRatio );
     
     self.contentSize = CGSizeMake(r.size.width,r.size.height);
     [self.ew setFrame:r];
@@ -552,6 +552,7 @@ float refScaleLandscape;
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesBegan:touches withEvent:event];
 #ifdef ACTIVEGS
 	if ([[pManager getEmulatorView].kbdc myTouchesBegan:touches])
 	{
@@ -626,7 +627,7 @@ float refScaleLandscape;
 	self.useTouch = touch;
 	
 	lastMousePos = [self rotateTouch:touch];
-	
+    NSLog(@"last mouse pos = %f , %f",lastMousePos.x, lastMousePos.y);
 	add_event_mouse(lastMousePos.x,lastMousePos.y,0,-1);
 	
 	if (self.secondTouch)
@@ -672,6 +673,7 @@ float refScaleLandscape;
 {
 	
 	debug_printf("touchesEnded : %d",[touches count]);
+    [super touchesEnded:touches withEvent:event];
 
 #ifdef ACTIVEGS
 	if (! [[pManager getEmulatorView].kbdc myTouchesEnded:touches])
@@ -750,7 +752,7 @@ float refScaleLandscape;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	
+    [super touchesCancelled:touches withEvent:event];
 	// on est ici car lez zoom a démarré => théoriquement, il ne doit y avoir aucun useTouch, secondTouch, ou mouseDown
 
 	if ([touches containsObject:self.useTouch])
@@ -800,6 +802,7 @@ float refScaleLandscape;
 	{
 		
 		lastMousePos = [self rotateTouch:self.useTouch];
+        NSLog(@"touchesmoved: last mouse pos = %f , %f",lastMousePos.x, lastMousePos.y);
 		add_event_mouse(lastMousePos.x,lastMousePos.y,mouseDown,1);
 	}
 }

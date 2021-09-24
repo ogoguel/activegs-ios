@@ -7,6 +7,11 @@
 #import "activegsAppDelegate.h"
 #include "../kegs/Src/protos_macdriver.h"
 #include "../kegs/Src/sim65816.h"
+#include "../kegs/Src/async_event.h"
+
+#import "KeyMapper.h"
+#import "ActiveGS-Swift.h"
+
 
 #define TIME_BEFORE_REENABLING_GESTURES 1.0
 #define TIME_BEFORE_DISABLING_GESTURES 0.5
@@ -87,8 +92,21 @@ int	x_lock_zoom = 0;
 			return curHit;
 		}
 	}
+    
+    EmulatorKeyboardView *leftKeyboard = [pManager getEmulatorView].emuKeyboardController.leftKeyboardView;
+    p = [self convertPoint:_point toView:leftKeyboard];
+    curHit = [leftKeyboard hitTest:p withEvent:event];
+    if ([curHit isDescendantOfView:leftKeyboard]) {
+        return curHit;
+    }
 
-	
+    EmulatorKeyboardView *rightKeyboard = [pManager getEmulatorView].emuKeyboardController.rightKeyboardView;
+    p = [self convertPoint:_point toView:rightKeyboard];
+    curHit = [rightKeyboard hitTest:p withEvent:event];
+    if ([curHit isDescendantOfView:rightKeyboard]) {
+        return curHit;
+    }
+
 	// renvoie les évenements à l'emulator
 	return [pManager getEmulatorView].zv;
 }
@@ -132,8 +150,6 @@ int	x_lock_zoom = 0;
 	}
 	return self;
 }
-
-
 
 -(void)invalidateTimers
 {
@@ -413,7 +429,7 @@ int	x_lock_zoom = 0;
 
     attachedTo = ATTACH_NONE;
     
-	CGRect apprect = [[UIScreen mainScreen] applicationFrame];
+	CGRect apprect = [[UIScreen mainScreen] bounds];
     printf("mainScreen apprect %d x %d\n",(int)apprect.size.width,(int)apprect.size.height);
 
 	self.contentView = [[customView alloc] initWithFrame:apprect];
@@ -428,11 +444,19 @@ int	x_lock_zoom = 0;
     
     [self.zv setUserInteractionEnabled:TRUE];
 
-	self.kbdc = [KBDController alloc]; 
+	self.kbdc = [[KBDController alloc] initWithNibName:nil bundle:nil];
 	[self.contentView addSubview:self.kbdc.view];
 	
+    self.emuKeyboardController = [[EmulatorKeyboardController alloc] init];
+    self.emuKeyboardController.leftKeyboardModel.delegate = self;
+    self.emuKeyboardController.leftKeyboardModel.modifierDelegate = self;
+    self.emuKeyboardController.rightKeyboardModel.delegate = self;
+    self.emuKeyboardController.rightKeyboardModel.modifierDelegate = self;
+    
+    self.debugMemoryViewController = [[DebugMemoryViewController alloc] init];
+    self.debugMemoryViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
 	self.view = self.contentView;
- 
 
     [self.zv disableZoom];
 }
@@ -564,7 +588,7 @@ int	x_lock_zoom = 0;
 	
 	// l'interface est repositionnées mais non animée
     
-    CGRect uirectrotate = [[UIScreen mainScreen] applicationFrame];
+    CGRect uirectrotate = [[UIScreen mainScreen] bounds];
 	[self.kbdc updateView:uirectrotate];
     [pManager updateNotificationView:uirectrotate];
     
@@ -609,6 +633,18 @@ int	x_lock_zoom = 0;
 	// Release any cached data, images, etc that aren't in use.
 }
 
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    [self addChildViewController:self.emuKeyboardController];
+    self.emuKeyboardController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.emuKeyboardController.view];
+    [[self.emuKeyboardController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor] setActive:YES];
+    [[self.emuKeyboardController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor] setActive:YES];
+    [[self.emuKeyboardController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor] setActive:YES];
+    [[self.emuKeyboardController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor] setActive:YES];
+    [self.emuKeyboardController didMoveToParentViewController:self];
+    [self.view bringSubviewToFront:self.emuKeyboardController.view];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -679,6 +715,80 @@ int	x_lock_zoom = 0;
 {
     int vfx = [_vfxNumber intValue];
     self.zv.crt.hidden = (vfx==VIDEOFX_CRT?0:1);
+}
+
+#pragma mark - EmulatorKeyboardKeyPressedDelegate
+-(void)keyDown:(id<KeyCoded>)key {
+    NSLog(@"key down: %li modifier: %i",(long)key.keyCode, self.emuKeyboardController.modifierState);
+    if (self.emuKeyboardController.modifierState & shiftKey) {
+        add_event_modifier(shiftKey);
+    }
+    add_event_key((int)key.keyCode, 0);
+}
+
+-(void)keyUp:(id<KeyCoded>)key {
+    if (key.keyCode == KEY_SPECIAL_DEBUGGER) {
+        [self presentViewController:self.debugMemoryViewController animated:true completion:nil];
+        return;
+    }
+    if (self.emuKeyboardController.modifierState & shiftKey) {
+        add_event_modifier(0);
+    }
+    add_event_key((int)key.keyCode, 1);
+}
+
+-(void)updateTransparencyToAlpha:(CGFloat)alpha {
+    self.emuKeyboardController.view.alpha = alpha;
+}
+
+#pragma mark - EmulatorKeyboardModifierPressedDelegate
+-(void)modifierPressedWithKey:(id<KeyCoded>)key enable:(BOOL)enable {
+    int modifierKey;
+    if (key.keyCode == KEY_SHIFT) {
+        modifierKey = shiftKey;
+    } else if (key.keyCode == KEY_CTRL) {
+        modifierKey = controlKey;
+    } else if (key.keyCode == KEY_APPLE) {
+        modifierKey = cmdKey;
+    } else if (key.keyCode == KEY_OPTION) {
+        modifierKey = optionKey;
+    }
+    if (enable) {
+        self.emuKeyboardController.modifierState |= modifierKey;
+        [self keyDown:key];
+    } else {
+        [self keyUp:key];
+        self.emuKeyboardController.modifierState &= ~modifierKey;
+    }
+}
+
+-(BOOL)isModifierEnabledWithKey:(id<KeyCoded>)key {
+    BOOL enabled;
+    switch (key.keyCode) {
+        case KEY_SHIFT:
+            NSLog(@"shift modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & shiftKey;
+            NSLog(@"shift modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_CTRL:
+            NSLog(@"ctrl modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & controlKey;
+            NSLog(@"ctrl modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_APPLE:
+            NSLog(@"open-apple modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & cmdKey;
+            NSLog(@"open-apple modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        case KEY_OPTION:
+            NSLog(@"closed-apple modifier = %i",self.emuKeyboardController.modifierState);
+            enabled = self.emuKeyboardController.modifierState & optionKey;
+            NSLog(@"closed-apple modifier enabled? %@",enabled ? @"YES" : @"NO");
+            return enabled;
+        default:
+            break;
+    }
+    return NO;
 }
 
 @end

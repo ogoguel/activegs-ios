@@ -22,6 +22,8 @@
 #include "../kegs/Src/SaveState.h"
 #include "../Common/ActiveDownload.h"
 #import "MfiGameControllerHandler.h"
+#import "GameControllerKeyRemapController.h"
+#import "ActiveGS-Swift.h"
 
 #ifdef ACTIVEGS_CUSTOMKEYS
     #include "UICustomKey.h"
@@ -281,6 +283,7 @@ int isHardwareKeyboard()
     UISegmentedControl *saveStateSegmentedControl;
 }
 @property (nonatomic,strong) MfiGameControllerHandler *mfiControllerHandler;
+@property (nonatomic,strong) KeyMapper *keyMapper;
 @end
 
 @implementation KBDController
@@ -332,7 +335,6 @@ int isHardwareKeyboard()
 @synthesize specialView = _specialView;
 
 extern int findCode(const char* _s);
-
 
 - (void)loadView
 {
@@ -455,7 +457,7 @@ extern int findCode(const char* _s);
 	self.debugIndicator.hidden = TRUE;
 	self.debugIndicator.backgroundColor = [UIColor lightGrayColor];
 	self.debugIndicator.font = [UIFont systemFontOfSize:(CGFloat)12.0];
-	self.debugIndicator.lineBreakMode=UILineBreakModeClip;
+	self.debugIndicator.lineBreakMode=NSLineBreakByClipping;
 	[self.interfaceView addSubview:self.debugIndicator];
 	
 	[self  showDebug:FALSE];
@@ -568,6 +570,9 @@ extern int findCode(const char* _s);
     [self setInputMode:INPUTMODE_ACCESS+INPUTMODE_HIDDEN];
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
     
+    self.keyMapper = [[KeyMapper alloc] init];
+    [self.keyMapper loadFromDefaults];
+    
     self.mfiControllerHandler = [[MfiGameControllerHandler alloc] init];
     __weak typeof(self) weakSelf = self;
     [self.mfiControllerHandler discoverController:^(GCController *gameController) {
@@ -578,8 +583,8 @@ extern int findCode(const char* _s);
         [pManager setNotificationText:@"mFi Controller Disconnected"];
     }];
     
-   
-    }
+}
+
 - (NSArray*)keyCommands
 {
     if (lastArrowKey != 0)
@@ -645,8 +650,15 @@ extern int findCode(const char* _s);
         joyX = xvalue;
         joyY = yvalue * -1.0;
     };
+
     GCControllerButtonInput *buttonX = controller.extendedGamepad ? controller.extendedGamepad.buttonX : controller.gamepad.buttonX;
     GCControllerButtonInput *buttonA = controller.extendedGamepad ? controller.extendedGamepad.buttonA : controller.gamepad.buttonA;
+    GCControllerButtonInput *buttonY = controller.extendedGamepad ? controller.extendedGamepad.buttonY : controller.gamepad.buttonY;
+    GCControllerButtonInput *buttonB = controller.extendedGamepad ? controller.extendedGamepad.buttonB : controller.gamepad.buttonB;
+    GCControllerButtonInput *buttonRS = controller.extendedGamepad ? controller.extendedGamepad.rightShoulder : controller.gamepad.rightShoulder;
+    GCControllerButtonInput *buttonLS = controller.extendedGamepad ? controller.extendedGamepad.leftShoulder : controller.gamepad.leftShoulder;
+    GCControllerButtonInput *buttonRT = controller.extendedGamepad ? controller.extendedGamepad.rightTrigger : nil;
+    GCControllerButtonInput *buttonLT = controller.extendedGamepad ? controller.extendedGamepad.leftTrigger : nil;
     GCControllerDirectionPad *dpad = controller.extendedGamepad ? controller.extendedGamepad.dpad : controller.gamepad.dpad;
     
     buttonX.valueChangedHandler = appleJoyButton0Handler;
@@ -655,6 +667,132 @@ extern int findCode(const char* _s);
     
     if ( controller.extendedGamepad ) {
         controller.extendedGamepad.leftThumbstick.valueChangedHandler = appleJoystickhHandler;
+    }
+    
+    //
+    // mapped keys
+    AppleKeyboardKey mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_X];
+    if ( mappedKey != NSNotFound ) {
+        buttonX.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_Y];
+    if ( mappedKey != NSNotFound ) {
+        buttonY.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_A];
+    if ( mappedKey != NSNotFound ) {
+        buttonA.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_B];
+    if ( mappedKey != NSNotFound ) {
+        buttonB.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_LS];
+    if ( mappedKey != NSNotFound ) {
+        buttonLS.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RS];
+    if ( mappedKey != NSNotFound ) {
+        buttonRS.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_LT];
+    if ( mappedKey != NSNotFound && buttonLT != nil ) {
+        buttonLT.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+
+    mappedKey = [self.keyMapper getMappedKeyForControl:MFI_BUTTON_RT];
+    if ( mappedKey != NSNotFound && buttonLT != nil ) {
+        buttonRT.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+            if ( pressed ) {
+                add_event_key((int)mappedKey, 0);
+            } else {
+                add_event_key((int)mappedKey, 1);
+            }
+        };
+    }
+    
+    AppleKeyboardKey mappedKeyDpadUp = [self.keyMapper getMappedKeyForControl:MFI_DPAD_UP];
+    AppleKeyboardKey mappedKeyDpadDown = [self.keyMapper getMappedKeyForControl:MFI_DPAD_DOWN];
+    AppleKeyboardKey mappedKeyDpadLeft = [self.keyMapper getMappedKeyForControl:MFI_DPAD_LEFT];
+    AppleKeyboardKey mappedKeyDpadRight = [self.keyMapper getMappedKeyForControl:MFI_DPAD_RIGHT];
+    if ( mappedKeyDpadUp != NSNotFound || mappedKeyDpadDown != NSNotFound || mappedKeyDpadLeft != NSNotFound || mappedKeyDpadRight != NSNotFound ) {
+        dpad.valueChangedHandler = ^(GCControllerDirectionPad *, float xvalue, float yvalue) {
+            if ( mappedKeyDpadUp != NSNotFound && yvalue > 0.0 ) {
+                add_event_key((int)mappedKeyDpadUp, 0);
+            } else if ( mappedKeyDpadUp != NSNotFound && yvalue <= 0.0 ) {
+                add_event_key((int)mappedKeyDpadUp, 1);
+            }
+            
+            if ( mappedKeyDpadDown != NSNotFound && yvalue < 0.0 ) {
+                add_event_key((int)mappedKeyDpadDown, 0);
+            } else if ( mappedKeyDpadDown != NSNotFound && yvalue >= 0.0 ) {
+                add_event_key((int)mappedKeyDpadDown, 1);
+            }
+            
+            if ( mappedKeyDpadRight != NSNotFound && xvalue > 0.0 ) {
+                add_event_key((int)mappedKeyDpadRight, 0);
+            } else if ( mappedKeyDpadRight != NSNotFound && xvalue <= 0.0 ) {
+                add_event_key((int)mappedKeyDpadRight, 1);
+            }
+            
+            if ( mappedKeyDpadLeft != NSNotFound && xvalue < 0.0 ) {
+                add_event_key((int)mappedKeyDpadLeft, 0);
+            } else if ( mappedKeyDpadLeft != NSNotFound && xvalue >= 0.0 ) {
+                add_event_key((int)mappedKeyDpadLeft, 1);
+            }
+            
+            // pass the joystick input through
+            joyX = xvalue;
+            joyY = yvalue * -1.0;
+        };
     }
 }
 
@@ -1012,6 +1150,25 @@ extern int x_frame_rate ;
     [pManager setNotificationText:[NSString stringWithFormat:@"Loaded State #%@",segIndex]];
 }
 
+-(void) remapControlsButtonPressed:(id)sender {
+    r_sim65816.pause();
+    GameControllerKeyRemapController *remapController = [[GameControllerKeyRemapController alloc] initWithNibName:@"GameControllerKeyRemapController" bundle:nil];
+    remapController.keyMapper = self.keyMapper;
+    remapController.onDismissal = ^{
+        [self.keyMapper loadFromDefaults];
+        [self setupMfiController:[[GCController controllers] firstObject]];
+        r_sim65816.resume();
+    };
+    [self presentViewController:remapController animated:YES completion:nil];
+}
+
+-(void) memoryDebuggerButtonPressed:(id)sender {
+    r_sim65816.pause();
+    DebugMemoryViewController *controller = [pManager getEmulatorView].debugMemoryViewController;
+    controller.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 //
 -(void)addRuntimeControls
 {
@@ -1111,6 +1268,42 @@ extern int x_frame_rate ;
     [self.runtimeControlsOptions addSubview:loadStateButton];    
     
     l+=LINEHEIGHT;
+    l += 2.0;
+    
+    UILabel* remapControlsLabel = [[UILabel alloc] initWithFrame:CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT)];
+    remapControlsLabel.text = @"Key Bindings";
+    remapControlsLabel.textAlignment = NSTextAlignmentCenter;
+    remapControlsLabel.font = [UIFont systemFontOfSize:12*res];
+    remapControlsLabel.backgroundColor = [UIColor clearColor];
+    [self.runtimeControlsOptions addSubview:remapControlsLabel];
+    l += LINEHEIGHT;
+    
+    l += 2.0;
+    UIButton *remapControlsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    remapControlsButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT);
+    [remapControlsButton setTitle:@"Remap Controls" forState:UIControlStateNormal];
+    remapControlsButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    [remapControlsButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+    remapControlsButton.backgroundColor = [UIColor clearColor];
+    remapControlsButton.layer.borderWidth = 1.0f;
+    remapControlsButton.layer.borderColor = [self.view.tintColor CGColor];
+    [remapControlsButton addTarget:self action:@selector(remapControlsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:remapControlsButton];
+
+    l += LINEHEIGHT;
+    
+    l += 2.0;
+    UIButton *memoryDebuggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    memoryDebuggerButton.frame = CGRectMake(OPTIONMARGIN,l,OPTIONWIDTH,LINEHEIGHT);
+    [memoryDebuggerButton setTitle:@"Memory Debugger" forState:UIControlStateNormal];
+    memoryDebuggerButton.titleLabel.font = [UIFont systemFontOfSize:12*res];
+    memoryDebuggerButton.backgroundColor = [UIColor clearColor];
+    memoryDebuggerButton.layer.borderWidth = 1.0f;
+    memoryDebuggerButton.layer.borderColor = [self.view.tintColor CGColor];
+    [memoryDebuggerButton addTarget:self action:@selector(memoryDebuggerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.runtimeControlsOptions addSubview:memoryDebuggerButton];
+    
+    l += LINEHEIGHT;
     nbs++;
 	
 	float w = OPTIONWIDTH+OPTIONMARGIN*2;
@@ -2087,7 +2280,7 @@ int x_adb_get_keypad_y()
     else
     if (!bForceOnScreenKeyboard)
     {
-            
+        AppleKeyboardKey mappedKey = NSNotFound;
         char c;
         int i=0;
         while( (c = s[i++]) != 0) 
@@ -2096,44 +2289,165 @@ int x_adb_get_keypad_y()
             {
                 case 'w': // up
                     keypad_y = -32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_UP];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
-                case 'e': // !verti
-                case 'z':
+                case 'e': // !verti : up released
                     keypad_y = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_UP];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'z': // down released
+                    keypad_y = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_DOWN];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'x': // down
                     keypad_y = 32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_DOWN];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'a': // left
                     keypad_x = -32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_LEFT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
-                case 'q':   // !hori
-                case 'c':
+                case 'q':   // left released
                     keypad_x = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_LEFT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                case 'c': // right released
+                    keypad_x = 0;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_RIGHT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'd': // right
                     keypad_x = 32767;
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_DPAD_RIGHT];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'y': // button 1 pressed
                     add_event_key(0x37, 0);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_1];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 't': // button 1 depressed
-                    add_event_key(0x37, 1);
+//                    add_event_key(0x37, 1);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_1];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
                 case 'h': // button 2 pressed
-                    add_event_key(0x3a, 0);
+//                    add_event_key(0x3a, 0);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_2];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
                     break;
                 case 'r': // button 2 depressed
-                    add_event_key(0x3a, 1);
+//                    add_event_key(0x3a, 1);
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_2];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
                     break;
-                case  'g': //à faire sur un keydepressed
-                    // display keyboard      
-                    printf("*** forcing on-screeen keyboard");
-                    [self OnScreenKeyboard:TRUE];        
+                case 'u': // button 3 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_3];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'f': // button 3 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_3];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'j': // button 4 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_4];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'n': // button 4 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_4];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'i': // button 5 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'm': // button 5 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'k': // button 6 pressed
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case 'p': // button 6 released
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_5];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    }
+                    break;
+                case 'o':
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_6];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case  'g': //à faire sur un keydepressed : coin
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_6];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    } else {
+                        // display keyboard
+                        printf("*** forcing on-screeen keyboard");
+                        [self OnScreenKeyboard:TRUE];
+                    }
                      break;
-                case  'v': //à faire sur un keydepressed
-                    // toggle la menu bar
-                    [self setMenuBarVisibility:!bMenuBarVisibility];
+                case  'l':
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_7];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 0);
+                    }
+                    break;
+                case  'v': //à faire sur un keydepressed : start
+                    mappedKey = [self.keyMapper getMappedKeyForControl:ICADE_BUTTON_7];
+                    if ( mappedKey != NSNotFound ) {
+                        add_event_key((int)mappedKey, 1);
+                    } else {
+                        // toggle la menu bar
+                        [self setMenuBarVisibility:!bMenuBarVisibility];
+                    }
                     break;
                 default:
                     break;
