@@ -93,7 +93,8 @@ void x_async_refresh(CGContextRef myContext,CGRect myBoundingBox)
 			
 			CGImageRef myImage = CGBitmapContextCreateImage((CGContextRef)g_kimage_offscreen.dev_handle);
             
-            
+            // IOS15 Hack, thanks to https://github.com/yoshisuga
+            myBoundingBox.size.width = myBoundingBox.size.width+1;
             
 			CGContextDrawImage(myContext, myBoundingBox, myImage);// 6
 	
