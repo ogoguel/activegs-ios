@@ -2,3 +2,7 @@
 xcuserdata/
 ActiveGS_AsmJS/out
 contents.xcworkspacedata
+.vs/
+~Build/
+*.vcxproj.user
+

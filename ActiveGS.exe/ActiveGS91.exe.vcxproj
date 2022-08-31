@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>ActiveGS</ProjectName>
+    <ProjectGuid>{49D558B6-A2BC-4F7F-9F20-8C722193DD76}</ProjectGuid>
+    <RootNamespace>ActiveGS91exe</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.30427.251</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)~Build\$(ProjectName)\$(Configuration)\$(PlatformShortName)</OutDir>
+    <IntDir>$(SolutionDir)~Build\Objs\$(ProjectName)\$(Configuration)\$(PlatformShortName)</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>A$(TargetExt)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)~Build\$(ProjectName)\$(Configuration)\$(PlatformShortName)</OutDir>
+    <IntDir>$(SolutionDir)~Build\Objs\$(ProjectName)\$(Configuration)\$(PlatformShortName)</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)~Build\$(ProjectName)\$(Configuration)\$(PlatformShortName)</OutDir>
+    <IntDir>$(SolutionDir)~Build\Objs\$(ProjectName)\$(Configuration)\$(PlatformShortName)</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)~Build\$(ProjectName)\$(Configuration)\$(PlatformShortName)</OutDir>
+    <IntDir>$(SolutionDir)~Build\Objs\$(ProjectName)\$(Configuration)\$(PlatformShortName)</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;KEGS_LITTLE_ENDIAN;ACTIVEGS;KEGS91;KEGS_BETAVERSION;DRIVER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;nafxcwd.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>msvcrtd.lib nafxcwd.lib libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;KEGS_LITTLE_ENDIAN;ACTIVEGS;KEGS91;KEGS_BETAVERSION;DRIVER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;nafxcwd.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>msvcrtd.lib nafxcwd.lib libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;KEGS_LITTLE_ENDIAN;ACTIVEGS;KEGS91;KEGS_BETAVERSION;DRIVER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>../Common.win32/StdAfx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;nafxcw.lib;libcmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)run\ActiveGS.exe</OutputFile>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib nafxcw.lib libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;KEGS_LITTLE_ENDIAN;ACTIVEGS;KEGS91;KEGS_BETAVERSION;DRIVER_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>../Common.win32/StdAfx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;nafxcw.lib;libcmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib nafxcw.lib libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common.win32\ActiveCommon.cpp" />
+    <ClCompile Include="..\Common.win32\ActiveDownloadWin32.cpp" />
+    <ClCompile Include="..\Common.win32\ActiveInfo.cpp" />
+    <ClCompile Include="..\Common.win32\ActiveStatus.cpp" />
+    <ClCompile Include="..\Common.win32\ChildView.cpp" />
+    <ClCompile Include="..\Common.win32\DiskEditURL.cpp" />
+    <ClCompile Include="..\Common.win32\HyperLink.cpp" />
+    <ClCompile Include="..\Common.win32\SliderZip.cpp" />
+    <ClCompile Include="..\Common.win32\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\TabGeneral.cpp" />
+    <ClCompile Include="..\Common.win32\TabOption.cpp" />
+    <ClCompile Include="..\Common.win32\TabRuntime.cpp" />
+    <ClCompile Include="..\Common.win32\TabXml.cpp" />
+    <ClCompile Include="..\Common.win32\winconsole.cpp" />
+    <ClCompile Include="..\Common\3rdpartylib\simplexml.cpp" />
+    <ClCompile Include="..\Common\activeconfig.cpp" />
+    <ClCompile Include="..\Common\ActiveDownload.cpp" />
+    <ClCompile Include="..\Common\ActiveGSList.cpp" />
+    <ClCompile Include="..\Common\ActiveZip.cpp" />
+    <ClCompile Include="..\Common\apple2e.cpp" />
+    <ClCompile Include="..\Common\CA2Text.cpp" />
+    <ClCompile Include="..\Common\CEmulatorCtrl.cpp" />
+    <ClCompile Include="..\Common\interface.cpp" />
+    <ClCompile Include="..\Common\libpng.cpp" />
+    <ClCompile Include="..\Common\rom.cpp" />
+    <ClCompile Include="..\Drivers\activegs_driver.cpp" />
+    <ClCompile Include="..\Libraries\libpng\png.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngerror.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pnggccrd.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngget.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngmem.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngpread.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngread.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngrio.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngrtran.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngrutil.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngset.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngtrans.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngvcrd.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngwio.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngwrite.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngwtran.cpp" />
+    <ClCompile Include="..\Libraries\libpng\pngwutil.cpp" />
+    <ClCompile Include="..\kegs\Src\adb.cpp" />
+    <ClCompile Include="..\kegs\Src\async_event.cpp" />
+    <ClCompile Include="..\kegs\Src\bigfile.cpp" />
+    <ClCompile Include="..\kegs\Src\clock.cpp" />
+    <ClCompile Include="..\kegs\Src\compile_time.cpp" />
+    <ClCompile Include="..\kegs\Src\compression.cpp" />
+    <ClCompile Include="..\kegs\Src\config_generic.cpp" />
+    <ClCompile Include="..\kegs\Src\dis.cpp" />
+    <ClCompile Include="..\kegs\Src\driver.cpp" />
+    <ClCompile Include="..\kegs\Src\engine_c.cpp" />
+    <ClCompile Include="..\kegs\Src\GraphCounter.cpp" />
+    <ClCompile Include="..\kegs\Src\iwm.cpp" />
+    <ClCompile Include="..\kegs\Src\marinetti.cpp" />
+    <ClCompile Include="..\kegs\Src\marinetti_helper.cpp" />
+    <ClCompile Include="..\kegs\Src\moremem.cpp" />
+    <ClCompile Include="..\kegs\Src\paddles.cpp" />
+    <ClCompile Include="..\kegs\Src\SaveState.cpp" />
+    <ClCompile Include="..\kegs\Src\scc.cpp" />
+    <ClCompile Include="..\kegs\Src\scc_socket_driver.cpp" />
+    <ClCompile Include="..\kegs\Src\sim65816.cpp" />
+    <ClCompile Include="..\kegs\Src\smartport.cpp" />
+    <ClCompile Include="..\kegs\Src\sound.cpp" />
+    <ClCompile Include="..\kegs\Src\sound_driver.cpp" />
+    <ClCompile Include="..\kegs\Src\video.cpp" />
+    <ClCompile Include="..\Libraries\unzip101e\ioapi.cpp" />
+    <ClCompile Include="..\Libraries\unzip101e\iowin32.cpp" />
+    <ClCompile Include="..\Libraries\unzip101e\unzip.cpp" />
+    <ClCompile Include="..\Libraries\unzip101e\zip.cpp" />
+    <ClCompile Include="..\kegs\Win\joystick_win.cpp" />
+    <ClCompile Include="..\kegs\Win\scc_windriver.cpp" />
+    <ClCompile Include="..\kegs\Win\win32snd_driver.cpp" />
+    <ClCompile Include="..\kegs\Win\win_activegs.cpp" />
+    <ClCompile Include="..\kegs\Win\win_generic.cpp" />
+    <ClCompile Include="..\kegs\Win\win_raster.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\adler32.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\compress.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\crc32.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\deflate.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\inffast.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\inflate.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\inftrees.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\trees.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\uncompr.cpp" />
+    <ClCompile Include="..\Libraries\zlib123\zutil.cpp" />
+    <ClCompile Include="ActiveGSApp.cpp" />
+    <ClCompile Include="cgfiltyp.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common.win32\activecommon.h" />
+    <ClInclude Include="..\Common.win32\activecommonres.h" />
+    <ClInclude Include="..\Common.win32\ActiveInfo.h" />
+    <ClInclude Include="..\Common.win32\ActiveStatus.h" />
+    <ClInclude Include="..\Common.win32\ChildView.h" />
+    <ClInclude Include="..\Common.win32\consoleresrc.h" />
+    <ClInclude Include="..\Common.win32\DiskEditURL.h" />
+    <ClInclude Include="..\Common.win32\HyperLink.h" />
+    <ClInclude Include="..\Common.win32\SliderZip.h" />
+    <ClInclude Include="..\Common.win32\TabGeneral.h" />
+    <ClInclude Include="..\Common.win32\TabOption.h" />
+    <ClInclude Include="..\Common.win32\TabRuntime.h" />
+    <ClInclude Include="..\Common.win32\TabXml.h" />
+    <ClInclude Include="..\Common\3rdpartylib\simplexml.h" />
+    <ClInclude Include="..\Common\ActiveDownload.h" />
+    <ClInclude Include="..\Common\ActiveGSList.h" />
+    <ClInclude Include="..\Common\CEMulatorCtrl.h" />
+    <ClInclude Include="..\Libraries\libpng\png.h" />
+    <ClInclude Include="..\Libraries\libpng\pngconf.h" />
+    <ClInclude Include="..\kegs\Src\16inst_c.h" />
+    <ClInclude Include="..\kegs\Src\8inst_c.h" />
+    <ClInclude Include="..\kegs\Src\8inst_s.h" />
+    <ClInclude Include="..\kegs\Src\adb.h" />
+    <ClInclude Include="..\kegs\Src\async_event.h" />
+    <ClInclude Include="..\kegs\Src\bigfile.h" />
+    <ClInclude Include="..\kegs\Src\clock.h" />
+    <ClInclude Include="..\kegs\Src\compression.h" />
+    <ClInclude Include="..\kegs\Src\config.h" />
+    <ClInclude Include="..\kegs\Src\defc.h" />
+    <ClInclude Include="..\kegs\Src\defcomm.h" />
+    <ClInclude Include="..\kegs\Src\defs.h" />
+    <ClInclude Include="..\kegs\Src\defs_instr.h" />
+    <ClInclude Include="..\kegs\Src\disas.h" />
+    <ClInclude Include="..\kegs\Src\driver.h" />
+    <ClInclude Include="..\kegs\Src\graphcounter.h" />
+    <ClInclude Include="..\kegs\Src\iwm.h" />
+    <ClInclude Include="..\kegs\Src\iwm_35_525.h" />
+    <ClInclude Include="..\kegs\Src\kegsfont.h" />
+    <ClInclude Include="..\kegs\Src\kegsversion.h" />
+    <ClInclude Include="..\kegs\Src\marinetti.h" />
+    <ClInclude Include="..\kegs\Src\moremem.h" />
+    <ClInclude Include="..\kegs\Src\op_routs.h" />
+    <ClInclude Include="..\kegs\Src\paddles.h" />
+    <ClInclude Include="..\kegs\Src\prodos.h" />
+    <ClInclude Include="..\kegs\Src\prodos_protos.h" />
+    <ClInclude Include="..\kegs\Src\protos.h" />
+    <ClInclude Include="..\kegs\Src\protos_engine_c.h" />
+    <ClInclude Include="..\kegs\Src\protos_macdriver.h" />
+    <ClInclude Include="..\kegs\Src\protos_macsnd_driver.h" />
+    <ClInclude Include="..\kegs\Src\protos_windriver.h" />
+    <ClInclude Include="..\kegs\Src\protos_xdriver.h" />
+    <ClInclude Include="..\kegs\Src\raster.h" />
+    <ClInclude Include="..\kegs\Src\SaveState.h" />
+    <ClInclude Include="..\kegs\Src\scc.h" />
+    <ClInclude Include="..\kegs\Src\sim65816.h" />
+    <ClInclude Include="..\kegs\Src\size_c.h" />
+    <ClInclude Include="..\kegs\Src\size_tab.h" />
+    <ClInclude Include="..\kegs\Src\sound.h" />
+    <ClInclude Include="..\kegs\Src\StdString.h" />
+    <ClInclude Include="..\kegs\Src\superhires.h" />
+    <ClInclude Include="..\kegs\Src\video.h" />
+    <ClInclude Include="..\Libraries\unzip101e\crypt.h" />
+    <ClInclude Include="..\Libraries\unzip101e\ioapi.h" />
+    <ClInclude Include="..\Libraries\unzip101e\iowin32.h" />
+    <ClInclude Include="..\Libraries\unzip101e\unzip.h" />
+    <ClInclude Include="..\Libraries\unzip101e\zip.h" />
+    <ClInclude Include="..\kegs\Win\dirent-win32.h" />
+    <ClInclude Include="..\kegs\Win\winresource.h" />
+    <ClInclude Include="..\Libraries\zlib123\crc32.h" />
+    <ClInclude Include="..\Libraries\zlib123\deflate.h" />
+    <ClInclude Include="..\Libraries\zlib123\inffast.h" />
+    <ClInclude Include="..\Libraries\zlib123\inffixed.h" />
+    <ClInclude Include="..\Libraries\zlib123\inflate.h" />
+    <ClInclude Include="..\Libraries\zlib123\inftrees.h" />
+    <ClInclude Include="..\Libraries\zlib123\trees.h" />
+    <ClInclude Include="..\Libraries\zlib123\zconf.h" />
+    <ClInclude Include="..\Libraries\zlib123\zconf.in.h" />
+    <ClInclude Include="..\Libraries\zlib123\zlib.h" />
+    <ClInclude Include="..\Libraries\zlib123\zutil.h" />
+    <ClInclude Include="ActiveGSApp.h" />
+    <ClInclude Include="cgfiltyp.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Common.win32\ActiveCommon.rc" />
+    <ResourceCompile Include="..\Common.win32\ActiveGS.rc" />
+    <ResourceCompile Include="..\Common.win32\console.rc" />
+    <ResourceCompile Include="ActiveGSApp.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\run\activegsappconfig.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Common.win32\bitmap2.bmp" />
+    <Image Include="..\Common.win32\bmp00001.bmp" />
+    <Image Include="..\Common.win32\disk52.bmp" />
+    <Image Include="..\Common.win32\disk54.bmp" />
+    <Image Include="..\Common.win32\disk55.bmp" />
+    <Image Include="..\Common32\bitmap2.bmp" />
+    <Image Include="..\Common32\disk52.bmp" />
+    <Image Include="..\Common32\disk54.bmp" />
+    <Image Include="..\Common32\disk55.bmp" />
+    <Image Include="res\ActiveGSApp.ico" />
+    <Image Include="res\idr_22mg.ico" />
+    <Image Include="res\idr_2mg1.ico" />
+    <Image Include="res\idr_main.ico" />
+    <Image Include="res\Toolbar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="res\ActiveGSApp.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Common.win32\cursor1.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Common\sounds\Spin Up Search 1.wav" />
+    <Media Include="..\Common\sounds\Spin Up Search 2.wav" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ActiveGSApp.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

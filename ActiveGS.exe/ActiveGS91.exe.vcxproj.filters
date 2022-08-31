@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{0876290e-5ea0-4529-80ca-3e33de8b9a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common.win32">
+      <UniqueIdentifier>{6da1666e-cbb0-4abb-a97f-ac0478b844f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{b38e7a11-43e1-4c45-9e0a-298f7faa5b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\H">
+      <UniqueIdentifier>{12d375d5-3df0-4a7e-9086-c545dbdf625d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Run">
+      <UniqueIdentifier>{51dc8c41-b398-47e4-b68a-61417da40967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="activegs.exe">
+      <UniqueIdentifier>{3dfcff28-c626-4032-b6ff-b8dc129d187a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="activegs.exe\Header Files">
+      <UniqueIdentifier>{3f6df060-e239-4886-b77c-b474461ce911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libpng">
+      <UniqueIdentifier>{411622c0-1a8d-4b39-9fee-49dcbb8dd4c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{a0ee4f56-59a4-46a1-aa53-a3effdb48cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="unzip">
+      <UniqueIdentifier>{e88f5577-5dd9-4f81-adc3-d2e0001f5661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{4b8c0a8d-8a74-40fa-aa3c-be5fb3ec4e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drivers">
+      <UniqueIdentifier>{b96f449f-29ea-4305-b074-52155c15c111}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common\activeconfig.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ActiveDownload.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ActiveGSList.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ActiveZip.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\apple2e.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\CA2Text.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\CEmulatorCtrl.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\interface.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\libpng.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\rom.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\3rdpartylib\simplexml.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\ActiveCommon.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\ActiveDownloadWin32.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\ActiveInfo.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\ActiveStatus.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\ChildView.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\DiskEditURL.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\HyperLink.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\SliderZip.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\TabGeneral.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\TabOption.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\TabRuntime.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\TabXml.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\winconsole.cpp">
+      <Filter>common.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\adb.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\async_event.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\clock.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\compile_time.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\compression.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\config_generic.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\dis.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\driver.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\engine_c.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\GraphCounter.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\iwm.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\marinetti.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\marinetti_helper.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\moremem.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\paddles.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\SaveState.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\scc.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\scc_socket_driver.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\sim65816.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\smartport.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\sound.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\sound_driver.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\video.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveGSApp.cpp">
+      <Filter>activegs.exe</Filter>
+    </ClCompile>
+    <ClCompile Include="cgfiltyp.cpp">
+      <Filter>activegs.exe</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>activegs.exe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common.win32\stdafx.cpp">
+      <Filter>activegs.exe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\joystick_win.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\scc_windriver.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\win32snd_driver.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\win_activegs.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\win_generic.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Win\win_raster.cpp">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Drivers\activegs_driver.cpp">
+      <Filter>Drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\kegs\Src\bigfile.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngwutil.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\png.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngerror.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pnggccrd.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngget.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngmem.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngpread.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngread.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngrio.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngrtran.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngrutil.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngset.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngtrans.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngvcrd.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngwio.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngwrite.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\libpng\pngwtran.cpp">
+      <Filter>libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\compress.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\crc32.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\adler32.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\deflate.cpp">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\inffast.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\inflate.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\inftrees.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\unzip101e\ioapi.cpp">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\unzip101e\iowin32.cpp">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\trees.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\uncompr.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\unzip101e\unzip.cpp">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\unzip101e\zip.cpp">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\zlib123\zutil.cpp">
+      <Filter>zlib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\ActiveDownload.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ActiveGSList.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\CEMulatorCtrl.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\3rdpartylib\simplexml.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\activecommon.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\activecommonres.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\ActiveInfo.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\ActiveStatus.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\ChildView.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\consoleresrc.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\DiskEditURL.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\HyperLink.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\SliderZip.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\TabGeneral.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\TabOption.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\TabRuntime.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common.win32\TabXml.h">
+      <Filter>common.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\16inst_c.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\8inst_c.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\8inst_s.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\adb.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\async_event.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\clock.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\compression.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\config.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\defc.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\defcomm.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\defs.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\defs_instr.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\disas.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\driver.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\graphcounter.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\iwm.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\iwm_35_525.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\kegsfont.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\kegsversion.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\marinetti.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\moremem.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\op_routs.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\paddles.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\prodos.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\prodos_protos.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos_engine_c.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos_macdriver.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos_macsnd_driver.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos_windriver.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\protos_xdriver.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\raster.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\SaveState.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\scc.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\sim65816.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\size_c.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\size_tab.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\sound.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\StdString.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\superhires.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Src\video.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="cgfiltyp.h">
+      <Filter>activegs.exe</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveGSApp.h">
+      <Filter>activegs.exe\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>activegs.exe\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>activegs.exe\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>activegs.exe\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Win\dirent-win32.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\kegs\Win\winresource.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="..\kegs\Src\bigfile.h">
+      <Filter>Src\H</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\libpng\png.h">
+      <Filter>libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\libpng\pngconf.h">
+      <Filter>libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\unzip101e\crypt.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\deflate.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\unzip101e\iowin32.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\unzip101e\ioapi.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\unzip101e\unzip.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\zconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\zconf.in.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\unzip101e\zip.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\zlib123\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Common.win32\ActiveCommon.rc">
+      <Filter>common.win32</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Common.win32\ActiveGS.rc">
+      <Filter>common.win32</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Common.win32\console.rc">
+      <Filter>common.win32</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="ActiveGSApp.rc">
+      <Filter>activegs.exe\Header Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\run\activegsappconfig.xml">
+      <Filter>Run</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ActiveGSApp.ico">
+      <Filter>activegs.exe\Header Files</Filter>
+    </Image>
+    <Image Include="..\Common32\bitmap2.bmp" />
+    <Image Include="..\Common.win32\bitmap2.bmp" />
+    <Image Include="..\Common.win32\bmp00001.bmp" />
+    <Image Include="..\Common32\disk52.bmp" />
+    <Image Include="..\Common.win32\disk52.bmp" />
+    <Image Include="..\Common32\disk54.bmp" />
+    <Image Include="..\Common.win32\disk54.bmp" />
+    <Image Include="..\Common.win32\disk55.bmp" />
+    <Image Include="..\Common32\disk55.bmp" />
+    <Image Include="res\idr_22mg.ico" />
+    <Image Include="res\idr_2mg1.ico" />
+    <Image Include="res\idr_main.ico" />
+    <Image Include="res\Toolbar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="res\ActiveGSApp.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Common.win32\cursor1.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Common\sounds\Spin Up Search 1.wav" />
+    <Media Include="..\Common\sounds\Spin Up Search 2.wav" />
+  </ItemGroup>
+</Project>

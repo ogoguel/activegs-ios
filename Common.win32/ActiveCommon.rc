@@ -1,0 +1,334 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "activecommonres.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Français (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "activecommonres.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_DISK51              BITMAP                  "bitmap2.bmp"
+
+IDB_DISK52              BITMAP                  "disk52.bmp"
+
+IDB_DISK61              BITMAP                  "disk54.bmp"
+
+IDB_DISK62              BITMAP                  "disk55.bmp"
+
+IDB_ALPHACURSOR         BITMAP                  "bmp00001.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ACTIVEINFO DIALOGEX 0, 0, 247, 143
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ActiveGS v2.3 (Build BETA 07/MAY/09)"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_ACTIVETAB,"SysTabControl32",0x0,7,7,233,129
+END
+
+IDD_TABGENERAL DIALOGEX 0, 0, 192, 105
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "ActiveGS v3.6",IDC_STATIC,6,18,72,8
+    LTEXT           "Olivier Goguel",IDC_URLOG,84,18,54,8
+    LTEXT           "Kegs v0.91",IDC_STATIC,6,30,72,8
+    LTEXT           "Kent Dickey",IDC_URLKD,84,30,54,8
+    LTEXT           "Active GS Home Page",IDC_STATIC,6,66,70,8
+    LTEXT           "http://activegs.freetoolsassociation.com",IDC_URLFTA,84,66,99,8
+    LTEXT           "Build :",IDC_BUILD,7,97,178,8
+    LTEXT           "Active GS Home Page",IDC_VERSION,7,90,178,8
+    LTEXT           "Disk Drive Sounds",IDC_STATIC,7,44,72,8
+    LTEXT           "Moose O'Malley",IDC_URLKD2,85,44,54,8
+END
+
+IDD_TABDISKCONF DIALOGEX 0, 0, 230, 117
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_SLOTLIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,6,6,209,68
+    PUSHBUTTON      "Mount",IDC_MOUNTBUTTON,174,96,41,12
+    EDITTEXT        IDC_EDITURL,48,96,96,12,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    PUSHBUTTON      "EJect",IDC_EJECT,48,78,30,12
+    PUSHBUTTON      "Reload",IDC_RELOAD,6,96,36,12
+    PUSHBUTTON      "5",IDC_REBOOT5,161,78,16,12
+    PUSHBUTTON      "6",IDC_REBOOT6,179,78,16,12
+    PUSHBUTTON      "7",IDC_REBOOT7,198,78,16,12
+    LTEXT           "Reboot",IDC_STATICSLOT2,136,80,23,9
+    COMBOBOX        IDC_COMBOSLOT,6,78,36,66,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "...",IDC_FILESELECT,146,96,16,12
+    PUSHBUTTON      "Swap",IDC_SWAP,81,78,30,12
+END
+
+IDD_TABPARAM DIALOGEX 0, 0, 198, 120
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_PARAMLIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,26,184,78
+END
+
+IDD_TABOPTION DIALOGEX 0, 0, 239, 113
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Use persistent storage",IDC_NOIECACHE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,18,108,10
+    LTEXT           "Persistent Directory",IDC_STATIC,12,30,64,12
+    EDITTEXT        IDC_PERSISTENT,78,30,138,14,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Persistent Storage",IDC_STATIC,6,6,216,40
+    GROUPBOX        "Debug Options (for advanced users only)",IDC_STATIC,6,48,216,40
+    CONTROL         "Halt on bad memory read",IDC_HALTBADREAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,60,96,10
+    CONTROL         "Halt on all events",IDC_HALTEVENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,60,84,10
+    CONTROL         "Halt on bad memory access",IDC_HALTBADACCESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,72,102,10
+    PUSHBUTTON      "Default Options",IDC_DEFAULTOPTIONS,150,72,66,12
+    PUSHBUTTON      "Clear Cache",IDC_CLEARCACHE,150,12,66,12,WS_DISABLED
+    CONTROL         "Enable Realtime capture (Rewind Mode)",IDC_ENABLEREWIND,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,90,162,10
+END
+
+IDD_TABHELP DIALOGEX 0, 0, 230, 110
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "F4",IDC_STATIC,12,84,9,8
+    LTEXT           "Toggle joystick mode",IDC_STATIC,66,84,68,8
+    LTEXT           "ALT or F1",IDC_STATIC,12,18,32,8
+    LTEXT           "Open-Apple",IDC_STATIC,66,18,39,8
+    LTEXT           "WIN or F2",IDC_STATIC,12,30,34,8
+    LTEXT           "Closed-Apple / Option",IDC_STATIC,66,30,82,8
+    LTEXT           "F8",IDC_STATIC,12,72,9,8
+    LTEXT           "Toggle mouse lock",IDC_STATIC,66,72,59,8
+    GROUPBOX        "Apple II GS",IDC_STATIC,6,6,216,48
+    GROUPBOX        "Emulator",IDC_STATIC,6,60,216,48
+    LTEXT           "PAUSE or F12",IDC_STATIC,12,42,45,8
+    LTEXT           "Reset",IDC_STATIC,66,42,20,8
+    LTEXT           "F5",IDC_STATIC,12,97,9,8
+    LTEXT           "Pause/Resume",IDC_STATIC,66,97,48,8
+END
+
+IDD_TABRUNTIME1 DIALOGEX 0, 0, 230, 117
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "?",IDC_SPEED,144,6,79,8
+    COMBOBOX        IDC_SPEEDMODE,60,6,66,53,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_ZIPSLIDER,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | TBS_TOOLTIPS | WS_TABSTOP,60,18,66,24
+    LTEXT           "Joystick Mode",IDC_STATIC,6,42,46,12
+    COMBOBOX        IDC_JOYSTICK,60,42,66,66,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Pause",IDC_PAUSE,144,78,66,12
+    PUSHBUTTON      "Screenshot",IDC_CONSOLEBUTTON2,144,60,66,12
+    PUSHBUTTON      "Capture State",IDC_SAVESTATE,60,96,66,12
+    PUSHBUTTON      "Restore State",IDC_RESTORESTATE,144,96,66,12
+    LTEXT           "Speed Mode",IDC_STATIC,6,6,48,12
+    LTEXT           "Video Type",IDC_STATIC,6,60,46,12
+    COMBOBOX        IDC_VIDEOFX,60,60,66,66,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Color Mode",IDC_STATIC,6,78,46,12
+    COMBOBOX        IDC_COLORMODE,60,78,66,66,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Zip Speed",IDC_STATIC,6,24,48,12
+    PUSHBUTTON      "Display Console",IDC_CONSOLEBUTTON3,144,24,66,12
+    COMBOBOX        IDC_STATE,7,96,36,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_LOADING DIALOGEX 0, 0, 30, 24
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_IMAGECTRLDISK,"Static",SS_BITMAP | SS_CENTERIMAGE,0,0,30,24
+END
+
+IDD_STATUS DIALOGEX 0, 0, 252, 22
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_BORDER
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "(...)",IDC_STATUS,7,7,238,8,0,WS_EX_TRANSPARENT
+END
+
+IDD_TABXML DIALOGEX 0, 0, 230, 110
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Name",-1,12,18,32,8
+    LTEXT           "Open-Apple",IDC_MULTIPLENAME,66,18,138,8
+    LTEXT           "Publisher",-1,12,30,31,8
+    LTEXT           "Closed-Apple / Option",IDC_MULTIPLEPUBLISHER,66,30,145,8
+    LTEXT           "Current",-1,12,72,26,8
+    LTEXT           "...",IDC_MULTIPLECURRENT,66,72,59,8
+    GROUPBOX        "Running",-1,6,6,216,48
+    GROUPBOX        "Multiple Disk",-1,6,60,216,42
+    LTEXT           "Year",-1,12,42,45,8
+    LTEXT           "Reset",IDC_MULTIPLEYEAR,66,42,148,8
+    PUSHBUTTON      "Swap",IDC_MULTIPLESWAP,161,69,54,12
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ACTIVEINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 240
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+
+    IDD_TABGENERAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 185
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 90
+    END
+
+    IDD_TABDISKCONF, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 108
+    END
+
+    IDD_TABPARAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 191
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 113
+    END
+
+    IDD_TABOPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 232
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 106
+    END
+
+    IDD_TABHELP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    IDD_TABRUNTIME1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 110
+    END
+
+    IDD_LOADING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 23
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 17
+    END
+
+    IDD_STATUS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 245
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 15
+    END
+
+    IDD_TABXML, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CURSOR1             CURSOR                  "cursor1.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_TABGENERAL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // Français (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
