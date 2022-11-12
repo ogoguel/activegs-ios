@@ -572,7 +572,27 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 {
     NSLog(@"activeGSList viewWillAppear %@",self);
 
-
+    
+    // Move files from Documents/Inbox to Documents (Items arriving through iOS "Open In"
+    NSLog(@"Moving files from Documents/Inbox to Documents so they're visible");
+    //Turn every file inside the directory into an array
+    // Note to self: remember to actually put files in the Documents folder. Use the code in the apparopriately marked file
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //strings to actually get the directories
+    NSString *appFolderPath = [path objectAtIndex:0];
+    NSString *inboxAppFolderPath = [appFolderPath stringByAppendingString:@"/Inbox"]; //add ".plist" to the end of the recipe name
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSArray *inboxContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSString stringWithFormat:inboxAppFolderPath, documentsDirectory] error:nil];
+    
+    //move all the files over
+    for (int i = 0; i != [inboxContents count]; i++) {
+        NSString *oldPath = [NSString stringWithFormat:@"%@/%@", inboxAppFolderPath, [inboxContents objectAtIndex:i]];
+        NSString *newPath = [NSString stringWithFormat:@"%@/%@", appFolderPath, [inboxContents objectAtIndex:i]];
+        [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:newPath error:nil];
+    }
+    
      if (self.sourceName)
      {
 #ifndef   ACTIVEGS_BACKGROUNDIMAGE
@@ -591,6 +611,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
     
 	[super viewDidLoad];
 	
+    
     
     // IOS8 ISSUE !!!!! DefaultRawHeight = UITableViewAutomaticDimension
     
