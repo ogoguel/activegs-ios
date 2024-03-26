@@ -428,7 +428,7 @@ int	x_lock_zoom = 0;
     
     [self.zv setUserInteractionEnabled:TRUE];
 
-	self.kbdc = [KBDController alloc]; 
+	self.kbdc = [[KBDController alloc] init]; 
 	[self.contentView addSubview:self.kbdc.view];
 	
 	self.view = self.contentView;

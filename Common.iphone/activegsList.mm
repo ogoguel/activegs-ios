@@ -376,7 +376,7 @@ static	UIImage* defaultImageII = nil;
     for(int i=0;i<list.elements.size();i++)
     {
         ActiveGSElement* el = &list.elements.at(i);
-        itemClass* ic = [itemClass alloc];
+        itemClass* ic = [[itemClass alloc] init];
 //        itemClass* ic = [itemClass alloc];
 
         ic->element = el;
@@ -690,7 +690,7 @@ static NSInteger compareImagesUsingSelector(id p1, id p2, void *context)
 	
     
     
-	AsyncImageView* asyncImage = [AsyncImageView alloc];
+	AsyncImageView* asyncImage = [[AsyncImageView alloc] init];
 	float s = [pManager resolutionRatio]*[pManager dpiRatio];
 	[asyncImage initImage:ic->element->thumb.c_str() target:cell.imageView width:64*s height:40*s];
 //	[asyncImage performSelectorOnMainThread:@selector(loadImage:) withObject:nil waitUntilDone:NO];

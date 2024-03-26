@@ -84,15 +84,15 @@
 	self.screenShot2.image = nil;
 	self.screenShot3.image = nil;
 	
-	AsyncImageView* asyncImage1 = [AsyncImageView alloc] ;
+	AsyncImageView* asyncImage1 = [[AsyncImageView alloc] init];
 	[asyncImage1 initImage:self->diskSelected->screenShots[0].c_str() target:self.screenShot1 width:128 height:80];
 	[asyncImage1 loadImage:nil];
 	
-	AsyncImageView* asyncImage2 = [AsyncImageView alloc];
+	AsyncImageView* asyncImage2 = [[AsyncImageView alloc] init];
 	[asyncImage2 initImage:self->diskSelected->screenShots[1].c_str() target:self.screenShot2 width:128 height:80];
 	[asyncImage2 loadImage:nil];
 	
-	AsyncImageView* asyncImage3 = [AsyncImageView alloc] ;
+	AsyncImageView* asyncImage3 = [[AsyncImageView alloc] init] ;
 	[asyncImage3 initImage:self->diskSelected->screenShots[2].c_str() target:self.screenShot3 width:128 height:80];
 	[asyncImage3 loadImage:nil];
 	

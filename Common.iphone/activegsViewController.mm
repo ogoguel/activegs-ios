@@ -153,7 +153,7 @@
 	self.tabView.delegate = self;
 	NSString *imgSource;
     
-	self.l0 = [activegsList alloc];
+	self.l0 = [[activegsList alloc] init];
 	//imgSource = [[NSBundle mainBundle] pathForResource:@ACTIVEGS_FIRSTTABLIST ofType:@"activegsxml"] ;
 	self.l0->listPath = pManager->firstTabXML.c_str();
 	self.l0->filter= ALL_NO_INDEX ;
@@ -165,14 +165,14 @@
     [self.l0.view setFrame:r];
 	[self.view addSubview:self.l0.view];	
 #else
-	activegsList* l3 = [activegsList alloc];
+	activegsList* l3 = [[activegsList alloc] init];
 	l3->listPath = "http://www.freetoolsassociation.com/xml/list.activegsxml";
     l3->versionPath = "http://www.freetoolsassociation.com/xml/version.dat";
 	l3->filter= ALL; 
 	l3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"FTA Website" image:[UIImage imageWithContentsOfFile: imgSource] tag:0]; ;
 	l3->trackerName = "FTA";
     
-	activegsList* l1 = [activegsList alloc];
+	activegsList* l1 = [[activegsList alloc] init];
 	l1->listPath = "http://www.virtualapple.org/xmlfiles/list.zip";
     l1->versionPath = "http://www.virtualapple.org/xmlfiles/version.dat";
 	l1->filter = ONLY_APPLE2 ;
@@ -180,7 +180,7 @@
 	/*NSString */imgSource = [[NSBundle mainBundle] pathForResource:@"Tab][" ofType:@"png"];
 	l1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Apple II" image:[UIImage imageWithContentsOfFile: imgSource] tag:0];
 	
-	activegsList* l2 = [activegsList alloc];
+	activegsList* l2 = [[activegsList alloc] init];
 	l2->listPath =  "http://www.virtualapple.org/xmlfiles/list.zip";;
     //	l2.title = @"Apple IIGS";
 	l2->filter = ONLY_2GS;
@@ -191,7 +191,7 @@
 #ifndef ACTIVEGS_ENABLE_DOCUMENT
 	self.docList=  nil;
 #else
-	self.docList = [activegsList alloc];
+	self.docList = [[activegsList alloc] init];
 	self.docList->listPath.Empty();
 	self.docList->filter = (int)(ALL_NO_INDEX|DOC_LIST);
 	self.docList->trackerName = "My2GS";	
