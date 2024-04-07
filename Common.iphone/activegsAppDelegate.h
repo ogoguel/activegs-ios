@@ -46,10 +46,12 @@
 #define ACTIVEGS_LAUNCHVIEWCONTROLLER activegsViewController
 
 #ifdef BESTOFFTA
+
+
 #define ACTIVEGS_TITLE "ActiveGS - Best Of FTA"	
 #define ACTIVEGS_CAPPTAINAPP "act384142"
 #define ACTIVEGS_CAPPTAINKEY "376e71d41db2422c88e1486a8a31e25b"
-#define ACTIVEGS_BACKGROUNDIMAGE "Default"
+//#define ACTIVEGS_BACKGROUNDIMAGE "Default"
 #define ACTIVEGS_FIRSTTABLIST "list" 
 #define ACTIVEGS_FIRSTTABTITLE "Best Of FTA" 
 #define ACTIVEGS_FIRSTTABTRACKER "BestOfFta"
@@ -58,9 +60,12 @@
 #define ACTIVEGS_IMAGEREQUIRED    // On ne peut pas lancer l'émulateur sans image
 #define ACTIVEGS_NOAPPLEBRANDING // Eliminer les logos Apple 2 & Apple 2GS
 #define ACTIVEGS_NOHARDWAREKEYBOARDETECTION // Pour passer la soumission Appstore
+#define ACTIVEGS_NOHARDWAREKEYBOARDDETECTION
 #define ACTIVEGS_NOTIFICATION
 #define HANDLE_URL
+#define ACTIVEGS_NOMFISUPPORT
 
+ 
 #elif ACTIVEGSKARATEKA
 #error unsupported
 

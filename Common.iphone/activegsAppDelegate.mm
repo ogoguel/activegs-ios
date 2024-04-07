@@ -298,22 +298,29 @@ void x_init_persistent_path(MyString& hp)
 	
 
     extern void activegs_driver();
+    extern void ios_load_roms();
     g_driver.init(activegs_driver);
     g_driver.x_apply_default_options = activegs_apply_default_options;
+    g_driver.x_config_load_roms = ios_load_roms;
     option.initOptions();
     
 	self.emulatorController = [[activegsEmulatorController alloc] init ] ;    // =retain
 	self.detailController = [[detailViewController alloc] init] ; // =retain
     
     
-
+#if BESTOFFTA
+    NSString* infoXB = @"infoViewControllerFTA";
+#else
     NSString* infoXB = @"infoViewController";
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         infoXB = [infoXB stringByAppendingString:@"-ipad"];
+#endif
     
     NSLog(@"Trying to load %@",infoXB);
 	self.infoController = [[infoViewController alloc] initWithNibName:infoXB bundle:nil  ]; // =retain
+    
+    NSLog(@"self.infoController %@",self.infoController);
+    
     
 	self.viewController = [[ACTIVEGS_LAUNCHVIEWCONTROLLER alloc] init  ]; // =retain
 

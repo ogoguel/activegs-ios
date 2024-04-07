@@ -165,7 +165,7 @@
 	// left Arrow
 	UIButton* backButton = [UIButton buttonWithType:(UIButtonType)101]; // left-pointing shape!
 	[backButton addTarget:self action:@selector(backButton:) forControlEvents:UIControlEventTouchUpInside];
-	[backButton setTitle:@"List" forState:UIControlStateNormal];
+	[backButton setTitle:@"Back" forState:UIControlStateNormal];
 	
 	// create button item -- possible because UIButton subclasses UIView!
 	UIBarButtonItem* browseItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];

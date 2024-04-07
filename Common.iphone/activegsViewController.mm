@@ -93,10 +93,17 @@
     [self.loader startAnimating];
     self.loader.hidden=false;
     
+    int safeY = 0;
+	
+    if (@available( iOS 11.0, * )) {
+        if ([[[UIApplication sharedApplication] keyWindow] safeAreaInsets].bottom > 0) {
+            // iPhone with notch
+            safeY =[[[UIApplication sharedApplication] keyWindow] safeAreaInsets].bottom;
+        }
+    }
 	
 	
-	
-	self.navView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, r.size.width, BARVIEW_HEIGHT)];
+	self.navView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, safeY, r.size.width, BARVIEW_HEIGHT)];
 	self.navView.barStyle = UIBarStyleBlack;
  //   self.navView.delegate = self;
 	self.navItem = [[UINavigationItem alloc] initWithTitle:@ACTIVEGS_TITLE];
@@ -145,7 +152,7 @@
 	
 	[self.view addSubview:self.navView];
     
-	r.origin.y = self.navView.frame.size.height;
+    r.origin.y = self.navView.frame.size.height + self.navView.frame.origin.y;
 	r.size.height -= r.origin.y;
     
     self.tabView = [[UITabBarController alloc] init];
@@ -395,7 +402,7 @@
 
 
 
-void 	x_config_load_roms()
+void 	ios_load_roms()
 {
     extern byte *g_rom_fc_ff_ptr;
     extern byte *g_rom_fc_ff_ptr;
