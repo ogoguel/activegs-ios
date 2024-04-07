@@ -345,7 +345,7 @@
 	// vérifie que l'émulateur fonctionne
 	if (!pMac)
 	{
-		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"ActiveGS" message:@"Select a program in the list first." delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil] autorelease];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ActiveGS" message:@"Select a program in the list first." delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
 		[alert show];
 		return ;
 	}

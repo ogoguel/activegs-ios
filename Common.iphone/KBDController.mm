@@ -569,10 +569,10 @@ extern int findCode(const char* _s);
 	[self setMenuBarVisibility:TRUE]; // So First time users are not lost!
     
     self.mfiControllerHandler = [[MfiGameControllerHandler alloc] init];
-    __weak typeof(self) weakSelf = self;
+    
     [self.mfiControllerHandler discoverController:^(GCController *gameController) {
-        [weakSelf setupMfiController:gameController];
-        [self setInputMode:inputMode&INPUTMODE_PAD];
+        [self setupMfiController:gameController];
+        [self setInputMode:self->inputMode&INPUTMODE_PAD];
         [pManager setNotificationText:@"mFi Controller Connected"];
     } disconnectedCallback:^{
         [pManager setNotificationText:@"mFi Controller Disconnected"];
