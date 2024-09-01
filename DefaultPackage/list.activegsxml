@@ -1,4 +1,4 @@
-﻿
+
 <?xml-stylesheet href="fichier.xsl" type="text/xsl"?>
 <list version="1" >
 	<source 
@@ -6,7 +6,8 @@
 		icon="http://www.freetoolsassociation.com/fta/activegs/ActiveGS.png"
 		revision ="1.01"
 		 >
-		ActiveGS - Best of FTA
+		ActiveGS - Best of FTA - March 2016
+        Version française et corrections par Benzebut - Juin 2024
 	</source>
 	
 	<config version="2" id="floby">
@@ -14,6 +15,7 @@
 		<year>1987</year>
 		<publisher>Second Sight Software</publisher>
 		<desc><![CDATA[
+        <langue>[US[
 		This was the first major development of the team on the Apple II : the game included 100 levels, 
 		a level-editor (hence its tagline the "buildable break-out"!), 
 		and a end-game animation that no-one has ever seen!<br />
@@ -22,12 +24,22 @@
 		years after, it is hard to imagine that it could even run but, at that time, we didn't know what an assembler was
 		(nor the difference between object and source code).<br />
 		
-		Under the Second Sight Software Label, the was presented at the French Apple Expo in 1987, 
-		and sent to major US publishing companies in the USA (Epyx, DataSoft, Electronics Art, ...). 
-		It received very good feedback from those professionals, which impressed the teenagers we were.<br />
+		Under the Second Sight Software label, the game was presented at the French Apple Expo in 1987,
+		and sent to major US publishing companies (Epyx, DataSoft, Electronics Art, ...).
+		It received very good feedbacks from those professionals, which impressed the teenagers we were.<br />
 
-		Unfortunately, the Apple II was fading away and publishing new titles did not make much sense
-		while the IIGS was just being launched : eventually, the game finished its life as a freeware for the pleasure of players all around the world!
+		Unfortunately, the Apple II market was fading away and publishing new titles did not make much sense
+		while the new IIGS was just being launched : eventually, the game finished its life as a freeware for the pleasure of players all around the world!
+       ]]></<langue>[US
+         <langue>[FR[
+         Ce fut le premier grand développement de l'équipe sur l'Apple II : le jeu incluait 100 niveaux, un éditeur de niveaux (d'où son nom de Break-Out modifiable !) et une animation finale que que personne n'a jamais vu !<br />
+         
+         Le jeu fut entièrement programmé en entrant chaque ligne de code directement dans les secteurs en utilisant un éditeur de blocs (Moby Disk II): après toutes ces années, il est difficile d'imaginer que cela puisse fonctionner, mais à cette époque, nous ignorions ce qu'un assembleur était (ni la différence entre objet et code source.<br />
+         
+         Sous le label Second Sight Software, le jeu fut présenté à l'Apple Expo 1987 à Paris et envoyé aux grands éditeurs américains (Epyx, DataSoft, Electronics Art, ...). Il reçu de très bons retours par ces professionnels, qui impressionna les adolescents que nous étions.<br />
+         
+         Hélas, le marché de l'Apple II disparaissait et publier de nouveaux titres n'était pas jugé comme pertinent alors que le nouvel IIGS venait d'être lancé: le jeu finit donc sa vie en logiciel libre pour le plaisir des joueurs à travers le monde !
+         ]]></<langue>[FR
 		]]></desc>
 		<pic type="thumbnail" width="64" height="40">floby3.png</pic>
 		<format>APPLE2</format>
@@ -44,11 +56,15 @@
 		<name>Star Wizard</name>
 		<year>1989</year>
 		<publisher>Sergent Claude</publisher>
-    <desc>
-      <![CDATA[
+    <desc><![CDATA[
+	<langue>[US[
     With friends from Savoie, Pierre and Dany developed this state-of-the art 3D real time game (released, under the Sergent Claude label).
-    This game was highly appreciated by the Second Sight Software members, and it was then decided to create a new team that 
+    This game was highly appreciated by the Second Sight Software members, and it was then decided to create a new team on the IIGS that 
     would be composed of naturally complementary members in design, art, music, metal- and math- powered development: FTA was born.
+       ]]></<langue>[US
+         <langue>[FR[
+	Avec des amis savoyards, Pierre et Dany développèrent un jeu avec le meilleur rendu 3D en temps réel connu (distribué sous le label Sergent Claude). Ce jeu fut hautement apprécié par les membres du Second Sight Software et il fut alors décidé de créer un nouveau groupe sur le IIGS qui allait se former autour de la complémentarité des membres en programmation, art, musique et les développements sur le métal et en math : FTA était né. 
+         ]]></<langue>[FR
     ]]></desc>
 		<format>2GS</format>
 		<image slot="5" disk="1">StarWizard (2002).fta</image>
@@ -65,22 +81,37 @@
 		<year>1989</year>
 		<publisher>FTA</publisher>
 		<desc><![CDATA[
-		<p><b>The demo that has made FTA the famous beyond their Dijon &amp; Aix-Les-Bains hideouts !</b></p>
+ 	<langue>[US[
+		<p><b>The demo that has made FTA the French team famous beyond their Dijon &amp; Aix-Les-Bains hideouts !</b></p>
     <p>
 		It has evolved from a simple parametric-based animation (thanks to Arkanoid for the sprites!) to a full 3D-powered demo with modern graphics and fancy musics.
 		Even though there was a bug in the 3D calculation (the shapes should never have collapsed onto themselves), people loved the demo.
 		</p>
     <p>
     In less than 2 weeks, the first version spread quickly from Dijon to <a target="_blank" href="http://groups.google.fr/group/comp.sys.apple/browse_thread/thread/79404fd00b1c66c2/33488ef31805980e?hl=fr&lnk=gst&q=nucleus++#33488ef31805980e">Cupertino</a>, 
-		where the Green Software Engineering team reviewed it. Unfortunately, due to a glitch in a low level drive command, it was incompatible with the upcoming ROM03 Motherboard which Apple was about to release.
-		Through their Switzerland office, Apple sent us a prototype of the ROM03 motherboard to make it work in time for the upcoming AppleFest in San Francisco, 
-		where then VP Jean-Louis Gass&eacute;e used it during his talk. 
+		where the Green Software Engineering team reviewed it. Unfortunately, due to a glitch in a low level drive command, the demo was incompatible with the upcoming ROM03 Motherboard which Apple was about to release.
+		Through their Switzerland subsidiary, Apple sent us a prototype of the ROM03 motherboard to make it work in time for the upcoming AppleFest in San Francisco, 
+		where then VP Jean-Louis Gassée used it during his talk. 
 	</p>
 		<p></i>The rest is history ;)</i> </p>
    
     <p>
-    Eventually, Nucleus was later customized to serve as an advertisment for the SPIT company (unfortunately, no copy could be retrieved) 
+    Eventually, Nucleus was later customized to serve as an advertisement for the SPIT company (unfortunately, no copy could be retrieved).
     </p>
+       ]]></<langue>[US
+         <langue>[FR[
+	<p><b>La démo qui a rendu le groupe français FTA célèbre au delà de leurs bases de Dijon et d'Aix les Bains !</b></p>
+    <p>
+	Elle a évolué d'une animation pré-calculée (merci à Arkanoid pour les rendus !) en une démo en pur 3D avec des graphiques modernes et des musiques entrainantes. Même s'il y avait une erreur dans les calculs en 3D (les formes n'auraient jamais dû se superposer), les gens ont adoré la démo. </p>
+    <p>
+	En moins de 2 semaines, la première version s'est diffusée rapidement de Dijon à <a target="_blank" href="http://groups.google.fr/group/comp.sys.apple/browse_thread/thread/79404fd00b1c66c2/33488ef31805980e?hl=fr&lnk=gst&q=nucleus++#33488ef31805980e">Cupertino</a>, où les ingénieurs de Green Software Engineering l'expertisèrent. Hélas, en raison d'un problème dans une commande de lecteur de bas niveau, la démo était incompatible avec la nouvelle version de la carte mère ROM03 qu'Apple allait sortir. 
+	A partir de leur filiale en Suisse, Apple nous a envoyé un prototype de la carte mère en ROM03 afin de pouvoir la faire fonctionner à temps pour l'AppleFest de San Francisco, où le vice-président Jean-Louis Gassée l'a utilisé durant sa présentation. 
+</p>
+		<p></i>Comme il se doit, le reste fait partie de l'histoire ;)</i> </p>
+   
+    <p>
+	Finalement, Nucleus fut par la suite modifié pour servir de support publicitaire pour l'entreprise SPIT (hélas, aucune copie n'a été conservée).
+         ]]></<langue>[FR
 		]]></desc>
 		<pic type="thumbnail" width="64" height="40">nucleus_2.png</pic>
 		<pic type="screenshot" width="320" height="200">nucleus.png</pic>
@@ -96,10 +127,11 @@
 		<year>1990</year>
 		<publisher>FTA</publisher>
 		<desc><![CDATA[
+ 	<langue>[US[
 		<p>
 		One of the successes of the first version of Nucleus was its very fast loading routines (even though most of the users
-		only know the ROM03 version which does not include them!)
-		Those fast routines came originally from SpeedySmith, a very fast disk copier but with limited features and raw (not to say crude) interface.
+		only know the ROM03 version which does not include them!). 
+		Those fast routines came originally from SpeedySmith program, a very fast disk copier but with limited features and raw (not to say crude) interface.
 		</p>
 		<p>
 		After having written Nucleus during the summer, the FTA team gathered again the next month (just before going back to college) to create a new program that would be a mix between
@@ -107,15 +139,31 @@
 		</p>
 		<p>
 		Thanks to the speed of the copy, its large set of features (it was often used by Mac users to quickly format disks for example), and its appealing interface, it became
-		a very successful shareware program, and we were very pleased to receive (snail) mails from people around the world from persons liking our work and asking us to "keep up the good work" : 
+		a very successful shareware program, and we were very pleased to receive (snail) mails from people around the world who liked our work and asking us to "keep up the good work" :
 		: it was then that we learnt how popular that expression was!<br /> 
-		A commercial version of Photonix was later developed (Photonix II) and sold by Toolbox, before finishing its life as an abandonware.
+		A commercial version of Photonix was later developed (Photonix II) and sold by the Toolbox company, before finishing its life as an abandonware.
 		</p>
 		<p>
-		15 years later, Photonix was recently brought to life as a prior-artifact in an anti-virus 
+		15 years later, Photonix was brought to life as a prior-artifact in an anti-virus 
 		<a href="http://www.fr.com/files/uploads/publications/DSU-Medical-Corp-v-JMS-Co-Ltd/Symantec_Corp_v_Computer_Assocs_Intl_Inc_Fed_Cir_2007-1201.pdf">patent infrigment lawsuit</a> 
 		: good programs never die!   
 		</p>
+       ]]></<langue>[US
+         <langue>[FR[
+	Une des raisons du succès de la première version de Nucleus fut ses routines de chargement ultra-rapides (même si la plupart des utilisateurs ne connaissent que la version pour la ROM03 qui ne les inclut pas !).
+	Ces routines optimisées venaient à l'origine du programme SpeedySmith, un copieur ultra rapide mais avec des options limitées et une interface minimaliste (pour ne pas dire pauvre). 
+		</p>
+		<p>
+	Après avoir écrit Nucleus durant les vacances d'été, le groupe FTA se rassembla de nouveau juste avant de retourner au collège pour créer un nouveau programme qui allait être un mélange entre Speedysmith (pour les fonctions du copieur) et Nucleus (pour les graphiques) : c'est comme cela que Photonix débuta ! </p>
+		<p>
+	Grâce à la vitesse de copie, ses nombreuses options (il était souvent utilisé par les utilisateurs Mac pour formater leurs disquettes rapidement) et son interface superbe, il est devenu un logiciel partagé très populaire et nous étions fiers de recevoir des courriers (papiers) de personnes du bout du monde qui nous demandaient de "continuer ces beaux travaux" : c'est comme cela que nous avons su que l'expression était aussi populaire !  <br />
+	Une version commerciale de Photonix fut publiée par la suite (Photonix II) par l'entreprise Toolbox, avant de finir sa vie en logiciel abandonné.
+</p>
+		<p>
+	15 années plus tard, Photonix fut ressuscité comme preuve dans un procès  <a href="http://www.fr.com/files/uploads/publications/DSU-Medical-Corp-v-JMS-Co-Ltd/Symantec_Corp_v_Computer_Assocs_Intl_Inc_Fed_Cir_2007-1201.pdf">pour violation de brevet </a> 
+	: les bons programmes ne meurent jamais ! 
+</p>
+ ]]></<langue>[FR
 		]]></desc>
 		<pic type="thumbnail" width="64" height="40">photonix_2.png</pic>
 		<pic type="screenshot" width="320" height="200">photonix_1.png</pic>
@@ -129,8 +177,16 @@
 	   <name>Mini Prix</name>
 	   <year>1990</year>
 	   <publisher>FTA</publisher>
-     <desc>A very realistic racing game simulation that did not want to compromise the fluidity of the control for the graphic immersion of the player !
-	  The game could easily win the-smallest-rendering-screen-ever-being-used-in-a-racing-game award, but nevertheless, the game was fun to play: easy to learn, hard to master!</desc>
+<desc><![CDATA[
+<langue>[US[
+A very realistic racing game simulation that did not want to compromise the fluidity of the control for the graphic immersion of the player !
+	  The game could easily win the-smallest-rendering-screen-ever-being-used-in-a-racing-game award, but nevertheless, the game was fun to play: easy to learn and hard to master! But it had a quite interesting sound engine that could not be forgotten.
+       ]]></<langue>[US
+         <langue>[FR[
+Un jeu de courses automobile réaliste qui ne voulait aucun compromis pour la fluidité du contrôle par l'immersion graphique du joueur !
+	Ce jeu pourrait facilement recevoir le prix du "plus petit rendu sur un écran pour un jeu d'arcade", mais néanmoins il était fort amusant à jouer, facile à comprendre et impossible à maitriser ! Cependant, il avait un son de moteur de course qui ne pouvait pas s'oublier.
+ ]]></<langue>[FR
+		]]></desc>
 	   <pic type="thumbnail" width="64" height="40">miniprix_2.png</pic>
     <format>2GS</format>
 	  <image slot="5" disk="1">MINIPRIX.FTA</image>
@@ -146,10 +202,14 @@
     <publisher>FTA</publisher>
     <desc>
       <![CDATA[
+<langue>[US[
 		FTA Members have always been fan of racing games: during the development of Photonix, only watching F1 GP Race could distract the team!<br />
-		Even though Blue Helmet was far from being finished, it provided some pretty cool racing experience at the decent frame rate. 
-		]]>
-    </desc>
+		Even though Blue Helmet game was far from being finished, it provided some pretty cool racing experience at the decent frame rate. Well for such a game at that time..
+       ]]></<langue>[US
+         <langue>[FR[
+	Les membres du FTA ont toujours été des grands adeptes des jeux de courses automobiles : durant le développement de Photonix, la seule chose qui pouvait distraire le groupe était de regarder les grands prix ! Même si le jeu Blue Helmet était loin d'être fini, il offrait une expérience de course sympa à une fréquence d'images descente. Enfin, pour un tel jeu à cette époque lointaine...
+ ]]></<langue>[FR
+	]]></desc>
     <pic type="thumbnail" width="320" height="200">bluehelmet_1.png</pic>
     <format>2GS</format>
     <image slot="5" disk="1">BLUE_HELMET.FTA</image>
@@ -164,13 +224,23 @@
 		<year>1990</year>
 		<publisher>FTA</publisher>
 		<desc><![CDATA[
+<desc><![CDATA[
+<langue>[US[
 		At a time where there was no video console at home, arcade gaming was the only way to get a fully immersive experience, and Space Harrier was one of our favourite games. <br />
 		This project emerged after having seen the Atari ST version that was really appealing, and we wanted to build something similar to bring that hi-speed spirit onto the IIGS.
 		Actually, the project started with Atari ST development in order to extract (not to say rip) all the sprites from the computer memory while the game was running,
-		 and then to transfer the files back to the IIGS. Exchanging information between computers seems so easy today, but at that time, it has required to build a custom
-		NULL Modem cable, and find communication software on both machines that would implement the ZModem protocol in a similar way: needless to say that the whole process took several weeks!<br />
+		 and then to transfer the files back to the IIGS. Exchanging files between computers seems so easy today, but at that time, it has required to build a custom
+		NULL Modem cable, and find communication software on both machines that would implement the ZModem protocol in a similar way: needless to say that the whole process took several weeks to be achieved!<br />
 		With those nice looking assets available, it encouraged us to develop some great graphic routines that would nicely use them.<br />
-		The result is one of our favorite productions, and even now, the version easily matches the official Sega version on iPhone (ok, their version is based on the Megadrive port)
+		The result is one of our favorite productions, and even now, the version easily matches the official Sega version on iPhone (ok, their version is based on the Megadrive port). 
+       ]]></<langue>[US
+         <langue>[FR[
+	A cette époque, il n'y avait pas de console vidéo à la maison, les bornes d'arcades étaient le seul moyen d'avoir une expérience immersive totale et Space Harrier était un de nos jeux préférés. <br />
+	Ce projet est apparu après avoir vu la version faite pour Atari ST qui était très tentante et nous voulions construire quelque chose de similaire pour avoir cette expérience de vitesse sur le IIGS. 
+	En fait, le projet commença par le développement sur Atari ST pour en extraire (pour ne pas dire piller) tous les rendus de la mémoire de l'ordinateur alors que jeu tournait et ensuite de transférer les fichiers sur le IIGS. L'échange de fichiers peut sembler facile de nos jours, mais à cette époque, cela demandait de bricoler un câble modem non-nul et trouver des logiciels de communication sur les deux machines qui supportaient le protocole ZModem : il va sans dire que ce procédé a pris des semaines pour aboutir ! <br />
+	Avec ces jolis rendus de disponibles, cela nous a motivé pour développer de belles routines graphiques qui pourraient les utiliser. <br />
+	Le résultat est l'une de nos productions préférées et même maintenant, cette version est fidèle à la version officielle de Sega disponible désormais sur iPhone (bon, leur version est basée sur l'adaptation Megadrive). 
+ ]]></<langue>[FR
 		]]></desc>
 		<pic type="thumbnail" width="64" height="40">harrier1.png</pic>
 		<format>2GS</format>
@@ -186,11 +256,17 @@
 		<name>Modulae</name>
 		<year>1990</year>
 		<publisher>FTA</publisher>
-		<desc><![CDATA[
-		<p>Quite often,a demo starts from a set of small and independent routines developed without any idea on where they could be used. But at a certain point, and that's the magic
+<desc><![CDATA[
+<langue>[US[
+		<p>Quite often, a demo starts from a set of small and independent routines developed without any idea on where they could be used, just to test an idea. But at a certain point, and that's the magic
 		of software development, everything naturally fits together : alchemy in action!</p>
 		<p> This is how Moduale was created by reuniting all those routines into a nice package : its 3D content was outstanding at that time, and
-		it was the most polished program we ever produced.</p>
+		it was the most polished program we ever produced. All the various modules of the demo show a new technical excellence that is achieved  on the IIGS, most of the time never seen before, while original musics do not stop playing. </p>
+       ]]></<langue>[US
+         <langue>[FR[
+Comme souvent, une démo commence par un jeu de petites et indépendantes routines développées sans savoir comment les utiliser, juste pour tester une idée. Mais à un certain point et c'est ce qui est magique dans le développement logiciel, tout s'assemble naturellement : l'alchimie fonctionne ! </p>
+<p> C'est comme cela que Modulae a été créée en fusionnant toutes ces routines dans un joli paquet : ses contenus 3D étaient incroyables à cette époque et ce fut le programme le plus complet que nous avons jamais produit. Tous les différents modules de la démo montrent une nouvelle réussite technique qui est réalisée sur le IIGS, souvent jamais vu précédemment, alors que les musiques ne s'interrompent pas.
+ ]]></<langue>[FR
 		]]></desc>
 		<pic type="thumbnail" width="64" height="40">modulae_4.png</pic>
 		<format>2GS</format>
@@ -214,15 +290,21 @@
 		<name>XMAS Demo</name>
 		<year>1990</year>
 		<publisher>FTA/MRZ</publisher>
-		<desc><![CDATA[
+<desc><![CDATA[
+<langue>[US[
 		<p>After the success of our early programs, we kept on experimenting new techniques to go beyond what we had already done : new options were made possible by having a finer 
 		control over the Apple IIGS hardware (pedal to the metal!), but on the other hand, it meant reprogramming almost every aspect of the computer. In retrospect, a lot of hard work was spent on invisible stuff, but
 		altogether, it is that continuous effort on every front that gives such a polished result. They were told it was impossible, so they did it.
 		</p>
 		<p>This is how the XMas demo was built, even though the technical exploits slightly outgrow the demo content : it was the first demo with music-enabled loading routines, 
-		overscan scrolls, and more important entirely coded in Geneva!</p>
+		overscan scrolls, full screen moving texts, dedicated parts with guest stars (FUCK and GSA) and more important entirely coded in Geneva!</p>
+       ]]></<langue>[US
+         <langue>[FR[
+<p>Après le succès de nos premiers programmes, nous avons continué d'expérimenter de nouvelles techniques pour aller au delà de ce que nous avions déjà produit : de nouvelles options furent générées pour avoir un contrôle plus fin de l'architecture du IIGS (coder le métal !), mais d'un autre côté, cela voulait dire reprogrammer presque tous les composants de l'ordinateur. Avec le recul, beaucoup de choses furent consacrées à réaliser des bidouilles invisibles, mais au final ce fut ce travail continue sur tous les aspects de la machine qui a donné un résultat si parfait. Il leur avait été dit que c'était impossible, donc ils l'ont fait.
+</p>
+		<p>C'est comme cela que la Xmas démo a été construite, même si l'exploit technique dépasse le contenu même de la démo : c'était la première qui avait des routines pour des musiques lors des chargements, des rendus dans les bordures, des textes mouvants plein écran, des invités de marque (FUCK et GSA) pour certaines parties et encore plus important, entièrement codée à Genève ! </p>
+ ]]></<langue>[FR
 		]]></desc>
-		
 		<pic type="thumbnail" width="64" height="40">xmas_2.png</pic>
 		<format>2GS</format>
 		<image slot="5" disk="1">XMASDEMO.FTA</image>
@@ -242,14 +324,16 @@
 		<name>Pom's Animations</name>
 		<year>1990</year>
 		<publisher>SSS</publisher>
-    <desc>
-     <![CDATA[
-     To bring some coolness to their companion disks, editors of the French Toolbox and Pom's magazines contacted 
-     us to add some fancy animations at the disk boot up. Thanks to tons of unused routines and musics, we've been able to create
-     many demos on a monthly basis : that was a demanding tasks for students, and a forging experience to deliver quality product on time!
-     ]]>
-    </desc>
-
+<desc><![CDATA[
+<langue>[US[
+     To bring some coolness to their companion disks, editors of the Toolbox and Pom's French magazines contacted
+     us to add some fancy animations at the disk boot up. Thanks to tons of unused routines and musics for the IIGS, we've been able to create
+     many demos on a monthly basis : that was a demanding tasks for students, and a forging experience to deliver quality product on time! Well, officially...
+       ]]></<langue>[US
+         <langue>[FR[
+Pour apporter de l'attrait aux disquettes qu'ils distribuaient, les éditeurs des magazines français ToolBox et Pom's nous avaient contacté pour ajouter des animations au démarrage des disquettes. Grâce à plein de routines et musiques que nous n'avions jamais utilisé pour le IIGS, nous avons été en mesure de créer plein de petites démos à un rythme mensuel : c'était un travail contraignant pour des étudiants et une riche expérience pour fournir à temps le produit fini ! Enfin, officiellement...
+ ]]></<langue>[FR
+    ]]></desc>
     <pic type="thumbnail" width="64" height="40">poms_1.png</pic>
 		<format>2GS</format>
     
@@ -269,7 +353,14 @@
 		<name>Oil Landers</name>
 		<year>1991</year>
 		<publisher>FTA</publisher>
-		<desc>A Stellar7 tribute! </desc>
+<desc><![CDATA[
+<langue>[US[
+	A Stellar7 tribute! A quick version of the game made by the team, just to have it on the IIGS like the other computers of that time...
+       ]]></<langue>[US
+         <langue>[FR[
+	Un hommage au jeu Stellar7. Une petite version du jeu faite par le groupe, simplement pour l'avoir sur le IIGS comme les autres ordinateurs de cette époque...
+ ]]></<langue>[FR
+    ]]></desc>
 		<format>2GS</format>
 		<image slot="5" disk="1">Oil_Landers.fta</image>
 			<pic type="thumbnail" width="320" height="200">oillanders_1.png</pic>
@@ -285,7 +376,14 @@
 		<name>Boucin'Ferno</name>
 		<year>1991</year>
 		<publisher>FTA</publisher>
-		<desc>Marble madness look alike!</desc>
+<desc><![CDATA[
+<langue>[US[
+Marble Madness look alike! A quick version of the game made by the team, just to have it on the IIGS like the other computers of that time...
+]]></<langue>[US
+         <langue>[FR[
+	Une copie du jeu Marble Madness. Une petite version du jeu faite par le groupe, simplement pour l'avoir sur le IIGS comme les autres ordinateurs de cette époque...
+ ]]></<langue>[FR
+    ]]></desc>
 		<pic type="thumbnail" width="64" height="40">bouncinferno_4.png</pic>
 		<format>2GS</format>
 		<image slot="5" disk="1">BOUNCIN_FERNO.FTA</image>
@@ -303,20 +401,30 @@
 		<name>Delta Demo</name>
 		<year>1991</year>
 		<publisher>FTA</publisher>
-    <desc>
-         <![CDATA[
+ <desc><![CDATA[
+<langue>[US[
     <p>The final demo from the FTA</p>
     <p>Even if it looks like a simple demo (as there's just one part), the Delta Demo contained some highly tuned code.<br />
-    * First, for the first time on the IIGS, a MOD based music (thanks Moby!) that would go beyond the 64KB limit of the Ensoniq. 
-    Those routines were later exposed in the NoiseTracker suite<br />
-    *Second, a multi-threading simulator (!) : all the display was performed during the VBL interrupt, while the main processor 
-    was creating the code to display the next object. Once the code was ready, then it was being used by the VBL interrupt, while the main processor works off the next object.
-	 Quite fancy at that time, and this is what has allowed us to create 3D wireframe based real-time (or so) animation at 50hz per second on a 2.8Mhz processor!
+    * First, for the first time on the IIGS, a MOD based music (thanks Moby!) that would go beyond the 64KB limit of the Ensoniq sound system. 
+    Those routines were later exposed in the NoiseTracker suite.<br />
+    *Second, a multi-threading simulator (!) : all the displays were performed during the VBL interrupt, while the main processor
+    was creating the code to display the next object. Once the code was ready, then it was being used by the VBL interrupt, while the main processor works on the next object to display.
+	 Quite fancy at that time, and this is what has allowed us to create 3D wireframe based real-time (or so) animation at 50hz per second on a 2.8Mhz processor! These are not typos, but the real IIGS features...
 	</p>
-     <p>After having delivered so many products in 2 years, it was time for the team to move onto something else, but this version was a nice goodbye gift.
-    <p>For the record, it was called the Delta demo to honour an Amiga Demo Maker who used to create everything himself : code, art & music!
-  ]]></desc>
-
+     <p>After having delivered so many products in 3 years, it was time for the team to move onto something else, but this version was a nice goodbye gift.
+    <p>For the record, it was called the Delta demo to honor an Amiga Demo Maker who used to create everything himself : code, art & music!
+]]></<langue>[US
+         <langue>[FR[
+    <p>La dernière démo par le FTA</p>
+    <p>Même si cela semble une démo simple (et ce n'est qu'une partie), la Delta Demo contient du code hautement peaufiné. <br />
+* D'abord, pour la première fois sur le IIGS, une musique au format MOD (merci Moby !) pouvait utiliser plus que les 64KB du coprocesseur son Ensoniq. Ces routines furent par la suite employées dans le logiciel NoiseTracker. <br />
+* Ensuite, un simulateur multi-synchro (!) : tout l'affichage était fait durant les interruptions VBL, pendant que le processeur principal créait le code pour afficher le prochain objet. Une fois que le code était prêt, il était alors poussé lors de l'interruption VBL, pendant que le processeur principal travaillait sur le prochain objet à afficher.
+Assez impressionnant à l'époque et c'est ce qui nous a permis de créer des animations 3D en fil de fer en temps réel (ou presque) à 50Hz par seconde sur un processeur à 2.8 Mhz ! Ce ne sont pas des erreurs de frappe, mais les vraies caractéristiques du IIGS... 
+	</p>
+     <p>Après avoir produit tant de logiciels en 3 ans, il était temps pour l'équipe de passer à autre chose, mais cette version fut un joli cadeau d'au revoir.
+    <p>Pour information, elle fut appelée la Delta Demo pour honorer un créateur de démos sur Amiga qui créait tout tout seul : code, rendu & musique ! 
+ ]]></<langue>[FR
+    ]]></desc>
   <pic type="thumbnail" width="64" height="40">delta_3.png</pic>
 		<format>2GS</format>
 		<image slot="5" disk="1">DELTA.FTA </image>
@@ -330,23 +438,28 @@
 		<bootslot>5</bootslot>
      </config>
 
-<!--
   <config version="2" id="noisetracker">
     <name>Noise Tracker</name>
     <year>1991</year>
     <publisher>FTA</publisher>
     <desc>FTA music player</desc>
-    <desc>
-      <![CDATA[
+<desc><![CDATA[
+<langue>[US[
       <p>
       The music from the Delta demo was composed on an Amiga, as there was no similar tool available of the IIGS. Even the undisputed music composer, Soundsmith, was limited 
-      to the 64Kb of the Ensoniq (even though we co-designed the 128KB extension while visiting Huibert in Madrid).<br />
+      to the 64Kb of the Ensoniq sound processor (even though we co-designed the 128KB extension while visiting Huibert in Madrid).<br />
       This is why Noisetracker was started and lead the path to a new generation of Music software on the IIGS.</p>
       <p>
-      As a tribute to our demo background, a nice demo with simulated z-buffer was added to add some polish to the program.
+      As a tribute to our demo background, a nice intro with simulated z-buffer was added to add some polish to the program.
       </p>
-      
-      ]]></desc>
+]]></<langue>[US
+         <langue>[FR[
+	La musique de la Delta Demo fut composée sur un Amiga, car il n'y avait pas d'outil similaire de disponible sur le IIGS. Même le logiciel de musique incontesté SoundSmith, était limité par les 64Kb du coprocesseur son Ensoniq (même si nous avions co-construit l'extension 128Kb alors que nous visitions Huibert à Madrid). <br />
+	C'est pourquoi Noisetracker fut conçu et lança une nouvelle génération de logiciels de musique sur le IIGS. </p>
+      <p>
+	Comme un hommage à nos précédentes démos, une jolie intro avec un rendu en 3D (Z-buffer) fut ajoutée pour compléter le programme. 
+ ]]></<langue>[FR
+  ]]></desc>
     <pic type="thumbnail" width="64" height="40">noisetracker_1.png</pic>
     <format>2GS</format>
     <image slot="5" disk="1">NOISETRACKER.FTA</image>
@@ -356,6 +469,23 @@
 	
     <bootslot>5</bootslot>
   </config>
--->
+  
+
+<config version="2" id="columns">
+        <name>Fun Columns</name>
+        <year>1991</year>
+        <publisher>FTA</publisher>
+        <desc><![CDATA[
+        CDA/P8/P16 App
+        ]]></desc>
+        <pic type="thumbnail" width="64" height="40">thumb_columns.png</pic>
+        <format>2GS</format>
+        <image slot="5" disk="1">columns.zip</image>
+                <pic type="screenshot" width="320" height="200">columns_1.png</pic>
+                <pic type="screenshot" width="320" height="200">columns_2.png</pic>
+                <pic type="screenshot" width="320" height="200">columns_3.png</pic>
+    <bootslot>5</bootslot>
+    </config>
+
 </list>
   
