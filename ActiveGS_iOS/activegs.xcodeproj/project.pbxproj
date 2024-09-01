@@ -217,6 +217,18 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		7E32C4602C0B128000457214 /* columns_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45B2C0B128000457214 /* columns_1.png */; };
+		7E32C4612C0B128000457214 /* columns_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45B2C0B128000457214 /* columns_1.png */; };
+		7E32C4622C0B128000457214 /* columns_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45C2C0B128000457214 /* columns_3.png */; };
+		7E32C4632C0B128000457214 /* columns_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45C2C0B128000457214 /* columns_3.png */; };
+		7E32C4642C0B128000457214 /* columns.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45D2C0B128000457214 /* columns.zip */; };
+		7E32C4652C0B128000457214 /* columns.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45D2C0B128000457214 /* columns.zip */; };
+		7E32C4662C0B128000457214 /* columns_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45E2C0B128000457214 /* columns_2.png */; };
+		7E32C4672C0B128000457214 /* columns_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45E2C0B128000457214 /* columns_2.png */; };
+		7E32C4682C0B128000457214 /* thumb_columns.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45F2C0B128000457214 /* thumb_columns.png */; };
+		7E32C4692C0B128000457214 /* thumb_columns.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C45F2C0B128000457214 /* thumb_columns.png */; };
+		7E32C46B2C0B134500457214 /* poms_toolbox.2mg.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C46A2C0B134500457214 /* poms_toolbox.2mg.zip */; };
+		7E32C46C2C0B134500457214 /* poms_toolbox.2mg.zip in Resources */ = {isa = PBXBuildFile; fileRef = 7E32C46A2C0B134500457214 /* poms_toolbox.2mg.zip */; };
 		7E51481F1CA6B5CE005DA0A6 /* ActiveGS.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E51480C1CA6B5CE005DA0A6 /* ActiveGS.png */; };
 		7E5148201CA6B5CE005DA0A6 /* Apple_2_Disk_Drive_Sounds.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7E51480D1CA6B5CE005DA0A6 /* Apple_2_Disk_Drive_Sounds.txt */; };
 		7E5148211CA6B5CE005DA0A6 /* disk.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E51480E1CA6B5CE005DA0A6 /* disk.png */; };
@@ -781,6 +793,12 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* activegs_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = activegs_Prefix.pch; sourceTree = "<group>"; };
+		7E32C45B2C0B128000457214 /* columns_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = columns_1.png; sourceTree = "<group>"; };
+		7E32C45C2C0B128000457214 /* columns_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = columns_3.png; sourceTree = "<group>"; };
+		7E32C45D2C0B128000457214 /* columns.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = columns.zip; sourceTree = "<group>"; };
+		7E32C45E2C0B128000457214 /* columns_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = columns_2.png; sourceTree = "<group>"; };
+		7E32C45F2C0B128000457214 /* thumb_columns.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb_columns.png; sourceTree = "<group>"; };
+		7E32C46A2C0B134500457214 /* poms_toolbox.2mg.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = poms_toolbox.2mg.zip; sourceTree = "<group>"; };
 		7E51480C1CA6B5CE005DA0A6 /* ActiveGS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActiveGS.png; sourceTree = "<group>"; };
 		7E51480D1CA6B5CE005DA0A6 /* Apple_2_Disk_Drive_Sounds.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Apple_2_Disk_Drive_Sounds.txt; sourceTree = "<group>"; };
 		7E51480E1CA6B5CE005DA0A6 /* disk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disk.png; sourceTree = "<group>"; };
@@ -1097,6 +1115,12 @@
 		09E7BDE311FC935E00DCCFE7 /* DefaultPackage */ = {
 			isa = PBXGroup;
 			children = (
+				7E32C46A2C0B134500457214 /* poms_toolbox.2mg.zip */,
+				7E32C45B2C0B128000457214 /* columns_1.png */,
+				7E32C45E2C0B128000457214 /* columns_2.png */,
+				7E32C45C2C0B128000457214 /* columns_3.png */,
+				7E32C45D2C0B128000457214 /* columns.zip */,
+				7E32C45F2C0B128000457214 /* thumb_columns.png */,
 				7E71CD7A2BC2D145008407E6 /* FTA20_1024.png */,
 				7E71CD742BC2A24F008407E6 /* ftalogo.png */,
 				0941E6731670E391003E0411 /* BOUNCIN_FERNO.FTA */,
@@ -1432,6 +1456,7 @@
 				09E7BE1111FC935E00DCCFE7 /* floby3.png in Resources */,
 				09E7BE1311FC935E00DCCFE7 /* list.activegsxml in Resources */,
 				09E7BE1411FC935E00DCCFE7 /* MODULAE.FTA in Resources */,
+				7E32C4662C0B128000457214 /* columns_2.png in Resources */,
 				09E7BE1511FC935E00DCCFE7 /* modulae_1.png in Resources */,
 				09E7BE1611FC935E00DCCFE7 /* modulae_10.png in Resources */,
 				7E5148231CA6B5CE005DA0A6 /* disk_35_2.png in Resources */,
@@ -1451,6 +1476,7 @@
 				09E7BE2411FC935E00DCCFE7 /* noisetracker_3.png in Resources */,
 				7E51482B1CA6B5CE005DA0A6 /* Search Skip Search 2.wav in Resources */,
 				09E7BE2611FC935E00DCCFE7 /* nucleus.png in Resources */,
+				7E32C4642C0B128000457214 /* columns.zip in Resources */,
 				09E7BE2711FC935E00DCCFE7 /* nucleus_2.png in Resources */,
 				09E7BE2811FC935E00DCCFE7 /* nucleus_c.png in Resources */,
 				09E7BE2911FC935E00DCCFE7 /* nucleus_t.png in Resources */,
@@ -1483,6 +1509,7 @@
 				09087F4312244C0500C52D88 /* photonix_1.png in Resources */,
 				09087F4412244C0500C52D88 /* photonix_2.png in Resources */,
 				09087F4612244C0500C52D88 /* thumb_delta.png in Resources */,
+				7E32C4602C0B128000457214 /* columns_1.png in Resources */,
 				7E51482E1CA6B5CE005DA0A6 /* Search Skip Search 5.wav in Resources */,
 				09087F4712244C0500C52D88 /* thumb_gsos.png in Resources */,
 				09087F4812244C0500C52D88 /* thumb_photonix.png in Resources */,
@@ -1500,6 +1527,7 @@
 				09AB6C1D123EE1CB00816DB7 /* SPACE_HARRIER.FTA in Resources */,
 				09AB6C1E123EE1CB00816DB7 /* thumb_bouncinferno.png in Resources */,
 				09AB6C1F123EE1CB00816DB7 /* thumb_harrier.png in Resources */,
+				7E32C4682C0B128000457214 /* thumb_columns.png in Resources */,
 				09AB6C25123EE2FA00816DB7 /* Default.png in Resources */,
 				7E51482F1CA6B5CE005DA0A6 /* ShastonHi640.ttf in Resources */,
 				7E5148301CA6B5CE005DA0A6 /* Spin Up Search 1.wav in Resources */,
@@ -1526,6 +1554,7 @@
 				0902FEE712820626002E7C03 /* TabFTA@2x.png in Resources */,
 				0902FEEF12820678002E7C03 /* TabFTA.png in Resources */,
 				0955429F12836F4D0035AE09 /* Tab2GS@2x.png in Resources */,
+				7E32C46B2C0B134500457214 /* poms_toolbox.2mg.zip in Resources */,
 				095542A8128375C40035AE09 /* Tab][.png in Resources */,
 				095542A9128375C40035AE09 /* Tab][@2x.png in Resources */,
 				09AF98051283F0DF00083D60 /* Oil_Landers.fta in Resources */,
@@ -1554,6 +1583,7 @@
 				7E5148221CA6B5CE005DA0A6 /* disk_35_1.png in Resources */,
 				09C81A9A1657ACDD008539D5 /* 525.icns in Resources */,
 				7E71CD7B2BC2D145008407E6 /* FTA20_1024.png in Resources */,
+				7E32C4622C0B128000457214 /* columns_3.png in Resources */,
 				0941E66E1670E086003E0411 /* NUCLEUS.FTA in Resources */,
 				7E51481F1CA6B5CE005DA0A6 /* ActiveGS.png in Resources */,
 				0941E6701670E143003E0411 /* DELTA.FTA in Resources */,
@@ -1614,13 +1644,16 @@
 				7E71CD4F2BC1E5A2008407E6 /* poms_4.png in Resources */,
 				7E71CD4C2BC1E5A2008407E6 /* bouncinferno_1.png in Resources */,
 				7E71CD122BC1E5A2008407E6 /* nucleus_c.png in Resources */,
+				7E32C4612C0B128000457214 /* columns_1.png in Resources */,
 				7E71CD482BC1E5A2008407E6 /* xmas_8.png in Resources */,
 				7E71CCEF2BC1E505008407E6 /* Tab][.png in Resources */,
+				7E32C46C2C0B134500457214 /* poms_toolbox.2mg.zip in Resources */,
 				7E71CD142BC1E5A2008407E6 /* thumb_system6.png in Resources */,
 				7E71CD682BC1E5CB008407E6 /* disk.png in Resources */,
 				7E71CD212BC1E5A2008407E6 /* modulae_10.png in Resources */,
 				7E71CD312BC1E5A2008407E6 /* thumb_noisetracker.png in Resources */,
 				7ECC1F8D2BC15F3D00132284 /* list.activegsxml in Resources */,
+				7E32C4652C0B128000457214 /* columns.zip in Resources */,
 				7E71CD3E2BC1E5A2008407E6 /* thumb_photonix.png in Resources */,
 				7E71CD5F2BC1E5CB008407E6 /* logo_apple2.png in Resources */,
 				7E71CD4E2BC1E5A2008407E6 /* delta_7.png in Resources */,
@@ -1663,6 +1696,7 @@
 				7E71CD082BC1E5A2008407E6 /* bouncinferno_4.png in Resources */,
 				7E71CD552BC1E5A2008407E6 /* poms_2.png in Resources */,
 				7E71CD372BC1E5A2008407E6 /* thumb_floby.png in Resources */,
+				7E32C4672C0B128000457214 /* columns_2.png in Resources */,
 				7E71CD252BC1E5A2008407E6 /* photonix_1.png in Resources */,
 				7E71CD3F2BC1E5A2008407E6 /* SPACE_HARRIER.FTA in Resources */,
 				7E71CD222BC1E5A2008407E6 /* bouncinferno_2.png in Resources */,
@@ -1682,9 +1716,11 @@
 				7E71CD572BC1E5B4008407E6 /* 2mg.icns in Resources */,
 				7E71CD542BC1E5A2008407E6 /* xmas_5.png in Resources */,
 				7E71CD6A2BC1E5CB008407E6 /* Search Skip Search 2.wav in Resources */,
+				7E32C4692C0B128000457214 /* thumb_columns.png in Resources */,
 				7E71CD612BC1E5CB008407E6 /* disk_525_1.png in Resources */,
 				7E71CD102BC1E5A2008407E6 /* modulae_9.png in Resources */,
 				7E71CD2C2BC1E5A2008407E6 /* modulae_1.png in Resources */,
+				7E32C4632C0B128000457214 /* columns_3.png in Resources */,
 				7E71CD5D2BC1E5CB008407E6 /* Apple_2_Disk_Drive_Sounds.txt in Resources */,
 				7E71CD702BC2965F008407E6 /* activegsViewController.xib in Resources */,
 				7E71CD1B2BC1E5A2008407E6 /* xmas_7.png in Resources */,
@@ -2110,7 +2146,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.bestoffta;
@@ -2181,7 +2217,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.bestoffta;
@@ -2253,7 +2289,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.freetoolsassociation.bestoffta;
